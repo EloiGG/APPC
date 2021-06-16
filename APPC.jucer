@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="FaZXBM" name="APPC" projectType="guiapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="ouGN8x" name="APPC">
+    <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
+      <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
+        <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
+          <FILE id="WDr1DK" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+          <FILE id="klg5it" name="MainComponent.cpp" compile="1" resource="0"
+                file="Source/MainComponent.cpp"/>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{F64676A4-8177-02D2-7F33-B9CAF93DCB89}" name="Core">
+        <FILE id="fLbqtz" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      </GROUP>
+      <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
+        <FILE id="MrM350" name="Networking.cpp" compile="1" resource="0" file="Source/Networking.cpp"/>
+        <FILE id="b2qqL4" name="Networking.h" compile="0" resource="0" file="Source/Networking.h"/>
+        <FILE id="aROWgX" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>
+        <FILE id="oL2kyw" name="UART.h" compile="0" resource="0" file="Source/UART.h"/>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="APPC"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="APPC"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Program Files/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>
