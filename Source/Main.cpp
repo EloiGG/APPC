@@ -8,9 +8,10 @@
 
 #include <JuceHeader.h>
 #include "MainComponent.h"
+#include "JSON.h"
 
 //==============================================================================
-class APPCApplication  : public juce::JUCEApplication
+class APPCApplication : public juce::JUCEApplication
 {
 public:
     //==============================================================================
