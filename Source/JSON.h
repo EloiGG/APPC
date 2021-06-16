@@ -56,3 +56,21 @@ public:
 private:
 	var parsedJSON;
 };
+
+/// <summary>
+/// Cette classe contient les informations du fichier JSON de configuration du logiciel.
+/// </summary>
+class ConfigJSON
+{
+public:
+	static bool err_ok(const String& output);
+
+public:
+	ConfigJSON(const File& json);
+
+	String getAuthToken();
+	String getAuthPassword();
+
+private:
+	var parsedJSON;
+};

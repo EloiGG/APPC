@@ -3,7 +3,7 @@
 
     JSON.cpp
     Created: 16 Jun 2021 11:29:44am
-    Author:  admin
+    Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -12,16 +12,11 @@
 
 PricesJSON::PricesJSON(const String& json)
 {
-    
     parsedJSON = JSON::parse(json);
 }
 
 PricesJSON::PricesJSON(const File& json)
 {
-    /*String s = json.loadFileAsString(), s2;
-    if (s[0] == '[' && s[s.length() - 1] == ']') {
-        s2 = s.substring(1, s.length() - 1);
-    }*/
     parsedJSON = JSON::parse(json);
 }
 
@@ -44,6 +39,7 @@ PriceJSON PricesJSON::operator[](int index)
     auto w = v[index].getDynamicObject();
     return PriceJSON(w);
 }
+
 
 PriceJSON::PriceJSON(DynamicObject* d) : dynObj(d)
 {
@@ -107,4 +103,24 @@ bool PriceJSON::getStatus()
 String PriceJSON::getOldPrice()
 {
     return dynObj->getProperty("oldPrice");
+}
+
+bool ConfigJSON::err_ok(const String& output)
+{
+    return output != "error";
+}
+
+ConfigJSON::ConfigJSON(const File& json)
+{
+    parsedJSON = JSON::parse(json);
+}
+
+String ConfigJSON::getAuthToken()
+{
+    return parsedJSON.getProperty("authenticationToken", "error");
+}
+
+String ConfigJSON::getAuthPassword()
+{
+    return parsedJSON.getProperty("authenticationPassword", "error");
 }
