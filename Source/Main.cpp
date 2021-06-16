@@ -26,7 +26,7 @@ public:
 	void initialise(const juce::String& commandLine) override
 	{
 		// This method is where you should put your application's initialisation code..
-
+		
 		mainWindow.reset(new MainWindow(getApplicationName()));
 		ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));
 		auto authTk = configJSON.getAuthToken(), authPswrd = configJSON.getAuthPassword();
