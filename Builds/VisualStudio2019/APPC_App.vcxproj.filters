@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="APPC\Source\UI\Util">
+      <UniqueIdentifier>{786A86AE-67DE-04EE-0793-C3B856D3B110}</UniqueIdentifier>
+    </Filter>
     <Filter Include="APPC\Source\UI\Components">
       <UniqueIdentifier>{5B29275B-A099-DCDC-BA3C-B199D3A5657B}</UniqueIdentifier>
     </Filter>
@@ -214,10 +217,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\LookAndFeel.cpp">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DigitComponent.cpp">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PriceComponent.cpp">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PriceDisplayComponent.cpp">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>APPC\Source\UI\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
+      <Filter>APPC\Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Price.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\JSON.cpp">
@@ -1413,8 +1431,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GridTool.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LookAndFeel.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DigitComponent.h">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PriceComponent.h">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PriceDisplayComponent.h">
+      <Filter>APPC\Source\UI\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>APPC\Source\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Price.h">
+      <Filter>APPC\Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\JSON.h">
       <Filter>APPC\Source\Communication</Filter>

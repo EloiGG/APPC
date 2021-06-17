@@ -13,7 +13,7 @@
 #include "rapidjson/rapidjson.h"
 
 /// <summary>
-/// Contient toutes les informations autour d'un prix. Informations récupérables via les accesseurs
+/// Contient toutes les informations autour d'un prix. Informations rÃ©cupÃ©rables via les accesseurs
 /// correspondants
 /// </summary>
 class PriceJSON
@@ -39,9 +39,9 @@ private:
 };
 
 /// <summary>
-/// Cette classe contient tout le texte du fichier JSON récupéré par la requête fuel_prices
-/// Ce fichier peut contenir plusieurs prix différents. Ils sont accessibles individuellement
-/// sous la forme PriceJSON via l'opérateur [].
+/// Cette classe contient tout le texte du fichier JSON rÃ©cupÃ©rÃ© par la requÃªte fuel_prices
+/// Ce fichier peut contenir plusieurs prix diffÃ©rents. Ils sont accessibles individuellement
+/// sous la forme PriceJSON via l'opÃ©rateur [].
 /// </summary>
 class PricesJSON
 {

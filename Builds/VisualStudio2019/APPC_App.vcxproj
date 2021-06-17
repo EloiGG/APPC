@@ -139,8 +139,13 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\DigitComponent.cpp"/>
+    <ClCompile Include="..\..\Source\PriceComponent.cpp"/>
+    <ClCompile Include="..\..\Source\PriceDisplayComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\Source\Price.cpp"/>
     <ClCompile Include="..\..\Source\JSON.cpp"/>
     <ClCompile Include="..\..\Source\Networking.cpp"/>
     <ClCompile Include="..\..\Source\UART.cpp"/>
@@ -1252,7 +1257,13 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GridTool.h"/>
+    <ClInclude Include="..\..\Source\LookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\DigitComponent.h"/>
+    <ClInclude Include="..\..\Source\PriceComponent.h"/>
+    <ClInclude Include="..\..\Source\PriceDisplayComponent.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Source\Price.h"/>
     <ClInclude Include="..\..\Source\JSON.h"/>
     <ClInclude Include="..\..\Source\Networking.h"/>
     <ClInclude Include="..\..\Source\UART.h"/>

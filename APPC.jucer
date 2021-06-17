@@ -6,7 +6,24 @@
   <MAINGROUP id="ouGN8x" name="APPC">
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
+        <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
+          <FILE id="evCd8l" name="GridTool.h" compile="0" resource="0" file="Source/GridTool.h"/>
+          <FILE id="s7sJ74" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
+          <FILE id="jBwqfY" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
+        </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
+          <FILE id="mEuui8" name="DigitComponent.cpp" compile="1" resource="0"
+                file="Source/DigitComponent.cpp"/>
+          <FILE id="WNBeOL" name="DigitComponent.h" compile="0" resource="0"
+                file="Source/DigitComponent.h"/>
+          <FILE id="aL0P05" name="PriceComponent.cpp" compile="1" resource="0"
+                file="Source/PriceComponent.cpp"/>
+          <FILE id="gq1DtL" name="PriceComponent.h" compile="0" resource="0"
+                file="Source/PriceComponent.h"/>
+          <FILE id="oxMd0i" name="PriceDisplayComponent.cpp" compile="1" resource="0"
+                file="Source/PriceDisplayComponent.cpp"/>
+          <FILE id="KE6WpO" name="PriceDisplayComponent.h" compile="0" resource="0"
+                file="Source/PriceDisplayComponent.h"/>
           <FILE id="WDr1DK" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
           <FILE id="klg5it" name="MainComponent.cpp" compile="1" resource="0"
                 file="Source/MainComponent.cpp"/>
@@ -14,6 +31,8 @@
       </GROUP>
       <GROUP id="{F64676A4-8177-02D2-7F33-B9CAF93DCB89}" name="Core">
         <FILE id="fLbqtz" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+        <FILE id="GRa8gy" name="Price.cpp" compile="1" resource="0" file="Source/Price.cpp"/>
+        <FILE id="fGkoQz" name="Price.h" compile="0" resource="0" file="Source/Price.h"/>
       </GROUP>
       <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
         <FILE id="mJwWan" name="JSON.cpp" compile="1" resource="0" file="Source/JSON.cpp"/>

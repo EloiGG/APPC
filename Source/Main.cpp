@@ -35,8 +35,10 @@ public:
 			auto a = net.getFuelPrice();
 			if (Network::err_ok(a)) {
 				PricesJSON prx(a);
-				for (int i = 0; i < prx.getNumPrices(); i++)
-					DBG(prx[i].getPrice());
+				for (int i = 0; i < prx.getNumPrices(); i++) {
+					DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
+
+				}
 			}
 			else
 				jassertfalse; //Erreur réseau
