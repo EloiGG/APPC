@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "DigitComponent.h"
 #include "GridTool.h"
+#include "Price.h"
 
 //==============================================================================
 /*
@@ -24,6 +25,8 @@ public:
 	PriceEditor();
 	void setPrice(const String& newPrice);
 	void paint(juce::Graphics&) override;
+	void resized() override;
+
 
 protected:
 	virtual void mouseDown(const MouseEvent& event) override;
@@ -35,7 +38,7 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditor)
 };
 
-class PriceComponent : public juce::Component
+class PriceComponent : public juce::Component, private Timer
 {
 	static constexpr size_t MAX_DIGITS = 6;
 public:
@@ -45,15 +48,23 @@ public:
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
+	void setPrice(Price& newPrice);
 	void setNumberOfDigits(int number_of_digits = 4);
 
 	virtual void mouseDoubleClick(const MouseEvent& event) override;
 
 private:
+	void updateDigits(Price& newPrice);
+	//void updatePriceEditor(Price& newPrice);
+
 	int numDigits;
-	DigitComponent digits[MAX_DIGITS];
+	DigitEditor digits[MAX_DIGITS];
 	GridTool grid;
 	PriceEditor priceEditor;
-	Font priceEditorFont;
+	Price currentPrice;
+	bool onPriceUpdate;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceComponent)
+
+		// Hérité via Timer
+		virtual void timerCallback() override;
 };

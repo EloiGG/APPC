@@ -3,7 +3,7 @@
 
 	DigitComponent.cpp
 	Created: 17 Jun 2021 11:04:03am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -14,56 +14,103 @@
 //==============================================================================
 DigitComponent::DigitComponent()
 {
-	addAndMakeVisible(digit);
-	digit.setText(std::to_string((unsigned int)Random::getSystemRandom().nextInt() % 10), NotificationType::sendNotification);
-	digit.setJustificationType(Justification::centred);
-	digit.setFont(font);
-	digit.setColour(Label::ColourIds::textColourId, Colour(244, 255, 143));
+	setText(std::to_string((unsigned int)Random::getSystemRandom().nextInt() % 10), NotificationType::sendNotification);
+	setText("2", NotificationType::sendNotification);
+	setJustificationType(Justification::centred);
+	setFont(font);
+	setColour(Label::ColourIds::textColourId, Colour(244, 255, 143));
 	font = Font("Seven Segment", "Regular", getHeight());
 	setRepaintsOnMouseActivity(true);
+	setEditable(true);
 }
 
 DigitComponent::~DigitComponent()
 {
 }
 
-void DigitComponent::paint(juce::Graphics& g)
-{	
-	g.setColour(Colours::black);
-	g.fillAll();
-
-	g.setColour(Colours::white);
-	g.drawRect(getLocalBounds());
-}
+//void DigitComponent::paint(juce::Graphics& g)
+//{	
+//	g.setColour(Colours::black);
+//	g.fillAll();
+//	Label::paint(g);
+//	g.setColour(Colours::white);
+//	g.drawRect(getLocalBounds());
+//}
 
 void DigitComponent::resized()
 {
-	digit.setBounds(getLocalBounds());
 	font.setHeight(getHeight());
-	digit.setFont(font);
+	setFont(font);
 }
 
-DigitEditor::DigitEditor()
+DigitEditor::DigitEditor() : frameCounter(0)
 {
-	setRepaintsOnMouseActivity(true);
 	setEditable(true);
+	setRepaintsOnMouseActivity(true);
+	setOpaque(true);
+	setEditable(true);
+	setText(std::to_string((unsigned int)Random::getSystemRandom().nextInt() % 10), NotificationType::sendNotification);
+	setJustificationType(Justification::centred);
+	setFont(Font("Seven Segment", "Regular", getHeight()));
+	setColour(Label::ColourIds::textColourId, lfColours::digitColour);
 }
 
 void DigitEditor::paint(juce::Graphics& g)
 {
 	auto c = isMouseOver() ? lfColours::digitBackground.brighter() : lfColours::digitBackground;
 	g.fillAll(c);
+	g.setColour(lfColours::digitColour);
 	Label::paint(g);
 	g.setColour(Colours::white);
 	g.drawRect(getLocalBounds());
+
+	float updateRectangleMargin = getWidth() / 10, cornerSize = getHeight() / 40.0f;
+	if (frameCounter>0) {
+		g.setColour(lfColours::onDigitUpdate.withAlpha(jmap<float>(frameCounter, 0, 60, 1, 0)));
+		g.drawRoundedRectangle(getLocalBounds().reduced(updateRectangleMargin).toFloat(), cornerSize, 1.0f);
+	}
 }
 
 void DigitEditor::setDigit(String& newDigit)
 {
-	setText(newDigit, NotificationType::sendNotification);
+	setText(newDigit.substring(0, 1), NotificationType::sendNotification);
+	frameCounter = 0;
+	startTimerHz(60);
+	timerCallback();
 }
 
-void DigitEditor::mouseDown(const MouseEvent&)
+String DigitEditor::getDigit()
 {
+	return getText().substring(0, 1);
+}
 
+
+void DigitEditor::resized()
+{
+	Label::resized();
+	auto f = getFont();
+	f.setHeight(getHeight());
+	setFont(f);
+}
+
+void DigitEditor::timerCallback()
+{
+	repaint();
+	if (++frameCounter > 60) {
+		frameCounter = 0;
+		stopTimer();
+	}
+}
+
+Digit::Digit()
+{
+	setText("2", NotificationType::sendNotification);
+	setEditable(true);
+	setFont(Font("Seven Segment", "Regular", 30));
+}
+
+void Digit::resized()
+{
+	Label::resized();
+	//getFont().setHeight(getHeight());
 }

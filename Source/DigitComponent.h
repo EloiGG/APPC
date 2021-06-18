@@ -16,31 +16,43 @@
 //==============================================================================
 /*
 */
-class DigitEditor : public Label
+class DigitEditor : public Label, private Timer
 {
 public:
     DigitEditor();
 
     void paint(juce::Graphics&) override;
     void setDigit(String& newDigit);
-    virtual void mouseDown(const MouseEvent&) override;
+    String getDigit();
+    void resized() override;
+
 
 private:
-
+    unsigned int frameCounter;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
+
+        // Hérité via Timer
+        virtual void timerCallback() override;
 };
 
-class DigitComponent  : public juce::Component
+class DigitComponent  : public Label
 {
 public:
     DigitComponent();
     ~DigitComponent() override;
 
-    void paint (juce::Graphics&) override;
+    //void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    DigitEditor digit;
     Font font;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DigitComponent)
+};
+
+class Digit : public Label
+{
+public:
+    Digit();
+    void resized() override;
+
 };

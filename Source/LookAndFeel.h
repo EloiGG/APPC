@@ -16,4 +16,5 @@ namespace lfColours
     const Colour digitColour(244, 255, 143);
     const Colour priceBackground(22, 22, 22);
     const Colour digitBackground(0, 0, 0);
+    const Colour onDigitUpdate(255, 53, 46);
 }

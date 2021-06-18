@@ -10,7 +10,6 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "rapidjson/rapidjson.h"
 
 /// <summary>
 /// Contient toutes les informations autour d'un prix. Informations récupérables via les accesseurs

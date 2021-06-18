@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="FaZXBM" name="APPC" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="1" jucerFormatVersion="1"
-              headerPath="$(SolutionDir)..\..\Include">
+              cppLanguageStandard="latest">
   <MAINGROUP id="ouGN8x" name="APPC">
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">

@@ -10,6 +10,7 @@
 #include "MainComponent.h"
 #include "JSON.h"
 #include "Networking.h"
+#include "Price.h"
 
 //==============================================================================
 class APPCApplication : public juce::JUCEApplication
@@ -39,12 +40,15 @@ public:
 					DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
 
 				}
+				Price p = "3222";// prx[0].getPrice();
+
 			}
 			else
 				jassertfalse; //Erreur réseau
 		}
 		else
 			jassertfalse; //Impossible de lire l'authentification dans le JSON
+
 	}
 
 	void shutdown() override
