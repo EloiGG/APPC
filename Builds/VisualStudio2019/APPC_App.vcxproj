@@ -146,9 +146,9 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\Price.cpp"/>
+    <ClCompile Include="..\..\Source\UART.cpp"/>
     <ClCompile Include="..\..\Source\JSON.cpp"/>
     <ClCompile Include="..\..\Source\Networking.cpp"/>
-    <ClCompile Include="..\..\Source\UART.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1264,9 +1264,9 @@
     <ClInclude Include="..\..\Source\PriceDisplayComponent.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\Price.h"/>
+    <ClInclude Include="..\..\Source\UART.h"/>
     <ClInclude Include="..\..\Source\JSON.h"/>
     <ClInclude Include="..\..\Source\Networking.h"/>
-    <ClInclude Include="..\..\Source\UART.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_AbstractFifo.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_Array.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_ArrayAllocationBase.h"/>

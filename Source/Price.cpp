@@ -12,7 +12,8 @@
 
 Price::Price(const String& price)
 {
-	*this = price;
+	if (isValid(price))
+		*this = price;
 }
 
 void Price::operator=(const String& newPrice)
@@ -37,9 +38,9 @@ void Price::operator=(const String& newPrice)
 	}
 }
 
-String Price::operator[](int index)
+String Price::operator[](int index) const
 {
-	return priceString.substring(index, index+1);
+	return priceString.substring(index, index + 1);
 }
 
 unsigned char Price::toUARTchar(const char c)
@@ -74,6 +75,8 @@ unsigned char Price::toUARTchar(const char c)
 
 bool Price::isValid(const String& s)
 {
+	if (s.length() == 0)
+		return false;	
 	bool r = true;
 	for (char c : s)
 	{
@@ -87,9 +90,12 @@ bool Price::isValid(const String& s)
 				return false;
 		}
 		else if (c == '-')
-			return c;
+			return true;
+		else if (c == '.')
+			return true;
 		else
 			return false;
+
 	}
 	return true;
 }
@@ -101,14 +107,27 @@ void Price::convert(String& s)
 	s = c;
 }
 
-String Price::toString(size_t stringLengh)
+String Price::toString(size_t stringLengh) const
 {
-	return String(priceString[0] + "." + priceString.substring(2, stringLengh - 2));
+	String s(priceString.substring(0, 1));
+	s.append(".", 1);
+	s.append(priceString.substring(1, stringLengh ), stringLengh);
+	return s;
 }
 
-//
-//void Price::changeOneDigit(unsigned int digitIndex, String& newDigit)
-//{
-//	priceString.replaceSection(digitIndex, digitIndex, newDigit);
-//
-//}
+
+void Price::changeOneDigit(unsigned int digitIndex, const String& newDigit)
+{
+	if (Price::isValid(newDigit))
+	{
+		auto s = priceString.substring(0, digitIndex);
+		s.append(newDigit, 1);
+		s.append(priceString.substring(digitIndex + 1), MAX_LENGH);
+		priceString = s;
+	}
+}
+
+bool Price::isEmpty()
+{
+	return priceString.length() == 0;
+}

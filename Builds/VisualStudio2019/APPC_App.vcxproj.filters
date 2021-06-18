@@ -238,13 +238,13 @@
     <ClCompile Include="..\..\Source\Price.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\UART.cpp">
+      <Filter>APPC\Source\Communication</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\JSON.cpp">
       <Filter>APPC\Source\Communication</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Networking.cpp">
-      <Filter>APPC\Source\Communication</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\UART.cpp">
       <Filter>APPC\Source\Communication</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
@@ -1452,13 +1452,13 @@
     <ClInclude Include="..\..\Source\Price.h">
       <Filter>APPC\Source\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\UART.h">
+      <Filter>APPC\Source\Communication</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\JSON.h">
       <Filter>APPC\Source\Communication</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Networking.h">
-      <Filter>APPC\Source\Communication</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\UART.h">
       <Filter>APPC\Source\Communication</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\containers\juce_AbstractFifo.h">

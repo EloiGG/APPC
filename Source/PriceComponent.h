@@ -29,8 +29,9 @@ public:
 
 
 protected:
-	virtual void mouseDown(const MouseEvent& event) override;
 	virtual void editorAboutToBeHidden(TextEditor*) override;
+	virtual void editorShown(TextEditor*);
+
 
 private:
 	String price;
@@ -42,27 +43,32 @@ class PriceComponent : public juce::Component, private Timer
 {
 	static constexpr size_t MAX_DIGITS = 6;
 public:
-	PriceComponent(int number_of_digits = 4);
+	PriceComponent(unsigned int priceID = 0, int number_of_digits = 4);
 	~PriceComponent() override;
+
+	void setTabOrder(int order);
 
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
-	void setPrice(Price& newPrice);
+	void setPrice(const Price& newPrice);
 	void setNumberOfDigits(int number_of_digits = 4);
-
+	void setID(unsigned int newID);
 	virtual void mouseDoubleClick(const MouseEvent& event) override;
 
-private:
-	void updateDigits(Price& newPrice);
-	//void updatePriceEditor(Price& newPrice);
+	void hideDigits(bool shouldHideDigits);
 
-	int numDigits;
+private:
+	void updateDigits();
+	void updatePriceEditor(const Price& newPrice);
+
+	int numDigits, ID;
 	DigitEditor digits[MAX_DIGITS];
 	GridTool grid;
 	PriceEditor priceEditor;
 	Price currentPrice;
-	bool onPriceUpdate;
+	bool onPriceUpdate, onPriceEditorUpdate;
+	bool updatingDigits, updatingPriceEditor;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceComponent)
 
 		// Hérité via Timer

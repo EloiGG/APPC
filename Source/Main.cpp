@@ -5,7 +5,6 @@
 
   ==============================================================================
 */
-
 #include <JuceHeader.h>
 #include "MainComponent.h"
 #include "JSON.h"
@@ -40,7 +39,7 @@ public:
 					DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
 
 				}
-				Price p = "3222";// prx[0].getPrice();
+				Price p = String("3222");// prx[0].getPrice();
 
 			}
 			else

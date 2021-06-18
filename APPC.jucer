@@ -35,12 +35,12 @@
         <FILE id="fGkoQz" name="Price.h" compile="0" resource="0" file="Source/Price.h"/>
       </GROUP>
       <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
+        <FILE id="kgmNAY" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>
+        <FILE id="V1s69T" name="UART.h" compile="0" resource="0" file="Source/UART.h"/>
         <FILE id="mJwWan" name="JSON.cpp" compile="1" resource="0" file="Source/JSON.cpp"/>
         <FILE id="IJLrO8" name="JSON.h" compile="0" resource="0" file="Source/JSON.h"/>
         <FILE id="MrM350" name="Networking.cpp" compile="1" resource="0" file="Source/Networking.cpp"/>
         <FILE id="b2qqL4" name="Networking.h" compile="0" resource="0" file="Source/Networking.h"/>
-        <FILE id="aROWgX" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>
-        <FILE id="oL2kyw" name="UART.h" compile="0" resource="0" file="Source/UART.h"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>

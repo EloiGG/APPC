@@ -14,14 +14,13 @@
 //==============================================================================
 DigitComponent::DigitComponent()
 {
-	setText(std::to_string((unsigned int)Random::getSystemRandom().nextInt() % 10), NotificationType::sendNotification);
-	setText("2", NotificationType::sendNotification);
 	setJustificationType(Justification::centred);
 	setFont(font);
 	setColour(Label::ColourIds::textColourId, Colour(244, 255, 143));
 	font = Font("Seven Segment", "Regular", getHeight());
 	setRepaintsOnMouseActivity(true);
 	setEditable(true);
+	setWantsKeyboardFocus(false);
 }
 
 DigitComponent::~DigitComponent()
@@ -49,7 +48,6 @@ DigitEditor::DigitEditor() : frameCounter(0)
 	setRepaintsOnMouseActivity(true);
 	setOpaque(true);
 	setEditable(true);
-	setText(std::to_string((unsigned int)Random::getSystemRandom().nextInt() % 10), NotificationType::sendNotification);
 	setJustificationType(Justification::centred);
 	setFont(Font("Seven Segment", "Regular", getHeight()));
 	setColour(Label::ColourIds::textColourId, lfColours::digitColour);
@@ -71,7 +69,7 @@ void DigitEditor::paint(juce::Graphics& g)
 	}
 }
 
-void DigitEditor::setDigit(String& newDigit)
+void DigitEditor::setDigit(const String& newDigit)
 {
 	setText(newDigit.substring(0, 1), NotificationType::sendNotification);
 	frameCounter = 0;
@@ -91,6 +89,11 @@ void DigitEditor::resized()
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);
+}
+
+void DigitEditor::editorShown(TextEditor*)
+{
+	DBG(getExplicitFocusOrder());
 }
 
 void DigitEditor::timerCallback()

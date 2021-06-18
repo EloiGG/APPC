@@ -22,9 +22,11 @@ public:
     DigitEditor();
 
     void paint(juce::Graphics&) override;
-    void setDigit(String& newDigit);
+    void setDigit(const String& newDigit);
     String getDigit();
     void resized() override;
+
+    virtual void editorShown(TextEditor*) override;
 
 
 private:

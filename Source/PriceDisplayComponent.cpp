@@ -12,12 +12,16 @@
 #include "PriceDisplayComponent.h"
 
 //==============================================================================
-PriceDisplayComponent::PriceDisplayComponent(unsigned int num_of_prices) : grid(1, num_of_prices), numPrices(num_of_prices)
+PriceDisplayComponent::PriceDisplayComponent(unsigned int num_of_prices) : grid(1, num_of_prices), numPrices(num_of_prices), prices()
 {
 	addAndMakeVisible(grid);
 	for (int i = 0; i < numPrices; i++) {
 		addAndMakeVisible(prices[i]);
+		prices[i].setTabOrder(i+1);
+		prices[i].setID(i);
+		prices[i].setPrice(String("2231"));
 	}
+	int i = 0;
 }
 
 PriceDisplayComponent::~PriceDisplayComponent()
@@ -52,4 +56,10 @@ void PriceDisplayComponent::addPrice()
 
 void PriceDisplayComponent::setNumDigits(unsigned int num_of_digits)
 {
+}
+
+void PriceDisplayComponent::hideAllDigits(bool shouldHideDigits)
+{
+	for (int i = 0; i < numPrices; i++)
+		prices[i].hideDigits(true);
 }

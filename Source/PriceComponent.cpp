@@ -13,13 +13,35 @@
 #include "LookAndFeel.h"
 
 //==============================================================================
-PriceComponent::PriceComponent(int number_of_digits) : numDigits(number_of_digits), grid(number_of_digits, 1),
-onPriceUpdate(false)
+PriceComponent::PriceComponent(unsigned int priceID, int number_of_digits) : numDigits(number_of_digits), grid(number_of_digits, 1),
+onPriceUpdate(false), ID(priceID), onPriceEditorUpdate(false), currentPrice(Price("0")), updatingPriceEditor(true), updatingDigits(false)
 {
 	priceEditor.onTextChange = [this]()
 	{
-		updateDigits(Price(priceEditor.getText()));
+		if (!updatingDigits) {
+			DBG("!up");
+			updatingPriceEditor = true;
+			Price p(priceEditor.getText());
+			if (!p.isEmpty()) {
+				currentPrice = p;
+				updateDigits();
+			}
+			else
+				priceEditor.setText(currentPrice.toString(numDigits + 1), NotificationType::sendNotification);
+		}
 	};
+
+	for (int i = 0; i < numDigits; i++)
+		digits[i].onTextChange = [this, i]()
+	{
+		if (!updatingPriceEditor) {
+			updatingDigits = true;
+			currentPrice.changeOneDigit(i, digits[i].getText());
+			updatePriceEditor(currentPrice);
+			updatingDigits = false;
+		}
+	};
+
 
 	addAndMakeVisible(priceEditor);
 	for (int i = 0; i < numDigits; i++)
@@ -30,13 +52,18 @@ PriceComponent::~PriceComponent()
 {
 }
 
+void PriceComponent::setTabOrder(int order)
+{
+	priceEditor.setExplicitFocusOrder(order);
+}
+
 
 void PriceComponent::paint(juce::Graphics& g)
 {
 }
 
 
-void PriceComponent::setPrice(Price& newPrice)
+void PriceComponent::setPrice(const Price& newPrice)
 {
 	priceEditor.setPrice(newPrice.toString(4));
 }
@@ -47,6 +74,15 @@ void PriceComponent::setNumberOfDigits(int number_of_digits)
 	numDigits = number_of_digits;
 }
 
+void PriceComponent::setID(unsigned int newID)
+{
+	ID = newID;
+	for (int i = 0; i < numDigits; i++) {
+		digits[i].setExplicitFocusOrder((i + 1) + 4 * ID + 4);
+	}
+	DBG(getExplicitFocusOrder());
+}
+
 void PriceComponent::mouseDoubleClick(const MouseEvent& event)
 {
 	priceEditor.setVisible(false);
@@ -54,19 +90,27 @@ void PriceComponent::mouseDoubleClick(const MouseEvent& event)
 		DBG("edit");
 }
 
-void PriceComponent::updateDigits(Price& newPrice)
+void PriceComponent::hideDigits(bool should)
 {
-	currentPrice = newPrice;
-	onPriceUpdate = true;
-	startTimerHz(2);
+	for (int i = 0; i < numDigits; i++)
+		digits[i].setVisible(!should);
+}
+
+void PriceComponent::updateDigits()
+{
+	startTimerHz(3);
 	timerCallback();
+}
+
+void PriceComponent::updatePriceEditor(const Price& newPrice)
+{
+	priceEditor.setPrice(newPrice.toString(numDigits));
 }
 
 void PriceComponent::timerCallback()
 {
-	if (onPriceUpdate)
+	if (updatingPriceEditor)
 	{
-		DBG("timer callback");
 		int i = 0;
 		for (; i < numDigits; i++) {
 			if (digits[i].getDigit() != currentPrice[i]) {
@@ -75,6 +119,9 @@ void PriceComponent::timerCallback()
 			}
 		}
 		onPriceUpdate = false;
+		//fin de mise à jour
+		updatingPriceEditor = false;
+		updatingDigits = false;
 		stopTimer();
 	}
 }
@@ -99,9 +146,9 @@ PriceEditor::PriceEditor()
 	setBroughtToFrontOnMouseClick(true);
 	setJustificationType(Justification::centred);
 	setRepaintsOnMouseActivity(true);
-	setText("333", NotificationType::sendNotification);
 	setColour(Label::ColourIds::textColourId, lfColours::digitColour.withAlpha(0.0f));
 	setFont(Font("Seven Segment", "Regular", getHeight()));
+
 }
 
 void PriceEditor::setPrice(const String& newPrice)
@@ -124,13 +171,15 @@ void PriceEditor::resized()
 	setFont(f);
 }
 
-void PriceEditor::mouseDown(const MouseEvent& m)
-{
-	showEditor();
-}
 
 void PriceEditor::editorAboutToBeHidden(TextEditor*)
 {
 	setAlwaysOnTop(false);
 	toBack();
+}
+
+void PriceEditor::editorShown(TextEditor*)
+{
+	setAlwaysOnTop(true);
+	DBG(getExplicitFocusOrder());
 }

@@ -10,7 +10,6 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include <winnt.h>
 
 class Price
 {
@@ -18,13 +17,14 @@ class Price
 public:
     Price(const String& price = "");
     void operator=(const String& newPrice);
-    String operator[](int index);
+    String operator[](int index) const;
     static unsigned char toUARTchar(const char c);
     static bool isValid(const String& s);
     static void convert(String& s);
-    String toString(size_t stringLengh);
-    //void changeOneDigit(unsigned int digitIndex, String& newDigit);
+    String toString(size_t stringLengh) const;
+    void changeOneDigit(unsigned int digitIndex, const String& newDigit);
+    String priceString;
+    bool isEmpty();
 
 private:
-    String priceString;
 };

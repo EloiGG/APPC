@@ -17,6 +17,7 @@
 //==============================================================================
 /*
 */
+
 class PriceDisplayComponent  : public juce::Component
 {
     static constexpr size_t MAX_PRICES = 10;
@@ -31,10 +32,12 @@ public:
     void addPrice();
 
     void setNumDigits(unsigned int num_of_digits);
+    void hideAllDigits(bool shouldHideDigits);
 
 private:
-    GridTool grid;
     PriceComponent prices[MAX_PRICES];
+    GridTool grid;
     size_t numPrices;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PriceDisplayComponent)
 };
