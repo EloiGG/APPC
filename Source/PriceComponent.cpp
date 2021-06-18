@@ -31,14 +31,17 @@ onPriceUpdate(false), ID(priceID), onPriceEditorUpdate(false), currentPrice(Pric
 		}
 	};
 
-	for (int i = 0; i < numDigits; i++)
-		digits[i].onTextChange = [this, i]()
+	for (int i = 0; i < numDigits; i++) digits[i].onTextChange = [this, i]()
 	{
 		if (!updatingPriceEditor) {
-			updatingDigits = true;
-			currentPrice.changeOneDigit(i, digits[i].getText());
-			updatePriceEditor(currentPrice);
-			updatingDigits = false;
+			if (Price::isValid(digits[i].getText()) && digits[i].getText().length() == 1) {
+				updatingDigits = true;
+				currentPrice.changeOneDigit(i, digits[i].getText());
+				updatePriceEditor(currentPrice);
+				updatingDigits = false;
+			}
+			else
+				digits[i].setText(String(currentPrice.priceString[i] - 0x30), NotificationType::sendNotification);
 		}
 	};
 
@@ -139,7 +142,7 @@ void PriceComponent::resized()
 	priceEditor.setBounds(getLocalBounds());
 }
 
-PriceEditor::PriceEditor()
+PriceEditor::PriceEditor() :isTextEditing(false)
 {
 	setOpaque(true);
 	setEditable(true);
@@ -161,6 +164,13 @@ void PriceEditor::paint(juce::Graphics& g)
 	auto c = isMouseOverOrDragging(true) ? lfColours::priceBackground.brighter() : lfColours::priceBackground;
 	g.fillAll(c);
 	Label::paint(g);
+	if (!isTextEditing) {
+		auto size = getHeight() / 6;
+		float rounding = 3.0f;
+		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / 4, getHeight() * 3 / 4 }).toFloat();
+		g.setColour(lfColours::digitColour);
+		g.fillRoundedRectangle(rect, rounding);
+	}
 }
 
 void PriceEditor::resized()
@@ -175,11 +185,13 @@ void PriceEditor::resized()
 void PriceEditor::editorAboutToBeHidden(TextEditor*)
 {
 	setAlwaysOnTop(false);
+	isTextEditing = false;
 	toBack();
 }
 
 void PriceEditor::editorShown(TextEditor*)
 {
 	setAlwaysOnTop(true);
+	isTextEditing = true;
 	DBG(getExplicitFocusOrder());
 }

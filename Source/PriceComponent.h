@@ -35,6 +35,7 @@ protected:
 
 private:
 	String price;
+	bool isTextEditing;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditor)
 };
