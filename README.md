@@ -7,6 +7,7 @@
  - Etape 2 : déplacer le dossier JUCE dans le dossier de votre choix
  - Etape 3 : dans ce dossier, lancer Projucer.exe
  - Etape 4 : dans Projucer : File>Global Paths... renseigner le chemin d'accès au dossier JUCE
+ - Etape 5 : coller le fichier "SEVEN SEGMENT.ttf" dans le dossier C:\Windows\Fonts
  
 ## Ouvrir le projet
 
