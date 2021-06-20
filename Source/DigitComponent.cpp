@@ -21,6 +21,7 @@ DigitComponent::DigitComponent()
 	setRepaintsOnMouseActivity(true);
 	setEditable(true);
 	setWantsKeyboardFocus(false);
+	Core::get().updatePrices(TextUpdateOrigin::PriceEditor);
 }
 
 DigitComponent::~DigitComponent()

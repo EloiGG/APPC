@@ -28,25 +28,25 @@ public:
 		// This method is where you should put your application's initialisation code..
 		
 		mainWindow.reset(new MainWindow(getApplicationName()));
-		ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));
-		auto authTk = configJSON.getAuthToken(), authPswrd = configJSON.getAuthPassword();
-		if (ConfigJSON::err_ok(authPswrd) && ConfigJSON::err_ok(authTk)) {
-			Network net(authTk, authPswrd);
-			auto a = net.getFuelPrice();
-			if (Network::err_ok(a)) {
-				PricesJSON prx(a);
-				for (int i = 0; i < prx.getNumPrices(); i++) {
-					DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
+		//ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));
+		//auto authTk = configJSON.getAuthToken(), authPswrd = configJSON.getAuthPassword();
+		//if (ConfigJSON::err_ok(authPswrd) && ConfigJSON::err_ok(authTk)) {
+		//	Network net(authTk, authPswrd);
+		//	auto a = net.getFuelPrice();
+		//	if (Network::err_ok(a)) {
+		//		PricesJSON prx(a);
+		//		for (int i = 0; i < prx.getNumPrices(); i++) {
+		//			DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
 
-				}
-				Price p = String("3222");// prx[0].getPrice();
+		//		}
+		//		Price p = String("3222");// prx[0].getPrice();
 
-			}
-			else
-				jassertfalse; //Erreur réseau
-		}
-		else
-			jassertfalse; //Impossible de lire l'authentification dans le JSON
+		//	}
+		//	else
+		//		jassertfalse; //Erreur réseau
+		//}
+		//else
+		//	jassertfalse; //Impossible de lire l'authentification dans le JSON
 
 	}
 

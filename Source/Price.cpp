@@ -111,7 +111,7 @@ String Price::toString(size_t stringLengh) const
 {
 	String s(priceString.substring(0, 1));
 	s.append(".", 1);
-	s.append(priceString.substring(1, stringLengh ), stringLengh);
+	s.append(priceString.substring(1, stringLengh), stringLengh);
 	return s;
 }
 

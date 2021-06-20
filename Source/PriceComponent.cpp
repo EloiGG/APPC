@@ -13,21 +13,25 @@
 #include "LookAndFeel.h"
 
 //==============================================================================
-PriceComponent::PriceComponent(unsigned int priceID, int number_of_digits) : numDigits(number_of_digits), grid(number_of_digits, 1),
+PriceComponent::PriceComponent(unsigned int priceID, int number_of_digits) :  grid(number_of_digits, 1),
 onPriceUpdate(false), ID(priceID), onPriceEditorUpdate(false), currentPrice(Price("0")), updatingPriceEditor(true), updatingDigits(false)
+{
+	setNumberOfDigits(number_of_digits);
+	init();
+}
+
+void PriceComponent::init()
 {
 	priceEditor.onTextChange = [this]()
 	{
 		if (!updatingDigits) {
-			DBG("!up");
 			updatingPriceEditor = true;
 			Price p(priceEditor.getText());
 			if (!p.isEmpty()) {
 				currentPrice = p;
 				updateDigits();
 			}
-			else
-				priceEditor.setText(currentPrice.toString(numDigits + 1), NotificationType::sendNotification);
+			priceEditor.setText(currentPrice.toString(numDigits), NotificationType::sendNotification);
 		}
 	};
 
@@ -45,10 +49,11 @@ onPriceUpdate(false), ID(priceID), onPriceEditorUpdate(false), currentPrice(Pric
 		}
 	};
 
-
 	addAndMakeVisible(priceEditor);
 	for (int i = 0; i < numDigits; i++)
 		addAndMakeVisible(digits[i]);
+
+	setPrice(currentPrice);
 }
 
 PriceComponent::~PriceComponent()
@@ -65,16 +70,21 @@ void PriceComponent::paint(juce::Graphics& g)
 {
 }
 
-
 void PriceComponent::setPrice(const Price& newPrice)
 {
-	priceEditor.setPrice(newPrice.toString(4));
+	currentPrice = newPrice;
+	priceEditor.setPrice(newPrice.toString(numDigits));
 }
 
 void PriceComponent::setNumberOfDigits(int number_of_digits)
 {
-	grid.resize(number_of_digits, grid.getNumRows());
-	numDigits = number_of_digits;
+	if (number_of_digits <= Core::MAX_DIGITS && number_of_digits != numDigits) {
+		grid.resize(number_of_digits, grid.getNumRows());
+		numDigits = number_of_digits;
+		priceEditor.setNumberOfDigits(number_of_digits);
+		Core::get().setNumDigits(numDigits);
+		init();
+	}
 }
 
 void PriceComponent::setID(unsigned int newID)
@@ -86,22 +96,20 @@ void PriceComponent::setID(unsigned int newID)
 	DBG(getExplicitFocusOrder());
 }
 
-void PriceComponent::mouseDoubleClick(const MouseEvent& event)
-{
-	priceEditor.setVisible(false);
-	if (priceEditor.isBeingEdited())
-		DBG("edit");
-}
-
 void PriceComponent::hideDigits(bool should)
 {
 	for (int i = 0; i < numDigits; i++)
 		digits[i].setVisible(!should);
 }
 
+int PriceComponent::getNumDigits()
+{
+	return numDigits;
+}
+
 void PriceComponent::updateDigits()
 {
-	startTimerHz(3);
+	startTimerHz(4);
 	timerCallback();
 }
 
@@ -122,7 +130,7 @@ void PriceComponent::timerCallback()
 			}
 		}
 		onPriceUpdate = false;
-		//fin de mise à jour
+		//fin de mise Ã  jour
 		updatingPriceEditor = false;
 		updatingDigits = false;
 		stopTimer();
@@ -142,7 +150,7 @@ void PriceComponent::resized()
 	priceEditor.setBounds(getLocalBounds());
 }
 
-PriceEditor::PriceEditor() :isTextEditing(false)
+PriceEditor::PriceEditor() :isTextEditing(false), numDigits(4)
 {
 	setOpaque(true);
 	setEditable(true);
@@ -167,7 +175,7 @@ void PriceEditor::paint(juce::Graphics& g)
 	if (!isTextEditing) {
 		auto size = getHeight() / 6;
 		float rounding = 3.0f;
-		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / 4, getHeight() * 3 / 4 }).toFloat();
+		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / numDigits, getHeight() * 3 / 4 }).toFloat();
 		g.setColour(lfColours::digitColour);
 		g.fillRoundedRectangle(rect, rounding);
 	}
@@ -179,6 +187,11 @@ void PriceEditor::resized()
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);
+}
+
+void PriceEditor::setNumberOfDigits(int new_number_of_digits)
+{
+	numDigits = new_number_of_digits;
 }
 
 
@@ -194,4 +207,9 @@ void PriceEditor::editorShown(TextEditor*)
 	setAlwaysOnTop(true);
 	isTextEditing = true;
 	DBG(getExplicitFocusOrder());
+}
+
+void PriceEditor::mouseDown(const MouseEvent&)
+{
+	showEditor();
 }

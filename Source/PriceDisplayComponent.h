@@ -24,6 +24,7 @@ class PriceDisplayComponent  : public juce::Component
 public:
     PriceDisplayComponent(unsigned int num_of_prices = 4);
     ~PriceDisplayComponent() override;
+    void init();
 
     void paint (juce::Graphics&) override;
     void resized() override;
@@ -33,6 +34,10 @@ public:
 
     void setNumDigits(unsigned int num_of_digits);
     void hideAllDigits(bool shouldHideDigits);
+
+    Rectangle<int> getFittingRectangle(const Rectangle<int>& r);
+
+    void updatePrices(TextUpdateOrigin);
 
 private:
     PriceComponent prices[MAX_PRICES];

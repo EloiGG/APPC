@@ -12,24 +12,50 @@
           <FILE id="jBwqfY" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
         </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
-          <FILE id="mEuui8" name="DigitComponent.cpp" compile="1" resource="0"
-                file="Source/DigitComponent.cpp"/>
-          <FILE id="WNBeOL" name="DigitComponent.h" compile="0" resource="0"
-                file="Source/DigitComponent.h"/>
-          <FILE id="aL0P05" name="PriceComponent.cpp" compile="1" resource="0"
-                file="Source/PriceComponent.cpp"/>
-          <FILE id="gq1DtL" name="PriceComponent.h" compile="0" resource="0"
-                file="Source/PriceComponent.h"/>
-          <FILE id="oxMd0i" name="PriceDisplayComponent.cpp" compile="1" resource="0"
-                file="Source/PriceDisplayComponent.cpp"/>
-          <FILE id="KE6WpO" name="PriceDisplayComponent.h" compile="0" resource="0"
-                file="Source/PriceDisplayComponent.h"/>
+          <GROUP id="{AF5BEE48-4F14-267C-D666-FE9A5C65C397}" name="Top">
+            <FILE id="Q2W2K3" name="TopPanel.cpp" compile="1" resource="0" file="Source/TopPanel.cpp"/>
+            <FILE id="ZpyLgi" name="TopPanel.h" compile="0" resource="0" file="Source/TopPanel.h"/>
+          </GROUP>
+          <GROUP id="{E7E7C207-0E40-578E-4386-8AC1A97CB847}" name="Left">
+            <FILE id="NuLRHJ" name="LeftPanel.cpp" compile="1" resource="0" file="Source/LeftPanel.cpp"/>
+            <FILE id="wPRKau" name="LeftPanel.h" compile="0" resource="0" file="Source/LeftPanel.h"/>
+          </GROUP>
+          <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
+            <FILE id="hvUpoh" name="GeneralTab.cpp" compile="1" resource="0" file="Source/GeneralTab.cpp"/>
+            <FILE id="VCUGFy" name="GeneralTab.h" compile="0" resource="0" file="Source/GeneralTab.h"/>
+            <FILE id="LSj0FX" name="PricesTab.cpp" compile="1" resource="0" file="Source/PricesTab.cpp"/>
+            <FILE id="b8xOhJ" name="PricesTab.h" compile="0" resource="0" file="Source/PricesTab.h"/>
+            <FILE id="ng0NH9" name="RightPanel.cpp" compile="1" resource="0" file="Source/RightPanel.cpp"/>
+            <FILE id="RfpYPu" name="RightPanel.h" compile="0" resource="0" file="Source/RightPanel.h"/>
+          </GROUP>
+          <GROUP id="{A3C3405C-4230-3739-E927-B8369218F077}" name="Middle">
+            <FILE id="mEuui8" name="DigitComponent.cpp" compile="1" resource="0"
+                  file="Source/DigitComponent.cpp"/>
+            <FILE id="WNBeOL" name="DigitComponent.h" compile="0" resource="0"
+                  file="Source/DigitComponent.h"/>
+            <FILE id="Ry1sR7" name="MiddlePanel.cpp" compile="1" resource="0" file="Source/MiddlePanel.cpp"/>
+            <FILE id="eVQG2R" name="MiddlePanel.h" compile="0" resource="0" file="Source/MiddlePanel.h"/>
+            <FILE id="aL0P05" name="PriceComponent.cpp" compile="1" resource="0"
+                  file="Source/PriceComponent.cpp"/>
+            <FILE id="gq1DtL" name="PriceComponent.h" compile="0" resource="0"
+                  file="Source/PriceComponent.h"/>
+            <FILE id="oxMd0i" name="PriceDisplayComponent.cpp" compile="1" resource="0"
+                  file="Source/PriceDisplayComponent.cpp"/>
+            <FILE id="KE6WpO" name="PriceDisplayComponent.h" compile="0" resource="0"
+                  file="Source/PriceDisplayComponent.h"/>
+          </GROUP>
+          <GROUP id="{B09DFF2C-DE7F-B65D-940F-3879C7932079}" name="Bottom">
+            <FILE id="t3UpRa" name="BottomPanel.cpp" compile="1" resource="0" file="Source/BottomPanel.cpp"/>
+            <FILE id="cekU9i" name="BottomPanel.h" compile="0" resource="0" file="Source/BottomPanel.h"/>
+          </GROUP>
           <FILE id="WDr1DK" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
           <FILE id="klg5it" name="MainComponent.cpp" compile="1" resource="0"
                 file="Source/MainComponent.cpp"/>
         </GROUP>
       </GROUP>
       <GROUP id="{F64676A4-8177-02D2-7F33-B9CAF93DCB89}" name="Core">
+        <FILE id="SXdiMT" name="Core.cpp" compile="1" resource="0" file="Source/Core.cpp"/>
+        <FILE id="a4krBc" name="Core.h" compile="0" resource="0" file="Source/Core.h"/>
         <FILE id="fLbqtz" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
         <FILE id="GRa8gy" name="Price.cpp" compile="1" resource="0" file="Source/Price.cpp"/>
         <FILE id="fGkoQz" name="Price.h" compile="0" resource="0" file="Source/Price.h"/>

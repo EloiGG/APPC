@@ -14,6 +14,7 @@
 #include "DigitComponent.h"
 #include "GridTool.h"
 #include "Price.h"
+#include "Core.h"
 
 //==============================================================================
 /*
@@ -26,26 +27,27 @@ public:
 	void setPrice(const String& newPrice);
 	void paint(juce::Graphics&) override;
 	void resized() override;
-
+	void setNumberOfDigits(int new_number_of_digits);
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
 	virtual void editorShown(TextEditor*);
-
+	virtual void mouseDown(const MouseEvent&) override;
 
 private:
 	String price;
 	bool isTextEditing;
+	int numDigits;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditor)
 };
 
 class PriceComponent : public juce::Component, private Timer
 {
-	static constexpr size_t MAX_DIGITS = 6;
 public:
 	PriceComponent(unsigned int priceID = 0, int number_of_digits = 4);
 	~PriceComponent() override;
+	void init();
 
 	void setTabOrder(int order);
 
@@ -55,23 +57,22 @@ public:
 	void setPrice(const Price& newPrice);
 	void setNumberOfDigits(int number_of_digits = 4);
 	void setID(unsigned int newID);
-	virtual void mouseDoubleClick(const MouseEvent& event) override;
 
 	void hideDigits(bool shouldHideDigits);
+	int getNumDigits();
 
 private:
 	void updateDigits();
 	void updatePriceEditor(const Price& newPrice);
 
 	int numDigits, ID;
-	DigitEditor digits[MAX_DIGITS];
+	DigitEditor digits[Core::MAX_DIGITS];
 	GridTool grid;
 	PriceEditor priceEditor;
 	Price currentPrice;
 	bool onPriceUpdate, onPriceEditorUpdate;
 	bool updatingDigits, updatingPriceEditor;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceComponent)
+	virtual void timerCallback() override;
 
-		// Hérité via Timer
-		virtual void timerCallback() override;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceComponent)
 };
