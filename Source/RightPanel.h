@@ -2,8 +2,8 @@
   ==============================================================================
 
     RightPanel.h
-    Created: 19 Jun 2021 1:07:30am
-    Author:  Eloi
+    Created: 21 Jun 2021 12:36:05pm
+    Author:  admin
 
   ==============================================================================
 */
@@ -11,14 +11,13 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "LookAndFeel.h"
-#include "GeneralTab.h"
-#include "PricesTab.h"
+#include "TabbedComponent.h"
+#include "Buttons.h"
 
 //==============================================================================
 /*
 */
-class RightPanel  : public juce::TabbedComponent
+class RightPanel  : public juce::Component
 {
 public:
     RightPanel();
@@ -28,7 +27,8 @@ public:
     void resized() override;
 
 private:
-    PricesTab priceTab;
-    GeneralTab genTab;
+    TabComponent tabs;
+    Buttons buttons;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RightPanel)
 };

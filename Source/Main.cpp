@@ -26,8 +26,13 @@ public:
 	void initialise(const juce::String& commandLine) override
 	{
 		// This method is where you should put your application's initialisation code..
-		
+		Core::get().setNumDigits(4);
+		Core::get().setNumPrices(4);
+		for (int i = 0; i < Core::get().getNumPrices(); ++i)
+			Core::get().setPrice(i, Price("1.829113"));
+		auto o = Core::get().getPrice(0);
 		mainWindow.reset(new MainWindow(getApplicationName()));
+
 		//ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));
 		//auto authTk = configJSON.getAuthToken(), authPswrd = configJSON.getAuthPassword();
 		//if (ConfigJSON::err_ok(authPswrd) && ConfigJSON::err_ok(authTk)) {

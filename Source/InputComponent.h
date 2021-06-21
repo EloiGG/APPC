@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    GeneralTab.h
-    Created: 19 Jun 2021 10:42:19am
-    Author:  Eloi
+    InputComponent.h
+    Created: 21 Jun 2021 2:24:45pm
+    Author:  admin
 
   ==============================================================================
 */
@@ -11,23 +11,19 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "GridTool.h"
-#include "LookAndFeel.h"
+
 //==============================================================================
 /*
 */
-class GeneralTab  : public juce::Component
+class InputComponent  : public juce::Component
 {
 public:
-    GeneralTab();
-    ~GeneralTab() override;
+    InputComponent();
+    ~InputComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    Label l;
-    GridTool grid;
-    TextButton test;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)
 };

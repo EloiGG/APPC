@@ -19,7 +19,7 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void updatePrices(TextUpdateOrigin whoCalled);
+    void updatePrices(TextUpdateOrigin whoCalled, unsigned int index);
 
 private:
     MiddlePanel mPanel;

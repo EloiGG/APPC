@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    GeneralTab.h
-    Created: 19 Jun 2021 10:42:19am
+    RightPanel.h
+    Created: 19 Jun 2021 1:07:30am
     Author:  Eloi
 
   ==============================================================================
@@ -11,23 +11,24 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "GridTool.h"
 #include "LookAndFeel.h"
+#include "GeneralTab.h"
+#include "PricesTab.h"
+
 //==============================================================================
 /*
 */
-class GeneralTab  : public juce::Component
+class TabComponent  : public juce::TabbedComponent
 {
 public:
-    GeneralTab();
-    ~GeneralTab() override;
+    TabComponent();
+    ~TabComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    Label l;
-    GridTool grid;
-    TextButton test;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
+    PricesTab priceTab;
+    GeneralTab genTab;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TabComponent)
 };

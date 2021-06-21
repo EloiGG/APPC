@@ -45,16 +45,29 @@ Price Core::getPrice(unsigned int index)
 	return Price("0");
 }
 
-void Core::updatePrices(TextUpdateOrigin whoCalled)
+void Core::setPrice(unsigned int index, const Price& newPrice)
 {
-	pricesUpdateFunction(whoCalled);
+	prices[index] = newPrice;
 }
 
-void Core::setUpdatePriceFunction(const std::function<void(TextUpdateOrigin)>& f)
+void Core::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
+	DBG("APPEL F");
+	if(pricesUpdateFunction)
+		pricesUpdateFunction(whoCalled, priceIndex);
+}
+
+void Core::setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f)
+{
+	DBG("set");
 	pricesUpdateFunction = f;
 }
 
-Core::Core() : numDigits(4), numPrices(4)
+std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
+{
+	return lfptr;
+}
+
+Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel)
 {
 }

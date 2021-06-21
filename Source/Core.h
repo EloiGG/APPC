@@ -14,10 +14,11 @@
 
 #include "Price.h"
 #include <functional>
+#include "LookAndFeel.h"
 
 enum class TextUpdateOrigin
 {
-    PriceEditor, DigitEditor, PricePanel
+    PriceEditor, DigitEditor, PricePanel, Omni
 };
 
 class Core
@@ -36,17 +37,22 @@ public:
     void setNumPrices(unsigned int newNumPrices);
 
     Price getPrice(unsigned int index);
+    void setPrice(unsigned int index, const Price& newPrice);
 
-    void updatePrices(TextUpdateOrigin whoCalled);
-    void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin)>& f);
+    void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
+    void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
+
+    std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
+
 private:
-    std::function<void(TextUpdateOrigin)> pricesUpdateFunction;
+    std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
     static Core core_instance;
 
     unsigned int numDigits;
     unsigned int numPrices;
     Price prices[MAX_PRICES];
+    std::shared_ptr<APPCLookAndFeel> lfptr;
 };
 
 #endif // !CORE_H

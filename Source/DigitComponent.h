@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    DigitComponent.h
-    Created: 17 Jun 2021 11:04:03am
-    Author:  admin
+	DigitComponent.h
+	Created: 17 Jun 2021 11:04:03am
+	Author:  admin
 
   ==============================================================================
 */
@@ -20,42 +20,18 @@
 class DigitEditor : public Label, private Timer
 {
 public:
-    DigitEditor();
+	DigitEditor();
 
-    void paint(juce::Graphics&) override;
-    void setDigit(const String& newDigit);
-    String getDigit();
-    void resized() override;
-
-    virtual void editorShown(TextEditor*) override;
+	void paint(juce::Graphics&) override;
+	void setDigit(const String& newDigit);
+	String getDigit();
+	void resized() override;
 
 
 private:
-    unsigned int frameCounter;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
+	virtual void timerCallback() override;
 
-        // Hérité via Timer
-        virtual void timerCallback() override;
-};
-
-class DigitComponent  : public Label
-{
-public:
-    DigitComponent();
-    ~DigitComponent() override;
-
-    //void paint (juce::Graphics&) override;
-    void resized() override;
-
-private:
-    Font font;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DigitComponent)
-};
-
-class Digit : public Label
-{
-public:
-    Digit();
-    void resized() override;
+	unsigned int frameCounter;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 
 };

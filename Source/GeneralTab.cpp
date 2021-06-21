@@ -12,11 +12,12 @@
 #include "GeneralTab.h"
 
 //==============================================================================
-GeneralTab::GeneralTab()
+GeneralTab::GeneralTab() : grid(4, 8), test("test"), l("idk", "APPA")
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
+    addAndMakeVisible(grid);
+    addAndMakeVisible(test);
+    addAndMakeVisible(l);
+    l.attachToComponent(&test, true);
 }
 
 GeneralTab::~GeneralTab()
@@ -25,27 +26,12 @@ GeneralTab::~GeneralTab()
 
 void GeneralTab::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("GeneralTab", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.fillAll(lfColours::tabBackground);
 }
 
 void GeneralTab::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+    grid.setBounds(getLocalBounds());
+    test.setBounds(grid.getRectangle(2, 2, 3, 3));
+    l.setBounds(grid.getRectangle(1, 2, 2, 3));
 }

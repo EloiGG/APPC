@@ -22,7 +22,7 @@ class PriceDisplayComponent  : public juce::Component
 {
     static constexpr size_t MAX_PRICES = 10;
 public:
-    PriceDisplayComponent(unsigned int num_of_prices = 4);
+    PriceDisplayComponent();
     ~PriceDisplayComponent() override;
     void init();
 
@@ -33,11 +33,11 @@ public:
     void addPrice();
 
     void setNumDigits(unsigned int num_of_digits);
-    void hideAllDigits(bool shouldHideDigits);
 
     Rectangle<int> getFittingRectangle(const Rectangle<int>& r);
 
-    void updatePrices(TextUpdateOrigin);
+    void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
+
 
 private:
     PriceComponent prices[MAX_PRICES];

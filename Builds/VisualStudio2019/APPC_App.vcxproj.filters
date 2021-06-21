@@ -232,6 +232,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\InputComponent.cpp">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClCompile>
@@ -241,13 +244,22 @@
     <ClCompile Include="..\..\Source\LeftPanel.cpp">
       <Filter>APPC\Source\UI\Components\Left</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PriceTab.cpp">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\RightPanel.cpp">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TabbedComponent.cpp">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Buttons.cpp">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GeneralTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PricesTab.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\RightPanel.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DigitComponent.cpp">
@@ -379,9 +391,6 @@
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_RuntimePermissions.cpp">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_StdFunctionCompat.cpp">
-      <Filter>JUCE Modules\juce_core\misc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_Uuid.cpp">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClCompile>
@@ -440,6 +449,9 @@
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
+      <Filter>JUCE Modules\juce_core\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\native\juce_wasm_SystemStats.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
@@ -1312,15 +1324,6 @@
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_linux_Windowing.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_linux_X11.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_linux_X11_Clipboard.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_linux_X11_Windowing.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_mac_FileChooser.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
@@ -1482,6 +1485,9 @@
     <ClInclude Include="..\..\Source\GridTool.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\InputComponent.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LookAndFeel.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>
@@ -1491,13 +1497,22 @@
     <ClInclude Include="..\..\Source\LeftPanel.h">
       <Filter>APPC\Source\UI\Components\Left</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PriceTab.h">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\RightPanel.h">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TabbedComponent.h">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Buttons.h">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GeneralTab.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PricesTab.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\RightPanel.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DigitComponent.h">
@@ -1699,9 +1714,6 @@
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_RuntimePermissions.h">
-      <Filter>JUCE Modules\juce_core\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_StdFunctionCompat.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_core\misc\juce_Uuid.h">
@@ -2535,10 +2547,10 @@
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.h">
       <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_linux_X11.h">
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h">
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Program Files\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.h">

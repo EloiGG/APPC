@@ -8,6 +8,10 @@
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
         <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
           <FILE id="evCd8l" name="GridTool.h" compile="0" resource="0" file="Source/GridTool.h"/>
+          <FILE id="NJwFJD" name="InputComponent.cpp" compile="1" resource="0"
+                file="Source/InputComponent.cpp"/>
+          <FILE id="plmYF9" name="InputComponent.h" compile="0" resource="0"
+                file="Source/InputComponent.h"/>
           <FILE id="s7sJ74" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
           <FILE id="jBwqfY" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
         </GROUP>
@@ -21,12 +25,20 @@
             <FILE id="wPRKau" name="LeftPanel.h" compile="0" resource="0" file="Source/LeftPanel.h"/>
           </GROUP>
           <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
+            <FILE id="kxRsal" name="PriceTab.cpp" compile="1" resource="0" file="Source/PriceTab.cpp"/>
+            <FILE id="PSCvYn" name="PriceTab.h" compile="0" resource="0" file="Source/PriceTab.h"/>
+            <FILE id="wL6Gxe" name="RightPanel.cpp" compile="1" resource="0" file="Source/RightPanel.cpp"/>
+            <FILE id="LqnmGo" name="RightPanel.h" compile="0" resource="0" file="Source/RightPanel.h"/>
+            <FILE id="ng0NH9" name="TabbedComponent.cpp" compile="1" resource="0"
+                  file="Source/TabbedComponent.cpp"/>
+            <FILE id="RfpYPu" name="TabbedComponent.h" compile="0" resource="0"
+                  file="Source/TabbedComponent.h"/>
+            <FILE id="lykD4S" name="Buttons.cpp" compile="1" resource="0" file="Source/Buttons.cpp"/>
+            <FILE id="fCVsPe" name="Buttons.h" compile="0" resource="0" file="Source/Buttons.h"/>
             <FILE id="hvUpoh" name="GeneralTab.cpp" compile="1" resource="0" file="Source/GeneralTab.cpp"/>
             <FILE id="VCUGFy" name="GeneralTab.h" compile="0" resource="0" file="Source/GeneralTab.h"/>
             <FILE id="LSj0FX" name="PricesTab.cpp" compile="1" resource="0" file="Source/PricesTab.cpp"/>
             <FILE id="b8xOhJ" name="PricesTab.h" compile="0" resource="0" file="Source/PricesTab.h"/>
-            <FILE id="ng0NH9" name="RightPanel.cpp" compile="1" resource="0" file="Source/RightPanel.cpp"/>
-            <FILE id="RfpYPu" name="RightPanel.h" compile="0" resource="0" file="Source/RightPanel.h"/>
           </GROUP>
           <GROUP id="{A3C3405C-4230-3739-E927-B8369218F077}" name="Middle">
             <FILE id="mEuui8" name="DigitComponent.cpp" compile="1" resource="0"

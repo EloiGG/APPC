@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    GeneralTab.h
-    Created: 19 Jun 2021 10:42:19am
-    Author:  Eloi
+    Buttons.h
+    Created: 21 Jun 2021 12:37:46pm
+    Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -11,23 +11,24 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "GridTool.h"
 #include "LookAndFeel.h"
+#include "GridTool.h"
+#include "Core.h"
+
 //==============================================================================
 /*
 */
-class GeneralTab  : public juce::Component
+class Buttons  : public juce::Component
 {
 public:
-    GeneralTab();
-    ~GeneralTab() override;
+    Buttons();
+    ~Buttons() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    Label l;
+    TextButton send, stop, prixP, prixM, digitP, digitM;
     GridTool grid;
-    TextButton test;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Buttons)
 };

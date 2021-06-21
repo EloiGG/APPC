@@ -2,25 +2,28 @@
   ==============================================================================
 
     PriceTab.cpp
-    Created: 19 Jun 2021 10:42:31am
-    Author:  Eloi
+    Created: 21 Jun 2021 12:38:08pm
+    Author:  admin
 
   ==============================================================================
 */
 
 #include <JuceHeader.h>
-#include "PricesTab.h"
+#include "PriceTab.h"
 
 //==============================================================================
-PricesTab::PricesTab() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
+PriceTab::PriceTab()
+{
+    // In your constructor, you should add any child components, and
+    // initialise any special settings that your component needs.
+
+}
+
+PriceTab::~PriceTab()
 {
 }
 
-PricesTab::~PricesTab()
-{
-}
-
-void PricesTab::paint (juce::Graphics& g)
+void PriceTab::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -40,7 +43,7 @@ void PricesTab::paint (juce::Graphics& g)
                 juce::Justification::centred, true);   // draw some placeholder text
 }
 
-void PricesTab::resized()
+void PriceTab::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..

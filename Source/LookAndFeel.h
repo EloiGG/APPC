@@ -20,4 +20,12 @@ namespace lfColours
     const Colour priceDisplayBackground(43, 47, 48);
     const Colour panelBackground(50, 50, 50);
     const Colour tabBackground(31, 30, 28);
+    const Colour buttonColor(60, 67, 79);
 }
+
+class APPCLookAndFeel : public LookAndFeel_V4
+{
+public:
+    virtual void drawButtonBackground(Graphics&, Button&, const Colour& backgroundColour,
+        bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+};

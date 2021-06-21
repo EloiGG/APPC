@@ -13,10 +13,10 @@
 #include "LookAndFeel.h"
 
 //==============================================================================
-PriceComponent::PriceComponent(unsigned int priceID, int number_of_digits) :  grid(number_of_digits, 1),
-onPriceUpdate(false), ID(priceID), onPriceEditorUpdate(false), currentPrice(Price("0")), updatingPriceEditor(true), updatingDigits(false)
+PriceComponent::PriceComponent(unsigned int priceID) : grid(Core::get().getNumDigits(), 1), ID(priceID),
+currentPrice(Core::get().getPrice(ID)), updatingPriceEditor(true), updatingDigits(false)
 {
-	setNumberOfDigits(number_of_digits);
+	setNumberOfDigits(Core::get().getNumDigits());
 	init();
 }
 
@@ -28,8 +28,10 @@ void PriceComponent::init()
 			updatingPriceEditor = true;
 			Price p(priceEditor.getText());
 			if (!p.isEmpty()) {
-				currentPrice = p;
-				updateDigits();
+				//currentPrice = p;
+				//updateDigits();
+				Core::get().setPrice(ID, p);
+				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 			}
 			priceEditor.setText(currentPrice.toString(numDigits), NotificationType::sendNotification);
 		}
@@ -54,15 +56,12 @@ void PriceComponent::init()
 		addAndMakeVisible(digits[i]);
 
 	setPrice(currentPrice);
+
+	updatePrices(TextUpdateOrigin::Omni, ID);
 }
 
 PriceComponent::~PriceComponent()
 {
-}
-
-void PriceComponent::setTabOrder(int order)
-{
-	priceEditor.setExplicitFocusOrder(order);
 }
 
 
@@ -93,18 +92,19 @@ void PriceComponent::setID(unsigned int newID)
 	for (int i = 0; i < numDigits; i++) {
 		digits[i].setExplicitFocusOrder((i + 1) + 4 * ID + 4);
 	}
-	DBG(getExplicitFocusOrder());
 }
 
-void PriceComponent::hideDigits(bool should)
+void PriceComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
-	for (int i = 0; i < numDigits; i++)
-		digits[i].setVisible(!should);
-}
+	if (priceIndex == ID)
+	{
+		currentPrice = Core::get().getPrice(ID);
 
-int PriceComponent::getNumDigits()
-{
-	return numDigits;
+		if (whoCalled != TextUpdateOrigin::PriceEditor)
+			updatePriceEditor(currentPrice);
+		if (whoCalled != TextUpdateOrigin::DigitEditor)
+			updateDigits();
+	}
 }
 
 void PriceComponent::updateDigits()
@@ -122,15 +122,12 @@ void PriceComponent::timerCallback()
 {
 	if (updatingPriceEditor)
 	{
-		int i = 0;
-		for (; i < numDigits; i++) {
+		for (int i = 0; i < numDigits; i++) {
 			if (digits[i].getDigit() != currentPrice[i]) {
 				digits[i].setDigit(currentPrice[i]);
 				return;
 			}
 		}
-		onPriceUpdate = false;
-		//fin de mise à jour
 		updatingPriceEditor = false;
 		updatingDigits = false;
 		stopTimer();
@@ -150,13 +147,22 @@ void PriceComponent::resized()
 	priceEditor.setBounds(getLocalBounds());
 }
 
+
+//=================================================================================================================
+//=================================================================================================================
+//													PRICE EDITOR
+//=================================================================================================================
+//=================================================================================================================
+
+
 PriceEditor::PriceEditor() :isTextEditing(false), numDigits(4)
 {
 	setOpaque(true);
 	setEditable(true);
 	setBroughtToFrontOnMouseClick(true);
-	setJustificationType(Justification::centred);
 	setRepaintsOnMouseActivity(true);
+
+	setJustificationType(Justification::centred);
 	setColour(Label::ColourIds::textColourId, lfColours::digitColour.withAlpha(0.0f));
 	setFont(Font("Seven Segment", "Regular", getHeight()));
 

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MiddlePanel.cpp
-    Created: 19 Jun 2021 1:07:43am
-    Author:  Eloi
+	MiddlePanel.cpp
+	Created: 19 Jun 2021 1:07:43am
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -13,30 +13,26 @@
 //==============================================================================
 MiddlePanel::MiddlePanel()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
-    prices.setNumPrices(5);
-    prices.setNumDigits(6);
-    addAndMakeVisible(prices);
-
+	prices.setNumPrices(Core::get().getNumPrices());
+	prices.setNumDigits(Core::get().getNumDigits());
+	addAndMakeVisible(prices);
 }
 
 MiddlePanel::~MiddlePanel()
 {
 }
 
-void MiddlePanel::paint (juce::Graphics& g)
+void MiddlePanel::paint(juce::Graphics& g)
 {
-    g.fillAll(lfColours::panelBackground);
+	g.fillAll(lfColours::panelBackground);
 }
 
 void MiddlePanel::resized()
 {
-    prices.setBounds(prices.getFittingRectangle(getLocalBounds()));
+	prices.setBounds(prices.getFittingRectangle(getLocalBounds()));
 }
 
-void MiddlePanel::updatePrices(TextUpdateOrigin origin)
+void MiddlePanel::updatePrices(TextUpdateOrigin whocalled, unsigned int index)
 {
-    prices.updatePrices(origin);
+	prices.updatePrices(whocalled, index);
 }

@@ -12,8 +12,9 @@
 #include "PriceDisplayComponent.h"
 
 //==============================================================================
-PriceDisplayComponent::PriceDisplayComponent(unsigned int num_of_prices) : grid(1, num_of_prices), numPrices(num_of_prices), prices()
+PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1,0)
 {
+	addChildComponent(grid);
 	init();
 }
 
@@ -23,13 +24,9 @@ PriceDisplayComponent::~PriceDisplayComponent()
 
 void PriceDisplayComponent::init()
 {
-	//addAndMakeVisible(grid);
-	addChildComponent(grid);
 	for (int i = 0; i < numPrices; i++) {
-		addAndMakeVisible(prices[i]);
-		prices[i].setTabOrder(i + 1);
 		prices[i].setID(i);
-		prices[i].setPrice(String("2231"));
+		addAndMakeVisible(prices[i]);
 	}
 }
 
@@ -73,16 +70,11 @@ void PriceDisplayComponent::setNumDigits(unsigned int num_of_digits)
 		prices[i].setNumberOfDigits(num_of_digits);
 }
 
-void PriceDisplayComponent::hideAllDigits(bool shouldHideDigits)
-{
-	for (int i = 0; i < numPrices; i++)
-		prices[i].hideDigits(true);
-}
 
 Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& rect)
 {
 	float spacingBetwinNumbers = 1.1;
-	float width = numPrices, height = prices[0].getNumDigits()* spacingBetwinNumbers, ratio = width/height;
+	float width = numPrices, height = Core::get().getNumDigits()*spacingBetwinNumbers, ratio = width / height;
 	Rectangle<int> r(10, 10, width, height);
 
 	r.setCentre(rect.getCentre());
@@ -92,8 +84,8 @@ Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& 
 	return r;
 }
 
-void PriceDisplayComponent::updatePrices(TextUpdateOrigin o)
+void PriceDisplayComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
-	if (o == TextUpdateOrigin::PriceEditor)
-		DBG("call");
+	for (int i = 0; i < numPrices; i++)
+		prices[i].updatePrices(whoCalled, priceIndex);
 }

@@ -2,43 +2,36 @@
   ==============================================================================
 
     RightPanel.cpp
-    Created: 19 Jun 2021 1:07:30am
-    Author:  Eloi
+    Created: 21 Jun 2021 12:36:05pm
+    Author:  admin
 
   ==============================================================================
 */
 
+#include <JuceHeader.h>
 #include "RightPanel.h"
 
 //==============================================================================
-RightPanel::RightPanel() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
+RightPanel::RightPanel()
 {
-    addTab("General", lfColours::tabBackground, &genTab, true);
-    addTab("Prix", lfColours::tabBackground, &priceTab, true);
+   
+    addAndMakeVisible(tabs);
+    addAndMakeVisible(buttons);
 }
 
 RightPanel::~RightPanel()
 {
 }
 
-void RightPanel::paint (juce::Graphics& g) 
+void RightPanel::paint (juce::Graphics& g)
 {
-    TabbedComponent::paint(g);
-    //g.fillAll(lfColours::panelBackground);
-
-    //g.setColour (juce::Colours::grey);
-    //g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    //g.setColour (juce::Colours::white);
-    //g.setFont (14.0f);
-    //g.drawText ("RightPanel", getLocalBounds(),
-    //            juce::Justification::centred, true);   // draw some placeholder text
+    g.fillAll(lfColours::panelBackground);
 }
 
 void RightPanel::resized()
 {
-    TabbedComponent::resized();
-    /*
-    genTab.setBounds(getLocalBounds());
-    priceTab.setBounds(getLocalBounds());*/
+    float separtion = 0.12f;
+    auto r = getLocalBounds();
+    buttons.setBounds(r.removeFromBottom(separtion * getHeight()));
+    tabs.setBounds(r);
 }

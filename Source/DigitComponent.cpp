@@ -12,43 +12,13 @@
 #include "DigitComponent.h"
 
 //==============================================================================
-DigitComponent::DigitComponent()
-{
-	setJustificationType(Justification::centred);
-	setFont(font);
-	setColour(Label::ColourIds::textColourId, Colour(244, 255, 143));
-	font = Font("Seven Segment", "Regular", getHeight());
-	setRepaintsOnMouseActivity(true);
-	setEditable(true);
-	setWantsKeyboardFocus(false);
-	Core::get().updatePrices(TextUpdateOrigin::PriceEditor);
-}
-
-DigitComponent::~DigitComponent()
-{
-}
-
-//void DigitComponent::paint(juce::Graphics& g)
-//{	
-//	g.setColour(Colours::black);
-//	g.fillAll();
-//	Label::paint(g);
-//	g.setColour(Colours::white);
-//	g.drawRect(getLocalBounds());
-//}
-
-void DigitComponent::resized()
-{
-	font.setHeight(getHeight());
-	setFont(font);
-}
 
 DigitEditor::DigitEditor() : frameCounter(0)
 {
 	setEditable(true);
 	setRepaintsOnMouseActivity(true);
 	setOpaque(true);
-	setEditable(true);
+
 	setJustificationType(Justification::centred);
 	setFont(Font("Seven Segment", "Regular", getHeight()));
 	setColour(Label::ColourIds::textColourId, lfColours::digitColour);
@@ -83,18 +53,12 @@ String DigitEditor::getDigit()
 	return getText().substring(0, 1);
 }
 
-
 void DigitEditor::resized()
 {
 	Label::resized();
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);
-}
-
-void DigitEditor::editorShown(TextEditor*)
-{
-	DBG(getExplicitFocusOrder());
 }
 
 void DigitEditor::timerCallback()
@@ -104,17 +68,4 @@ void DigitEditor::timerCallback()
 		frameCounter = 0;
 		stopTimer();
 	}
-}
-
-Digit::Digit()
-{
-	setText("2", NotificationType::sendNotification);
-	setEditable(true);
-	setFont(Font("Seven Segment", "Regular", 30));
-}
-
-void Digit::resized()
-{
-	Label::resized();
-	//getFont().setHeight(getHeight());
 }
