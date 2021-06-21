@@ -29,3 +29,8 @@ void APPCLookAndFeel::drawButtonBackground(Graphics& g, Button& button, const Co
         g.drawRoundedRectangle(bounds, cornerSize, 1.0f);
     
 }
+
+Font APPCLookAndFeel::getTextButtonFont(TextButton&, int buttonHeight)
+{
+    return { jmin(16.0f, (float)buttonHeight * 0.9f) };
+}

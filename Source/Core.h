@@ -18,7 +18,7 @@
 
 enum class TextUpdateOrigin
 {
-    PriceEditor, DigitEditor, PricePanel, Omni
+    PriceEditor, DigitEditor, InputComponent, Omni
 };
 
 class Core
@@ -43,7 +43,7 @@ public:
     void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
-
+    std::function<void()> updateVisualization;
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();

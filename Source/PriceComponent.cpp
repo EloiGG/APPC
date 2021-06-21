@@ -28,8 +28,6 @@ void PriceComponent::init()
 			updatingPriceEditor = true;
 			Price p(priceEditor.getText());
 			if (!p.isEmpty()) {
-				//currentPrice = p;
-				//updateDigits();
 				Core::get().setPrice(ID, p);
 				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 			}
@@ -54,10 +52,18 @@ void PriceComponent::init()
 	addAndMakeVisible(priceEditor);
 	for (int i = 0; i < numDigits; i++)
 		addAndMakeVisible(digits[i]);
+	for (int i = numDigits; i < Core::MAX_DIGITS; i++)
+		digits[i].setVisible(false);
 
 	setPrice(currentPrice);
 
 	updatePrices(TextUpdateOrigin::Omni, ID);
+
+	if (getParentComponent()) // pricedisplay
+		if(getParentComponent()->getParentComponent()) //middlepanel
+			getParentComponent()->getParentComponent()->resized();
+
+	resized();
 }
 
 PriceComponent::~PriceComponent()

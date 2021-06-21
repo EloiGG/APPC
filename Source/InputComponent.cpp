@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    InputComponent.cpp
-    Created: 21 Jun 2021 2:24:45pm
-    Author:  admin
+	InputComponent.cpp
+	Created: 21 Jun 2021 2:24:45pm
+	Author:  admin
 
   ==============================================================================
 */
@@ -12,40 +12,73 @@
 #include "InputComponent.h"
 
 //==============================================================================
-InputComponent::InputComponent()
+InputComponent::InputComponent(const String& parameterName, const String& defaultValue) : title(parameterName, parameterName + String(" : ")), input(defaultValue, defaultValue),
+p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10), lastText(defaultValue)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+	p.setLookAndFeel(Core::get().getLookAndFeel().get());
+	m.setLookAndFeel(Core::get().getLookAndFeel().get());
+	p.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	m.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	titleWidth = title.getText().length() * 10;
+	input.setEditable(true);
 
+	addAndMakeVisible(title);
+	addAndMakeVisible(input);
+	addAndMakeVisible(p);
+	addAndMakeVisible(m);
+
+	onIncrement = [this]()
+	{
+		auto n = input.getText(true).getIntValue() + 1;
+		input.setText(String(n), NotificationType::sendNotification);
+	};
+
+	onDecrement = [this]()
+	{
+		auto n = input.getText(true).getIntValue() - 1;
+		input.setText(String(n), NotificationType::sendNotification);
+	};
+
+	input.onTextChange = [this]()
+	{
+		auto n = input.getText(true).getFloatValue();
+		if (n <= max && n >= min) {
+			lastText = input.getText();
+			if (onUpdate)
+				onUpdate(lastText);
+		}
+		else
+			input.setText(lastText, NotificationType::sendNotification);
+	};
+
+}
+
+InputComponent::InputComponent(const String& parameterName, const int& defaultValue) : InputComponent(parameterName, String(defaultValue))
+{
 }
 
 InputComponent::~InputComponent()
 {
 }
 
-void InputComponent::paint (juce::Graphics& g)
+void InputComponent::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+	g.setColour(lfColours::inputBackground);
+	g.fillRoundedRectangle(input.getBounds().toFloat(), 3.0f);
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("InputComponent", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+	g.setColour(lfColours::inputOutline.withAlpha(0.5f));
+	g.drawRect(input.getBounds());
+	g.drawRect(p.getBounds());
+	g.drawRect(m.getBounds());
 }
 
 void InputComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+	float inputwidth = 0.75;
+	auto r = getLocalBounds();
+	title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.4)));
+	auto s = r.removeFromRight(30);
+	p.setBounds(s.removeFromTop(getHeight() * 0.5));
+	m.setBounds(s);
+	input.setBounds(r);
 }

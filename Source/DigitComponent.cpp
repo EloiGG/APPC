@@ -34,7 +34,7 @@ void DigitEditor::paint(juce::Graphics& g)
 	g.drawRect(getLocalBounds());
 
 	float updateRectangleMargin = getWidth() / 10, cornerSize = getHeight() / 40.0f;
-	if (frameCounter>0) {
+	if (frameCounter > 0) {
 		g.setColour(lfColours::onDigitUpdate.withAlpha(jmap<float>(frameCounter, 0, 60, 1, 0)));
 		g.drawRoundedRectangle(getLocalBounds().reduced(updateRectangleMargin).toFloat(), cornerSize, 1.0f);
 	}

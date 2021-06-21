@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "GridTool.h"
 #include "LookAndFeel.h"
+#include "InputComponent.h"
 //==============================================================================
 /*
 */
@@ -26,8 +27,7 @@ public:
     void resized() override;
 
 private:
-    Label l;
     GridTool grid;
-    TextButton test;
+    InputComponent nPrices, nDigits;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
 };

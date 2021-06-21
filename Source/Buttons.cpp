@@ -24,10 +24,10 @@ grid(4, 1)
 	send.setColour(TextButton::ColourIds::buttonColourId, Colours::green);
 	stop.setColour(TextButton::ColourIds::buttonColourId, Colours::red);
 
-	prixP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonColor);
-	prixM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonColor);
-	digitP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonColor);
-	digitM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonColor);
+	prixP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	prixM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	digitP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	digitM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 
 	addAndMakeVisible(send);
 	addAndMakeVisible(stop);

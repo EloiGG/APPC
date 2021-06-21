@@ -12,8 +12,13 @@
 #include "PriceDisplayComponent.h"
 
 //==============================================================================
-PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1,0)
+PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0)
 {
+	Core::get().updateVisualization = [this]()
+	{
+		setNumDigits(Core::get().getNumDigits());
+		setNumPrices(Core::get().getNumPrices());
+	};
 	addChildComponent(grid);
 	init();
 }
@@ -24,10 +29,15 @@ PriceDisplayComponent::~PriceDisplayComponent()
 
 void PriceDisplayComponent::init()
 {
+
 	for (int i = 0; i < numPrices; i++) {
 		prices[i].setID(i);
 		addAndMakeVisible(prices[i]);
 	}
+	for (int i = numPrices; i < Core::MAX_PRICES; i++)
+		prices[i].setVisible(false);
+	if (getParentComponent())
+		getParentComponent()->resized();
 }
 
 void PriceDisplayComponent::paint(juce::Graphics& g)
@@ -35,7 +45,7 @@ void PriceDisplayComponent::paint(juce::Graphics& g)
 	g.fillAll(lfColours::priceDisplayBackground);
 	g.setColour(Colours::black);
 	for (int i = 0; i < numPrices; i++)
-		g.drawLine(Line<float>(grid.getPoint(0,i).toFloat(), grid.getPoint(1,i).toFloat()), 1.0f);
+		g.drawLine(Line<float>(grid.getPoint(0, i).toFloat(), grid.getPoint(1, i).toFloat()), 1.0f);
 	g.drawRect(getLocalBounds());
 }
 
@@ -74,13 +84,13 @@ void PriceDisplayComponent::setNumDigits(unsigned int num_of_digits)
 Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& rect)
 {
 	float spacingBetwinNumbers = 1.1;
-	float width = numPrices, height = Core::get().getNumDigits()*spacingBetwinNumbers, ratio = width / height;
+	float width = numPrices, height = Core::get().getNumDigits() * spacingBetwinNumbers, ratio = width / height;
 	Rectangle<int> r(10, 10, width, height);
 
 	r.setCentre(rect.getCentre());
-	int exp = std::min((rect.getWidth() - width), (rect.getHeight() - height)/ratio)/2;
-	r.expand(exp,exp*ratio);
-	
+	int exp = std::min((rect.getWidth() - width), (rect.getHeight() - height) / ratio) / 2;
+	r.expand(exp, exp * ratio);
+
 	return r;
 }
 
