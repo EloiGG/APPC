@@ -28,6 +28,8 @@ public:
 	void resized() override;
 
 
+	std::function<void()> editorAboutToBeHiddenLamda;
+
 private:
 	virtual void timerCallback() override;
 

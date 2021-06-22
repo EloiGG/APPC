@@ -40,7 +40,7 @@ void Core::setNumPrices(unsigned int newNumPrices)
 
 Price Core::getPrice(unsigned int index)
 {
-	if (index < numDigits)
+	if (index < numPrices)
 		return prices[index];
 	return Price("0");
 }
@@ -52,15 +52,48 @@ void Core::setPrice(unsigned int index, const Price& newPrice)
 
 void Core::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
-	DBG("APPEL F");
-	if(pricesUpdateFunction)
+	if (pricesUpdateFunction)
 		pricesUpdateFunction(whoCalled, priceIndex);
 }
 
 void Core::setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f)
 {
-	DBG("set");
 	pricesUpdateFunction = f;
+}
+
+Network Core::getNetwork()
+{
+	return network;
+}
+
+void Core::setNetwork(const Network& net)
+{
+	network = net;
+	networkInit = true;
+}
+
+bool Core::hasNetwork()
+{
+	return networkInit;
+}
+
+void Core::loadInformationsFromNetwork()
+{
+	if (!networkInit) return;
+
+	auto s = network.getFuelPrice();
+	PricesJSON p(s);
+	numPrices = p.getNumPrices();
+	unsigned int nd = 0;
+	setNumPrices(p.getNumPrices());
+	for (int i = 0; i < numPrices; i++) {
+		prices[i] = p[i].getPrice();
+		if (p[i].getPrice().length() > nd) nd = p[i].getPrice().length();
+	}
+	setNumDigits(nd - 1);
+	for (int i = 0; i < numPrices; i++)
+		updatePrices(TextUpdateOrigin::Omni, i);
+	updateVisualization();
 }
 
 std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
@@ -68,6 +101,6 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 	return lfptr;
 }
 
-Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel)
+Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel), networkInit(false)
 {
 }

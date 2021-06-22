@@ -100,15 +100,10 @@ bool Price::isValid(const String& s)
 	return true;
 }
 
-void Price::convert(String& s)
-{
-	char c[MAX_LENGH + 1];
 
-	s = c;
-}
-
-String Price::toString(size_t stringLengh) const
+String Price::toString(size_t stringLengh, bool withComa) const
 {
+	if (!withComa) return priceString;
 	String s(priceString.substring(0, 1));
 	s.append(".", 1);
 	s.append(priceString.substring(1, stringLengh), stringLengh);

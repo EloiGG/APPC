@@ -15,6 +15,8 @@
 #include "Price.h"
 #include <functional>
 #include "LookAndFeel.h"
+#include "Networking.h"
+#include "JSON.h"
 
 enum class TextUpdateOrigin
 {
@@ -42,15 +44,21 @@ public:
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
     void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
 
+    Network getNetwork();
+    void setNetwork(const Network& net);
+    bool hasNetwork();
+
+    void loadInformationsFromNetwork();
+
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
     std::function<void()> updateVisualization;
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
-    static Core core_instance;
 
-    unsigned int numDigits;
-    unsigned int numPrices;
+    Network network;
+    unsigned int numDigits, numPrices;
+    bool networkInit;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
 };

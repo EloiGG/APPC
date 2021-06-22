@@ -16,8 +16,10 @@ PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0)
 {
 	Core::get().updateVisualization = [this]()
 	{
-		setNumDigits(Core::get().getNumDigits());
 		setNumPrices(Core::get().getNumPrices());
+		setNumDigits(Core::get().getNumDigits());/*
+		for (int i = 0; i < numPrices; i++)
+			updatePrices(TextUpdateOrigin::Omni,i);*/
 	};
 	addChildComponent(grid);
 	init();
@@ -34,8 +36,10 @@ void PriceDisplayComponent::init()
 		prices[i].setID(i);
 		addAndMakeVisible(prices[i]);
 	}
-	for (int i = numPrices; i < Core::MAX_PRICES; i++)
+	for (int i = numPrices; i < Core::MAX_PRICES; i++) {
+		prices[i].setID(i);
 		prices[i].setVisible(false);
+	}
 	if (getParentComponent())
 		getParentComponent()->resized();
 }
@@ -63,7 +67,7 @@ void PriceDisplayComponent::setNumPrices(unsigned int num_of_prices)
 	if (num_of_prices <= MAX_PRICES && num_of_prices != numPrices) {
 		grid.resize(grid.getNumColumns(), num_of_prices);
 		numPrices = num_of_prices;
-		Core::get().setNumPrices(numPrices);
+		//Core::get().setNumPrices(numPrices);
 		init();
 	}
 }
@@ -96,6 +100,8 @@ Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& 
 
 void PriceDisplayComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
-	for (int i = 0; i < numPrices; i++)
+	for (int i = 0; i < numPrices; i++) {
 		prices[i].updatePrices(whoCalled, priceIndex);
+		DBG(i << (int)priceIndex);
+	}
 }

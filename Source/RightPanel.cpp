@@ -35,3 +35,8 @@ void RightPanel::resized()
     buttons.setBounds(r.removeFromBottom(separtion * getHeight()));
     tabs.setBounds(r);
 }
+
+void RightPanel::updateParameters()
+{
+    tabs.updateParameters();
+}

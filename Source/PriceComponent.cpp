@@ -28,6 +28,7 @@ void PriceComponent::init()
 			updatingPriceEditor = true;
 			Price p(priceEditor.getText());
 			if (!p.isEmpty()) {
+				currentPrice = p;
 				Core::get().setPrice(ID, p);
 				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 			}
@@ -45,7 +46,7 @@ void PriceComponent::init()
 				updatingDigits = false;
 			}
 			else
-				digits[i].setText(String(currentPrice.priceString[i] - 0x30), NotificationType::sendNotification);
+				digits[i].setText(String(currentPrice.toString(numDigits, true)[i] - 0x30), NotificationType::sendNotification);
 		}
 	};
 
@@ -105,7 +106,6 @@ void PriceComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int price
 	if (priceIndex == ID)
 	{
 		currentPrice = Core::get().getPrice(ID);
-
 		if (whoCalled != TextUpdateOrigin::PriceEditor)
 			updatePriceEditor(currentPrice);
 		if (whoCalled != TextUpdateOrigin::DigitEditor)

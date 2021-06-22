@@ -39,3 +39,8 @@ void TabComponent::resized()
 {
     TabbedComponent::resized();
 }
+
+void TabComponent::updateParameters()
+{
+
+}

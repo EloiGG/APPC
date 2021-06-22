@@ -16,6 +16,22 @@ bool Network::err_ok(const String& output)
 		output != "{\"message\":\"Username could not be found.\"}";
 }
 
+std::tuple<bool, int> Network::connected()
+{
+	URL realURL(url + String("/fuel_prices"));
+	StringPairArray responseHeaders;
+	int statusCode = 0;
+	if (auto stream = std::unique_ptr<InputStream>(realURL.createInputStream(false, nullptr, nullptr, makeHeader(),
+		5000, // timeout in millisecs
+		&responseHeaders, &statusCode)))
+	{
+		if (statusCode == 200)
+			return { true, statusCode };
+	}
+
+	return { false, statusCode };
+}
+
 Network::Network() : url("https://centofuel2.centaure-systems.fr/api")
 {
 }
@@ -27,8 +43,7 @@ url("https://centofuel2.centaure-systems.fr/api")
 
 String Network::getFuelPrice(int timeout_ms)
 {
-	url += String("/fuel_prices");
-	URL realURL(url);
+	URL realURL(url + String("/fuel_prices"));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	jassert(authPassword != ""); // Il n'y a pas eu d'authentification. utiliser setAuthentication

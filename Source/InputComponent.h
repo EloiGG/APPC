@@ -39,3 +39,13 @@ private:
     int titleWidth;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)
 };
+
+class CheckBox : public ToggleButton
+{
+public:
+    CheckBox(const String& text);
+private:
+    int titleWidth;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CheckBox)
+};

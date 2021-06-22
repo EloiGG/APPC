@@ -26,6 +26,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void updateParameters();
+
 private:
     TabComponent tabs;
     Buttons buttons;

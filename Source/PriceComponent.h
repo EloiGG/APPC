@@ -28,6 +28,7 @@ public:
 	void paint(juce::Graphics&) override;
 	void resized() override;
 	void setNumberOfDigits(int new_number_of_digits);
+	std::function<void()> editorAboutToBeHiddenLamda;
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;

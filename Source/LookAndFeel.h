@@ -32,4 +32,14 @@ public:
         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
     Font getTextButtonFont(TextButton&, int buttonHeight) override;
+
+    void drawTickBox(Graphics& g, Component& component,
+        float x, float y, float w, float h,
+        const bool ticked,
+        const bool isEnabled,
+        const bool shouldDrawButtonAsHighlighted,
+        const bool shouldDrawButtonAsDown) override;
+
+    void drawToggleButton(Graphics& g, ToggleButton& button,
+        bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 };

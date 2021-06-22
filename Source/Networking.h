@@ -15,9 +15,9 @@ class Network
 {
 public:
     static bool err_ok(const String& output);
+    std::tuple<bool, int> connected();
 
 public:
-    using String = juce::String;
 
     Network();
     Network(const String& token, const String& password);

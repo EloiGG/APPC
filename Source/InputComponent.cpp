@@ -19,7 +19,7 @@ p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10),
 	m.setLookAndFeel(Core::get().getLookAndFeel().get());
 	p.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	m.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	titleWidth = title.getText().length() * 10;
+	titleWidth = title.getText().length() * 8;
 	input.setEditable(true);
 
 	addAndMakeVisible(title);
@@ -76,9 +76,14 @@ void InputComponent::resized()
 {
 	float inputwidth = 0.75;
 	auto r = getLocalBounds();
-	title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.4)));
+	title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.6)));
 	auto s = r.removeFromRight(30);
 	p.setBounds(s.removeFromTop(getHeight() * 0.5));
 	m.setBounds(s);
 	input.setBounds(r);
+}
+
+CheckBox::CheckBox(const String& text) : ToggleButton(text+ String(" : "))
+{
+	setLookAndFeel(Core::get().getLookAndFeel().get());
 }
