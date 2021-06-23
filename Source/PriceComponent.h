@@ -28,7 +28,7 @@ public:
 	void paint(juce::Graphics&) override;
 	void resized() override;
 	void setNumberOfDigits(int new_number_of_digits);
-	std::function<void()> editorAboutToBeHiddenLamda;
+	std::function<void()> textEditedLamda;
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
@@ -36,9 +36,9 @@ protected:
 	virtual void mouseDown(const MouseEvent&) override;
 
 private:
-	String price;
 	bool isTextEditing;
 	int numDigits;
+	String lastPrice;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditor)
 };

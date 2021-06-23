@@ -102,6 +102,5 @@ void PriceDisplayComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned in
 {
 	for (int i = 0; i < numPrices; i++) {
 		prices[i].updatePrices(whoCalled, priceIndex);
-		DBG(i << (int)priceIndex);
 	}
 }

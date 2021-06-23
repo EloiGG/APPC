@@ -22,7 +22,7 @@ currentPrice(Core::get().getPrice(ID)), updatingPriceEditor(true), updatingDigit
 
 void PriceComponent::init()
 {
-	priceEditor.onTextChange = [this]()
+	priceEditor.textEditedLamda = [this]()
 	{
 		if (!updatingDigits) {
 			updatingPriceEditor = true;
@@ -32,7 +32,7 @@ void PriceComponent::init()
 				Core::get().setPrice(ID, p);
 				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 			}
-			priceEditor.setText(currentPrice.toString(numDigits), NotificationType::sendNotification);
+			priceEditor.setText(currentPrice.toString(Core::MAX_DIGITS), NotificationType::sendNotification);
 		}
 	};
 
@@ -43,10 +43,12 @@ void PriceComponent::init()
 				updatingDigits = true;
 				currentPrice.changeOneDigit(i, digits[i].getText());
 				updatePriceEditor(currentPrice);
+				Core::get().setPrice(ID, currentPrice);
+				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 				updatingDigits = false;
 			}
 			else
-				digits[i].setText(String(currentPrice.toString(numDigits, true)[i] - 0x30), NotificationType::sendNotification);
+				digits[i].setText(String(currentPrice.toString(Core::MAX_DIGITS, true)[i] - 0x30), NotificationType::sendNotification);
 		}
 	};
 
@@ -56,7 +58,7 @@ void PriceComponent::init()
 	for (int i = numDigits; i < Core::MAX_DIGITS; i++)
 		digits[i].setVisible(false);
 
-	setPrice(currentPrice);
+	setPrice(Core::get().getPrice(ID));
 
 	updatePrices(TextUpdateOrigin::Omni, ID);
 
@@ -79,7 +81,7 @@ void PriceComponent::paint(juce::Graphics& g)
 void PriceComponent::setPrice(const Price& newPrice)
 {
 	currentPrice = newPrice;
-	priceEditor.setPrice(newPrice.toString(numDigits));
+	priceEditor.setPrice(newPrice.toString(Core::get().getNumDigits()));
 }
 
 void PriceComponent::setNumberOfDigits(int number_of_digits)
@@ -87,8 +89,8 @@ void PriceComponent::setNumberOfDigits(int number_of_digits)
 	if (number_of_digits <= Core::MAX_DIGITS && number_of_digits != numDigits) {
 		grid.resize(number_of_digits, grid.getNumRows());
 		numDigits = number_of_digits;
-		priceEditor.setNumberOfDigits(number_of_digits);
-		Core::get().setNumDigits(numDigits);
+		//priceEditor.setNumberOfDigits(number_of_digits);
+		//Core::get().setNumDigits(numDigits);
 		init();
 	}
 }
@@ -96,9 +98,9 @@ void PriceComponent::setNumberOfDigits(int number_of_digits)
 void PriceComponent::setID(unsigned int newID)
 {
 	ID = newID;
-	for (int i = 0; i < numDigits; i++) {
+	/*for (int i = 0; i < numDigits; i++) {
 		digits[i].setExplicitFocusOrder((i + 1) + 4 * ID + 4);
-	}
+	}*/
 }
 
 void PriceComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
@@ -121,13 +123,14 @@ void PriceComponent::updateDigits()
 
 void PriceComponent::updatePriceEditor(const Price& newPrice)
 {
-	priceEditor.setPrice(newPrice.toString(numDigits));
+	priceEditor.setPrice(newPrice.toString(Core::MAX_DIGITS));
 }
 
 void PriceComponent::timerCallback()
 {
 	if (updatingPriceEditor)
 	{
+		currentPrice = Core::get().getPrice(ID);
 		for (int i = 0; i < numDigits; i++) {
 			if (digits[i].getDigit() != currentPrice[i]) {
 				digits[i].setDigit(currentPrice[i]);
@@ -161,7 +164,7 @@ void PriceComponent::resized()
 //=================================================================================================================
 
 
-PriceEditor::PriceEditor() :isTextEditing(false), numDigits(4)
+PriceEditor::PriceEditor() :isTextEditing(false), numDigits(Core::get().getNumDigits())
 {
 	setOpaque(true);
 	setEditable(true);
@@ -171,11 +174,11 @@ PriceEditor::PriceEditor() :isTextEditing(false), numDigits(4)
 	setJustificationType(Justification::centred);
 	setColour(Label::ColourIds::textColourId, lfColours::digitColour.withAlpha(0.0f));
 	setFont(Font("Seven Segment", "Regular", getHeight()));
-
 }
 
 void PriceEditor::setPrice(const String& newPrice)
 {
+	lastPrice = getText();
 	setText(newPrice, NotificationType::sendNotification);
 }
 
@@ -187,7 +190,7 @@ void PriceEditor::paint(juce::Graphics& g)
 	if (!isTextEditing) {
 		auto size = getHeight() / 6;
 		float rounding = 3.0f;
-		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / numDigits, getHeight() * 3 / 4 }).toFloat();
+		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / (int)Core::get().getNumDigits(), getHeight() * 3 / 4 }).toFloat();
 		g.setColour(lfColours::digitColour);
 		g.fillRoundedRectangle(rect, rounding);
 	}
@@ -207,11 +210,15 @@ void PriceEditor::setNumberOfDigits(int new_number_of_digits)
 }
 
 
-void PriceEditor::editorAboutToBeHidden(TextEditor*)
+void PriceEditor::editorAboutToBeHidden(TextEditor* te)
 {
 	setAlwaysOnTop(false);
 	isTextEditing = false;
 	toBack();
+	if (lastPrice != getText()) {
+		textEditedLamda();
+		lastPrice = getText();
+	}
 }
 
 void PriceEditor::editorShown(TextEditor*)
