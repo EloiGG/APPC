@@ -27,7 +27,7 @@ class Core
 {
 public:
     static constexpr size_t MAX_DIGITS = 6;
-    static constexpr size_t MAX_PRICES = 6;
+    static constexpr size_t MAX_PRICES = 10;
 
     Core(const Core&) = delete;
     static Core& get();

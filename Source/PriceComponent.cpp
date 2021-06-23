@@ -14,7 +14,7 @@
 
 //==============================================================================
 PriceComponent::PriceComponent(unsigned int priceID) : grid(Core::get().getNumDigits(), 1), ID(priceID),
-currentPrice(Core::get().getPrice(ID)), updatingPriceEditor(true), updatingDigits(false)
+currentPrice(Core::get().getPrice(ID))
 {
 	setNumberOfDigits(Core::get().getNumDigits());
 	init();
@@ -22,34 +22,28 @@ currentPrice(Core::get().getPrice(ID)), updatingPriceEditor(true), updatingDigit
 
 void PriceComponent::init()
 {
-	priceEditor.textEditedLamda = [this]()
+	priceEditor.textManuallyUpdated = [this]()
 	{
-		if (!updatingDigits) {
-			updatingPriceEditor = true;
-			Price p(priceEditor.getText());
-			if (!p.isEmpty()) {
-				currentPrice = p;
-				Core::get().setPrice(ID, p);
-				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
-			}
-			priceEditor.setText(currentPrice.toString(Core::MAX_DIGITS), NotificationType::sendNotification);
+		Price p(priceEditor.getText());
+		if (!p.isEmpty()) {
+			currentPrice = p;
+			Core::get().setPrice(ID, p);
+			Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 		}
+		priceEditor.setText(currentPrice.toString(Core::MAX_DIGITS), NotificationType::sendNotification);
+
 	};
 
-	for (int i = 0; i < numDigits; i++) digits[i].onTextChange = [this, i]()
+	for (int i = 0; i < numDigits; i++) digits[i].textManuallyUpdated = [this, i]()
 	{
-		if (!updatingPriceEditor) {
-			if (Price::isValid(digits[i].getText()) && digits[i].getText().length() == 1) {
-				updatingDigits = true;
-				currentPrice.changeOneDigit(i, digits[i].getText());
-				updatePriceEditor(currentPrice);
-				Core::get().setPrice(ID, currentPrice);
-				Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
-				updatingDigits = false;
-			}
-			else
-				digits[i].setText(String(currentPrice.toString(Core::MAX_DIGITS, true)[i] - 0x30), NotificationType::sendNotification);
+		if (Price::isValid(digits[i].getText()) && digits[i].getText().length() == 1) {
+			currentPrice.changeOneDigit(i, digits[i].getText());
+			updatePriceEditor(currentPrice);
+			Core::get().setPrice(ID, currentPrice);
+			Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 		}
+		else
+			digits[i].setText(String(currentPrice.toString(Core::MAX_DIGITS, true)[i] - 0x30), NotificationType::sendNotification);
 	};
 
 	addAndMakeVisible(priceEditor);
@@ -63,7 +57,7 @@ void PriceComponent::init()
 	updatePrices(TextUpdateOrigin::Omni, ID);
 
 	if (getParentComponent()) // pricedisplay
-		if(getParentComponent()->getParentComponent()) //middlepanel
+		if (getParentComponent()->getParentComponent()) //middlepanel
 			getParentComponent()->getParentComponent()->resized();
 
 	resized();
@@ -128,8 +122,6 @@ void PriceComponent::updatePriceEditor(const Price& newPrice)
 
 void PriceComponent::timerCallback()
 {
-	if (updatingPriceEditor)
-	{
 		currentPrice = Core::get().getPrice(ID);
 		for (int i = 0; i < numDigits; i++) {
 			if (digits[i].getDigit() != currentPrice[i]) {
@@ -137,10 +129,7 @@ void PriceComponent::timerCallback()
 				return;
 			}
 		}
-		updatingPriceEditor = false;
-		updatingDigits = false;
 		stopTimer();
-	}
 }
 
 
@@ -178,7 +167,6 @@ PriceEditor::PriceEditor() :isTextEditing(false), numDigits(Core::get().getNumDi
 
 void PriceEditor::setPrice(const String& newPrice)
 {
-	lastPrice = getText();
 	setText(newPrice, NotificationType::sendNotification);
 }
 
@@ -210,22 +198,18 @@ void PriceEditor::setNumberOfDigits(int new_number_of_digits)
 }
 
 
-void PriceEditor::editorAboutToBeHidden(TextEditor* te)
+void PriceEditor::editorAboutToBeHidden(TextEditor* te) 
 {
+	SpecialLabel::editorAboutToBeHidden(te);
 	setAlwaysOnTop(false);
 	isTextEditing = false;
 	toBack();
-	if (lastPrice != getText()) {
-		textEditedLamda();
-		lastPrice = getText();
-	}
 }
 
 void PriceEditor::editorShown(TextEditor*)
 {
 	setAlwaysOnTop(true);
 	isTextEditing = true;
-	DBG(getExplicitFocusOrder());
 }
 
 void PriceEditor::mouseDown(const MouseEvent&)

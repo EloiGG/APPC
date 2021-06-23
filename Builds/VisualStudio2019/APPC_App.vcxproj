@@ -1272,6 +1272,7 @@
     <ClInclude Include="..\..\Source\GridTool.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\SpecialLabel.h"/>
     <ClInclude Include="..\..\Source\TopPanel.h"/>
     <ClInclude Include="..\..\Source\LeftPanel.h"/>
     <ClInclude Include="..\..\Source\PriceTab.h"/>

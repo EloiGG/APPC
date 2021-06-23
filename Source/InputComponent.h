@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "Core.h"
+#include "SpecialLabel.h"
 
 //==============================================================================
 /*
@@ -26,15 +27,20 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
+    void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
+
     std::function<void()>& onIncrement;
     std::function<void()>& onDecrement;
-    std::function<void(String&)> onUpdate;
+    std::function<void(const String&)> onUpdate;
 
     float min, max;
 
 private:
+
     String lastText;
-    Label title, input;
+    Label title;
+    SpecialLabel input;
     TextButton p, m;
     int titleWidth;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)

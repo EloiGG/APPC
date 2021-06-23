@@ -13,11 +13,11 @@
 #include <JuceHeader.h>
 #include "LookAndFeel.h"
 #include "Core.h"
-
+#include "SpecialLabel.h"
 //==============================================================================
 /*
 */
-class DigitEditor : public Label, private Timer
+class DigitEditor : public SpecialLabel, private Timer
 {
 public:
 	DigitEditor();
@@ -27,12 +27,8 @@ public:
 	String getDigit();
 	void resized() override;
 
-
-	std::function<void()> editorAboutToBeHiddenLamda;
-
 private:
 	virtual void timerCallback() override;
-
 	unsigned int frameCounter;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 

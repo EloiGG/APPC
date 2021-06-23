@@ -14,6 +14,7 @@
                 file="Source/InputComponent.h"/>
           <FILE id="s7sJ74" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
           <FILE id="jBwqfY" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
+          <FILE id="IZDb1S" name="SpecialLabel.h" compile="0" resource="0" file="Source/SpecialLabel.h"/>
         </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
           <GROUP id="{AF5BEE48-4F14-267C-D666-FE9A5C65C397}" name="Top">

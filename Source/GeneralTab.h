@@ -26,6 +26,11 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void setNumPrices(int newNumPrices);
+    void setNumDigits(int newNumDigits);
+
+    void updateAllParameters();
+
 private:
     AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow;
     TextButton connectButton, loadConfigButton;

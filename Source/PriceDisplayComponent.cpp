@@ -14,13 +14,7 @@
 //==============================================================================
 PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0)
 {
-	Core::get().updateVisualization = [this]()
-	{
-		setNumPrices(Core::get().getNumPrices());
-		setNumDigits(Core::get().getNumDigits());/*
-		for (int i = 0; i < numPrices; i++)
-			updatePrices(TextUpdateOrigin::Omni,i);*/
-	};
+	
 	addChildComponent(grid);
 	init();
 }

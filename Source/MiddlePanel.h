@@ -28,6 +28,7 @@ public:
     void resized() override;
 
     void updatePrices(TextUpdateOrigin whocalled, unsigned int index);
+    void updateVisualization();
 private:
     PriceDisplayComponent prices;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MiddlePanel)

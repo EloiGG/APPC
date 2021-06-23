@@ -9,11 +9,21 @@ MainComponent::MainComponent()
 			mPanel.updatePrices(o, index);
 		}
 	);
+
+	Core::get().updateVisualization = [this]()
+	{
+		mPanel.updateVisualization();
+		rPanel.updateParameters();
+	};
+
 	addAndMakeVisible(lPanel);
 	addAndMakeVisible(mPanel);
 	addAndMakeVisible(rPanel);
 	addAndMakeVisible(tPanel);
 	addAndMakeVisible(bPanel);
+
+	Core::get().updateVisualization();
+
 	setSize(1000, 600);
 }
 

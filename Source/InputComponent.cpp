@@ -12,8 +12,19 @@
 #include "InputComponent.h"
 
 //==============================================================================
-InputComponent::InputComponent(const String& parameterName, const String& defaultValue) : title(parameterName, parameterName + String(" : ")), input(defaultValue, defaultValue),
-p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10), lastText(defaultValue)
+InputComponent::InputComponent(const String& parameterName, const String& defaultValue) : title(parameterName, parameterName + String(" : ")), 
+p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10), lastText(defaultValue),
+input([this]()
+	{
+		auto n = input.getText(true).getFloatValue();
+		if (n <= max && n >= min) {
+			lastText = input.getText();
+			if (onUpdate)
+				onUpdate(lastText);
+		}
+		else
+			input.setText(lastText, NotificationType::sendNotification);
+	})
 {
 	p.setLookAndFeel(Core::get().getLookAndFeel().get());
 	m.setLookAndFeel(Core::get().getLookAndFeel().get());
@@ -31,26 +42,15 @@ p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10),
 	{
 		auto n = input.getText(true).getIntValue() + 1;
 		input.setText(String(n), NotificationType::sendNotification);
+		input.textManuallyUpdated();
 	};
 
 	onDecrement = [this]()
 	{
 		auto n = input.getText(true).getIntValue() - 1;
 		input.setText(String(n), NotificationType::sendNotification);
+		input.textManuallyUpdated();
 	};
-
-	input.onTextChange = [this]()
-	{
-		auto n = input.getText(true).getFloatValue();
-		if (n <= max && n >= min) {
-			lastText = input.getText();
-			if (onUpdate)
-				onUpdate(lastText);
-		}
-		else
-			input.setText(lastText, NotificationType::sendNotification);
-	};
-
 }
 
 InputComponent::InputComponent(const String& parameterName, const int& defaultValue) : InputComponent(parameterName, String(defaultValue))

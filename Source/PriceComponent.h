@@ -20,7 +20,7 @@
 /*
 */
 
-class PriceEditor : public Label
+class PriceEditor : public SpecialLabel
 {
 public:
 	PriceEditor();
@@ -28,7 +28,6 @@ public:
 	void paint(juce::Graphics&) override;
 	void resized() override;
 	void setNumberOfDigits(int new_number_of_digits);
-	std::function<void()> textEditedLamda;
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
@@ -38,7 +37,6 @@ protected:
 private:
 	bool isTextEditing;
 	int numDigits;
-	String lastPrice;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditor)
 };

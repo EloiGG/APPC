@@ -45,7 +45,7 @@ lineControl("Controle des segments"), resetLine("Effacer si erreur")
 
 	grid.setBounds(0, 0, getWidth(), 300);
 
-	nPrices.onUpdate = [](String& input)
+	nPrices.onUpdate = [](const String& input)
 	{
 		Core::get().setNumPrices(input.getIntValue());
 		Core::get().updateVisualization();
@@ -53,12 +53,12 @@ lineControl("Controle des segments"), resetLine("Effacer si erreur")
 	nPrices.min = 1;
 	nPrices.max = Core::MAX_PRICES;
 
-	nDigits.onUpdate = [](String& input)
+	nDigits.onUpdate = [](const String& input)
 	{
 		Core::get().setNumDigits(input.getIntValue());
 		Core::get().updateVisualization();
 	};
-	nDigits.min = 2;
+	nDigits.min = 1;
 	nDigits.max = Core::MAX_DIGITS;
 
 	connectButton.onClick = [this]()
@@ -126,4 +126,21 @@ void GeneralTab::resized()
 	resetLine.setBounds(grid.getRectangle(0, 3, 4, 4));
 	connectButton.setBounds(grid.getRectangle(0, 10, 2, 12));
 	loadConfigButton.setBounds(grid.getRectangle(2, 10, 4, 12));
+}
+
+void GeneralTab::setNumPrices(int newNumPrices)
+{
+	nPrices.setInput(String(newNumPrices));
+}
+
+void GeneralTab::setNumDigits(int newNumDigits)
+{
+	nDigits.setInput(String(newNumDigits));
+}
+
+void GeneralTab::updateAllParameters()
+{
+	auto& c = Core::get();
+	setNumPrices(c.getNumPrices());
+	setNumDigits(c.getNumDigits());
 }

@@ -1491,6 +1491,9 @@
     <ClInclude Include="..\..\Source\LookAndFeel.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SpecialLabel.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\TopPanel.h">
       <Filter>APPC\Source\UI\Components\Top</Filter>
     </ClInclude>

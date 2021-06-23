@@ -13,8 +13,6 @@
 //==============================================================================
 MiddlePanel::MiddlePanel()
 {
-	prices.setNumPrices(Core::get().getNumPrices());
-	prices.setNumDigits(Core::get().getNumDigits());
 	addAndMakeVisible(prices);
 }
 
@@ -35,4 +33,10 @@ void MiddlePanel::resized()
 void MiddlePanel::updatePrices(TextUpdateOrigin whocalled, unsigned int index)
 {
 	prices.updatePrices(whocalled, index);
+}
+
+void MiddlePanel::updateVisualization()
+{
+	prices.setNumPrices(Core::get().getNumPrices());
+	prices.setNumDigits(Core::get().getNumDigits());
 }
