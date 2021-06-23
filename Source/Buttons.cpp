@@ -8,15 +8,12 @@
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "Buttons.h"
 
 //==============================================================================
-Buttons::Buttons() : send("Envoyer"), stop("Stop"), prixP("Prix + 1"), prixM("Prix - 1"), digitP("Chiffre + 1"), digitM("Chiffre - 1"),
-grid(4, 1)
+Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 1)
 {
 	addAndMakeVisible(grid);
-
 
 	send.setLookAndFeel(Core::get().getLookAndFeel().get());
 	stop.setLookAndFeel(Core::get().getLookAndFeel().get());
@@ -24,21 +21,18 @@ grid(4, 1)
 	send.setColour(TextButton::ColourIds::buttonColourId, Colours::green);
 	stop.setColour(TextButton::ColourIds::buttonColourId, Colours::red);
 
-	prixP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	prixM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	digitP.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	digitM.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-
 	addAndMakeVisible(send);
 	addAndMakeVisible(stop);
-	/*addAndMakeVisible(prixP);
-	addAndMakeVisible(prixM);
-	addAndMakeVisible(digitP);
-	addAndMakeVisible(digitM);*/
+
+	send.onClick = [this]() {Sequence s;
+	s.createSequence(Core::get());
+	sendThread.startThread(); };
+	stop.onClick = [this]() {sendThread.stopThread(2500); };
 }
 
 Buttons::~Buttons()
 {
+	sendThread.stopThread(1500);
 }
 
 void Buttons::paint(juce::Graphics& g)
@@ -51,8 +45,4 @@ void Buttons::resized()
 	grid.setBounds(getLocalBounds());
 	send.setBounds(grid.getRectangle(1, 0, 4, 1));
 	stop.setBounds(grid.getRectangle(0, 0, 1, 1));
-	/*prixP.setBounds(grid.getRectangle(0, 0, 1 - separation / 2, 1));
-	prixM.setBounds(grid.getRectangle(1 - separation / 2, 0, 2 - separation, 1));
-	digitP.setBounds(grid.getRectangle(2, 0, 3 + separation, 1));
-	digitM.setBounds(grid.getRectangle(3 + separation / 2, 0, 4, 1));*/
 }

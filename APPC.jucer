@@ -72,6 +72,11 @@
         <FILE id="fLbqtz" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
         <FILE id="GRa8gy" name="Price.cpp" compile="1" resource="0" file="Source/Price.cpp"/>
         <FILE id="fGkoQz" name="Price.h" compile="0" resource="0" file="Source/Price.h"/>
+        <FILE id="FKNFPP" name="Sequence.cpp" compile="1" resource="0" file="Source/Sequence.cpp"/>
+        <FILE id="saAzso" name="Sequence.h" compile="0" resource="0" file="Source/Sequence.h"/>
+        <FILE id="aZSOEU" name="SerialThread.cpp" compile="1" resource="0"
+              file="Source/SerialThread.cpp"/>
+        <FILE id="oDOYkD" name="SerialThread.h" compile="0" resource="0" file="Source/SerialThread.h"/>
       </GROUP>
       <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
         <FILE id="kgmNAY" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>

@@ -50,6 +50,16 @@ void Core::setPrice(unsigned int index, const Price& newPrice)
 	prices[index] = newPrice;
 }
 
+unsigned int Core::getDelay()
+{
+	return delay_ms;
+}
+
+void Core::setDelay_ms(unsigned int newDelay)
+{
+	delay_ms = newDelay;
+}
+
 void Core::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
 	if (pricesUpdateFunction)
@@ -101,6 +111,7 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 	return lfptr;
 }
 
-Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel), networkInit(false)
+Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
+networkInit(false), delay_ms(0)
 {
 }

@@ -158,6 +158,8 @@
     <ClCompile Include="..\..\Source\Core.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\Price.cpp"/>
+    <ClCompile Include="..\..\Source\Sequence.cpp"/>
+    <ClCompile Include="..\..\Source\SerialThread.cpp"/>
     <ClCompile Include="..\..\Source\UART.cpp"/>
     <ClCompile Include="..\..\Source\JSON.cpp"/>
     <ClCompile Include="..\..\Source\Networking.cpp"/>
@@ -1289,6 +1291,8 @@
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\Core.h"/>
     <ClInclude Include="..\..\Source\Price.h"/>
+    <ClInclude Include="..\..\Source\Sequence.h"/>
+    <ClInclude Include="..\..\Source\SerialThread.h"/>
     <ClInclude Include="..\..\Source\UART.h"/>
     <ClInclude Include="..\..\Source\JSON.h"/>
     <ClInclude Include="..\..\Source\Networking.h"/>

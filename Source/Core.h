@@ -41,6 +41,15 @@ public:
     Price getPrice(unsigned int index);
     void setPrice(unsigned int index, const Price& newPrice);
 
+    unsigned int getDelay();
+    void setDelay_ms(unsigned int newDelay);
+
+    bool getLineControl() { return lineControl; }
+    void setLineControl(bool newLineControl) { lineControl = newLineControl; }
+    bool getResetLine() { return resetLine; }
+    void setResetLine(bool newResetLine) { resetLine = newResetLine; }
+
+
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
     void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
 
@@ -57,8 +66,8 @@ private:
     Core();
 
     Network network;
-    unsigned int numDigits, numPrices;
-    bool networkInit;
+    unsigned int numDigits, numPrices, delay_ms;
+    bool networkInit, lineControl, resetLine;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
 };

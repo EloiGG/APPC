@@ -14,6 +14,8 @@
 #include "LookAndFeel.h"
 #include "GridTool.h"
 #include "Core.h"
+#include "SerialThread.h"
+#include "Sequence.h"
 
 //==============================================================================
 /*
@@ -28,7 +30,8 @@ public:
     void resized() override;
 
 private:
-    TextButton send, stop, prixP, prixM, digitP, digitM;
+    SerialThread sendThread;
+    TextButton send, stop;
     GridTool grid;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Buttons)
 };

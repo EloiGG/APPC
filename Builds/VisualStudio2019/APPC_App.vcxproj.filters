@@ -289,6 +289,12 @@
     <ClCompile Include="..\..\Source\Price.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Sequence.cpp">
+      <Filter>APPC\Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SerialThread.cpp">
+      <Filter>APPC\Source\Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UART.cpp">
       <Filter>APPC\Source\Communication</Filter>
     </ClCompile>
@@ -1540,6 +1546,12 @@
       <Filter>APPC\Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Price.h">
+      <Filter>APPC\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Sequence.h">
+      <Filter>APPC\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SerialThread.h">
       <Filter>APPC\Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UART.h">

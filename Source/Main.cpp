@@ -20,17 +20,16 @@ public:
 
 	const juce::String getApplicationName() override { return ProjectInfo::projectName; }
 	const juce::String getApplicationVersion() override { return ProjectInfo::versionString; }
-	bool moreThanOneInstanceAllowed() override { return true; }
+	bool moreThanOneInstanceAllowed() override { return false; }
 
 	//==============================================================================
 	void initialise(const juce::String& commandLine) override
 	{
-		// This method is where you should put your application's initialisation code..
 		Core::get().setNumDigits(4);
 		Core::get().setNumPrices(4);
 		for (int i = 0; i < Core::MAX_PRICES; ++i)
 			Core::get().setPrice(i, Price("0"));
-		auto o = Core::get().getPrice(0);
+
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 		//ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));

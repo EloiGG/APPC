@@ -105,7 +105,8 @@ lineControl("Controle des segments"), resetLine("Effacer si erreur")
 				connectWindow.setVisible(false);
 			}), false);
 	};
-
+	lineControl.onStateChange = [this]() {Core::get().setLineControl(lineControl.getState()); };
+	resetLine.onStateChange = [this]() {Core::get().setResetLine(resetLine.getState()); };
 }
 
 GeneralTab::~GeneralTab()
