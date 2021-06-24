@@ -33,10 +33,8 @@ public:
     void updateAllParameters();
 
 private:
-    AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow;
-    TextButton connectButton, loadConfigButton;
     GridTool grid;
-    InputComponent nPrices, nDigits, delay;
+    InputComponent nPrices, nDigits, delay, id;
     CheckBox lineControl, resetLine;
     Disabled disabled;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)

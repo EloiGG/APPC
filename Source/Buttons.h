@@ -44,7 +44,10 @@ public:
 	void updateVizualisation();
 private:
 
+	FileChooser filechooser;
+	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow;
 	SerialThread sendThread;
+	TextButton connectButton, loadConfigButton;
 	TextButton send, stop;
 	GridTool grid;
 	Progression progression;

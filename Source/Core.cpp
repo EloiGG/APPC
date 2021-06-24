@@ -116,6 +116,32 @@ void Core::loadInformationsFromNetwork()
 	updateVisualization();
 }
 
+void Core::loadInformationsFromJSON()
+{
+	auto pwrd = configjson.getAuthPassword();
+	auto id_ = configjson.getID();
+	auto baseAPI = configjson.getBaseAPI();
+	auto reset_line = configjson.getResetLine();
+	auto line_control = configjson.getLineControl();
+
+	if (pwrd != "error")
+		setNetwork(Network("X-AUTH-TOKEN", pwrd));
+	if (id_ != -1)
+		id = id_;
+	if (baseAPI != "error");
+	// a faire
+	if (reset_line != -1)
+		resetLine = reset_line;
+	if (line_control != -1)
+		lineControl = line_control;
+
+	loadInformationsFromNetwork();
+
+	for (int i = 0; i < numPrices; i++)
+		updatePrices(TextUpdateOrigin::Omni, i);
+	updateVisualization();
+}
+
 std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 {
 	return lfptr;

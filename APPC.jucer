@@ -18,14 +18,6 @@
           <FILE id="IZDb1S" name="SpecialLabel.h" compile="0" resource="0" file="Source/SpecialLabel.h"/>
         </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
-          <GROUP id="{AF5BEE48-4F14-267C-D666-FE9A5C65C397}" name="Top">
-            <FILE id="Q2W2K3" name="TopPanel.cpp" compile="1" resource="0" file="Source/TopPanel.cpp"/>
-            <FILE id="ZpyLgi" name="TopPanel.h" compile="0" resource="0" file="Source/TopPanel.h"/>
-          </GROUP>
-          <GROUP id="{E7E7C207-0E40-578E-4386-8AC1A97CB847}" name="Left">
-            <FILE id="NuLRHJ" name="LeftPanel.cpp" compile="1" resource="0" file="Source/LeftPanel.cpp"/>
-            <FILE id="wPRKau" name="LeftPanel.h" compile="0" resource="0" file="Source/LeftPanel.h"/>
-          </GROUP>
           <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
             <FILE id="kxRsal" name="PriceTab.cpp" compile="1" resource="0" file="Source/PriceTab.cpp"/>
             <FILE id="PSCvYn" name="PriceTab.h" compile="0" resource="0" file="Source/PriceTab.h"/>

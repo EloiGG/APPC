@@ -65,10 +65,14 @@ public:
 	static bool err_ok(const String& output);
 
 public:
-	ConfigJSON(const File& json);
-
-	String getAuthToken();
+	ConfigJSON(const File& json = File());
+	~ConfigJSON();
+	void setFile(const File& json);
 	String getAuthPassword();
+	int getID();
+	String getBaseAPI();
+	int getLineControl();
+	int getResetLine();
 
 private:
 	var parsedJSON;

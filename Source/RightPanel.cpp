@@ -30,7 +30,7 @@ void RightPanel::paint (juce::Graphics& g)
 
 void RightPanel::resized()
 {
-    float separtion = 0.12f;
+    float separtion = 0.22f;
     auto r = getLocalBounds();
     buttons.setBounds(r.removeFromBottom(separtion * getHeight()));
     tabs.setBounds(r);

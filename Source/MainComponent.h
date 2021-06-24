@@ -24,9 +24,7 @@ public:
 
 private:
     MiddlePanel mPanel;
-    TopPanel tPanel;
     RightPanel rPanel;
-    LeftPanel lPanel;
     BottomPanel bPanel;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

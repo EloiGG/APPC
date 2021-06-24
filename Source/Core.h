@@ -50,7 +50,8 @@ public:
     void setResetLine(bool newResetLine) { resetLine = newResetLine; }
     bool getIsInTransmission();
     void setInTransmission(bool shouldBeInTransmission);
-
+    void setID(int newID) { id = newID; }
+    int getID() { return id; }
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
     void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
 
@@ -58,16 +59,19 @@ public:
     void setNetwork(const Network& net);
     bool hasNetwork();
 
+    void setJSON(const ConfigJSON& newJSON) { configjson = newJSON; }
+
     void loadInformationsFromNetwork();
+    void loadInformationsFromJSON();
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
     std::function<void()> updateVisualization;
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
-
+    ConfigJSON configjson;
     Network network;
-    unsigned int numDigits, numPrices, delay_ms;
+    unsigned int numDigits, numPrices, delay_ms, id;
     bool networkInit, lineControl, resetLine, isInTransmission;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;

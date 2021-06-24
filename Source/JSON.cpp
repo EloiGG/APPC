@@ -115,12 +115,36 @@ ConfigJSON::ConfigJSON(const File& json)
     parsedJSON = JSON::parse(json);
 }
 
-String ConfigJSON::getAuthToken()
+ConfigJSON::~ConfigJSON()
 {
-    return parsedJSON.getProperty("authenticationToken", "error");
+}
+
+void ConfigJSON::setFile(const File& json)
+{
+    parsedJSON = JSON::parse(json);
 }
 
 String ConfigJSON::getAuthPassword()
 {
-    return parsedJSON.getProperty("authenticationPassword", "error");
+    return parsedJSON.getProperty("api_key", "error");
+}
+
+int ConfigJSON::getID()
+{
+    return (int)parsedJSON.getProperty("id", -1);
+}
+
+String ConfigJSON::getBaseAPI()
+{
+    return parsedJSON.getProperty("base_api", "error");
+}
+
+int ConfigJSON::getLineControl()
+{
+    return (bool)parsedJSON.getProperty("line_control",-1);
+}
+
+int ConfigJSON::getResetLine()
+{
+    return (bool)parsedJSON.getProperty("reset_line", -1);
 }

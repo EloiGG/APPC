@@ -5,12 +5,6 @@
     <Filter Include="APPC\Source\UI\Util">
       <UniqueIdentifier>{786A86AE-67DE-04EE-0793-C3B856D3B110}</UniqueIdentifier>
     </Filter>
-    <Filter Include="APPC\Source\UI\Components\Top">
-      <UniqueIdentifier>{D57536ED-64D4-351D-1B17-C16E2FE6C710}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="APPC\Source\UI\Components\Left">
-      <UniqueIdentifier>{12FAE1E8-C95B-0781-2930-FB18D729A444}</UniqueIdentifier>
-    </Filter>
     <Filter Include="APPC\Source\UI\Components\Right">
       <UniqueIdentifier>{92AC60A1-A6AB-3607-3825-D3FBAC11D8E8}</UniqueIdentifier>
     </Filter>
@@ -237,12 +231,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp">
       <Filter>APPC\Source\UI\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TopPanel.cpp">
-      <Filter>APPC\Source\UI\Components\Top</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\LeftPanel.cpp">
-      <Filter>APPC\Source\UI\Components\Left</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PriceTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
@@ -1502,12 +1490,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\SpecialLabel.h">
       <Filter>APPC\Source\UI\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TopPanel.h">
-      <Filter>APPC\Source\UI\Components\Top</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LeftPanel.h">
-      <Filter>APPC\Source\UI\Components\Left</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PriceTab.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>

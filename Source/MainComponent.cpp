@@ -16,10 +16,8 @@ MainComponent::MainComponent()
 		rPanel.updateParameters();
 	};
 
-	addAndMakeVisible(lPanel);
 	addAndMakeVisible(mPanel);
 	addAndMakeVisible(rPanel);
-	addAndMakeVisible(tPanel);
 	addAndMakeVisible(bPanel);
 
 	Core::get().updateVisualization();

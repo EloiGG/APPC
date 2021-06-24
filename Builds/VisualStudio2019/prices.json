@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "price": "1.111",
+    "GasStation": "\/api\/gas_stations\/1",
+    "Fuel": "\/api\/fuels\/1",
+    "created": "2020-09-16T15:34:54+02:00",
+    "updated": "2021-06-16T10:35:27+02:00",
+    "position": 0,
+    "emptied": false,
+    "modifyAt": null,
+    "modifyDone": false,
+    "status": true,
+    "oldPrice": "1.111"
+  },
+  {
+    "id": 2,
+    "price": "2.222",
+    "GasStation": "\/api\/gas_stations\/1",
+    "Fuel": "\/api\/fuels\/3",
+    "created": "2020-09-17T13:53:01+02:00",
+    "updated": "2021-06-16T10:35:38+02:00",
+    "position": 1,
+    "emptied": false,
+    "modifyAt": null,
+    "modifyDone": false,
+    "status": true,
+    "oldPrice": "2.222"
+  },
+  {
+    "id": 3,
+    "price": "3.333",
+    "GasStation": "\/api\/gas_stations\/1",
+    "Fuel": "\/api\/fuels\/4",
+    "created": "2020-09-16T15:35:06+02:00",
+    "updated": "2021-06-16T10:35:44+02:00",
+    "position": 2,
+    "emptied": false,
+    "modifyAt": null,
+    "modifyDone": false,
+    "status": true,
+    "oldPrice": "3.333"
+  },
+  {
+    "id": 4,
+    "price": "4.444",
+    "GasStation": "\/api\/gas_stations\/1",
+    "Fuel": "\/api\/fuels\/7",
+    "created": "2020-09-17T13:53:20+02:00",
+    "updated": "2021-05-04T14:10:40+02:00",
+    "position": 3,
+    "emptied": false,
+    "modifyAt": null,
+    "modifyDone": false,
+    "status": true,
+    "oldPrice": "4.444"
+  },
+  {
+    "id": 43,
+    "price": "5.555",
+    "GasStation": "\/api\/gas_stations\/1",
+    "Fuel": "\/api\/fuels\/6",
+    "created": "2020-09-17T13:53:37+02:00",
+    "updated": "2021-03-08T17:22:56+01:00",
+    "position": 4,
+    "emptied": false,
+    "modifyAt": null,
+    "modifyDone": false,
+    "status": true,
+    "oldPrice": "5.555"
+  }
+]
