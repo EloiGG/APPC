@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Buttons.h
-    Created: 21 Jun 2021 12:37:46pm
-    Author:  Eloi GUIHARD-GOUJON
+	Buttons.h
+	Created: 21 Jun 2021 12:37:46pm
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -20,18 +20,33 @@
 //==============================================================================
 /*
 */
-class Buttons  : public juce::Component
+class Progression : public Component, private Timer
 {
 public:
-    Buttons();
-    ~Buttons() override;
-
-    void paint (juce::Graphics&) override;
-    void resized() override;
+	Progression(const SerialThread& t) : thread(t) { setInterceptsMouseClicks(false, false); }
+	void start();
+	void paint(juce::Graphics&) override;
 
 private:
-    SerialThread sendThread;
-    TextButton send, stop;
-    GridTool grid;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Buttons)
+	virtual void timerCallback() override;
+	const SerialThread& thread;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Progression)
+};
+
+class Buttons : public juce::Component
+{
+public:
+	Buttons();
+	~Buttons() override;
+
+	void paint(juce::Graphics&) override;
+	void resized() override;
+
+private:
+
+	SerialThread sendThread;
+	TextButton send, stop;
+	GridTool grid;
+	Progression progression;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Buttons)
 };

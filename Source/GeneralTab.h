@@ -35,7 +35,7 @@ private:
     AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow;
     TextButton connectButton, loadConfigButton;
     GridTool grid;
-    InputComponent nPrices, nDigits;
+    InputComponent nPrices, nDigits, delay;
     CheckBox lineControl, resetLine;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
 };

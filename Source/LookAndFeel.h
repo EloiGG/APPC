@@ -23,6 +23,8 @@ namespace lfColours
     const Colour buttonBackground(60, 67, 79);
     const Colour inputOutline(204, 204, 204);
     const Colour inputBackground(tabBackground.darker());
+    const Colour sendButton(77, 140, 67);
+    const Colour stopButton(255, 46, 46);
 }
 
 class APPCLookAndFeel : public LookAndFeel_V4

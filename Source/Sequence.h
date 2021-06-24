@@ -30,7 +30,11 @@ public:
 		Price* prices, const unsigned int& delay_in_milliseconds, const bool& lineControl);
 	void createSequence(const Core& core);
 	void operator+=(const Sequence& seq2);
+	size_t getSize() const;
+	SequenceStep operator[](size_t index) const;
+	unsigned int getDelay() const { return delay_ms; }
 	
+
 private:
 	unsigned int delay_ms;
 	std::vector<SequenceStep> v;

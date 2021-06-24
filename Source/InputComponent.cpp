@@ -12,8 +12,8 @@
 #include "InputComponent.h"
 
 //==============================================================================
-InputComponent::InputComponent(const String& parameterName, const String& defaultValue) : title(parameterName, parameterName + String(" : ")), 
-p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10), lastText(defaultValue),
+InputComponent::InputComponent(const String& parameterName, const String& defaultValue) : title(parameterName, parameterName + String(" : ")),
+p("+"), m("-"), onIncrement(p.onClick), onDecrement(m.onClick), min(0), max(10), lastText(defaultValue), increment(1), decrement(1),
 input([this]()
 	{
 		auto n = input.getText(true).getFloatValue();
@@ -38,52 +38,58 @@ input([this]()
 	addAndMakeVisible(p);
 	addAndMakeVisible(m);
 
+	input.setText(String(defaultValue), NotificationType::sendNotification);
+
 	onIncrement = [this]()
 	{
-		auto n = input.getText(true).getIntValue() + 1;
+		int intval = input.getText(true).getIntValue();
+		auto n = increment == 1 ? intval + 1 :
+			intval % increment == 0 ? intval + increment : (intval + increment) / increment * increment;
 		input.setText(String(n), NotificationType::sendNotification);
 		input.textManuallyUpdated();
 	};
 
 	onDecrement = [this]()
 	{
-		auto n = input.getText(true).getIntValue() - 1;
+		int intval = input.getText(true).getIntValue();
+		auto n = decrement == 1 ? intval - 1 :
+			intval % decrement == 0 ? intval - decrement : (intval - decrement) / decrement * decrement;
 		input.setText(String(n), NotificationType::sendNotification);
 		input.textManuallyUpdated();
 	};
 }
 
-InputComponent::InputComponent(const String& parameterName, const int& defaultValue) : InputComponent(parameterName, String(defaultValue))
-{
-}
+	InputComponent::InputComponent(const String& parameterName, const int& defaultValue) : InputComponent(parameterName, String(defaultValue))
+	{
+	}
 
-InputComponent::~InputComponent()
-{
-}
+	InputComponent::~InputComponent()
+	{
+	}
 
-void InputComponent::paint(juce::Graphics& g)
-{
-	g.setColour(lfColours::inputBackground);
-	g.fillRoundedRectangle(input.getBounds().toFloat(), 3.0f);
+	void InputComponent::paint(juce::Graphics& g)
+	{
+		g.setColour(lfColours::inputBackground);
+		g.fillRoundedRectangle(input.getBounds().toFloat(), 3.0f);
 
-	g.setColour(lfColours::inputOutline.withAlpha(0.5f));
-	g.drawRect(input.getBounds());
-	g.drawRect(p.getBounds());
-	g.drawRect(m.getBounds());
-}
+		g.setColour(lfColours::inputOutline.withAlpha(0.5f));
+		g.drawRect(input.getBounds());
+		g.drawRect(p.getBounds());
+		g.drawRect(m.getBounds());
+	}
 
-void InputComponent::resized()
-{
-	float inputwidth = 0.75;
-	auto r = getLocalBounds();
-	title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.6)));
-	auto s = r.removeFromRight(30);
-	p.setBounds(s.removeFromTop(getHeight() * 0.5));
-	m.setBounds(s);
-	input.setBounds(r);
-}
+	void InputComponent::resized()
+	{
+		float inputwidth = 0.75;
+		auto r = getLocalBounds();
+		title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.6)));
+		auto s = r.removeFromRight(30);
+		p.setBounds(s.removeFromTop(getHeight() * 0.5));
+		m.setBounds(s);
+		input.setBounds(r);
+	}
 
-CheckBox::CheckBox(const String& text) : ToggleButton(text+ String(" : "))
-{
-	setLookAndFeel(Core::get().getLookAndFeel().get());
-}
+	CheckBox::CheckBox(const String& text) : ToggleButton(text + String(" : "))
+	{
+		setLookAndFeel(Core::get().getLookAndFeel().get());
+	}

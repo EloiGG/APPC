@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    InputComponent.h
-    Created: 21 Jun 2021 2:24:45pm
-    Author:  admin
+	InputComponent.h
+	Created: 21 Jun 2021 2:24:45pm
+	Author:  admin
 
   ==============================================================================
 */
@@ -17,41 +17,42 @@
 //==============================================================================
 /*
 */
-class InputComponent  : public juce::Component
+class InputComponent : public juce::Component
 {
 public:
-    InputComponent(const String& parameterName, const String& defaultValue = "");
-    InputComponent(const String& parameterName, const int& defaultValue);
-    ~InputComponent() override;
+	InputComponent(const String& parameterName, const String& defaultValue = "");
+	InputComponent(const String& parameterName, const int& defaultValue);
+	~InputComponent() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
+	void paint(juce::Graphics&) override;
+	void resized() override;
 
-    void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
-    void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
+	void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
+	void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
 
-    std::function<void()>& onIncrement;
-    std::function<void()>& onDecrement;
-    std::function<void(const String&)> onUpdate;
+	std::function<void()>& onIncrement;
+	std::function<void()>& onDecrement;
+	std::function<void(const String&)> onUpdate;
 
-    float min, max;
+	float min, max;
+	int increment, decrement;
 
 private:
 
-    String lastText;
-    Label title;
-    SpecialLabel input;
-    TextButton p, m;
-    int titleWidth;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)
+	String lastText;
+	Label title;
+	SpecialLabel input;
+	TextButton p, m;
+	int titleWidth;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputComponent)
 };
 
 class CheckBox : public ToggleButton
 {
 public:
-    CheckBox(const String& text);
+	CheckBox(const String& text);
 private:
-    int titleWidth;
+	int titleWidth;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CheckBox)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CheckBox)
 };

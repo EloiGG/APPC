@@ -10,7 +10,7 @@
 
 #include "Sequence.h"
 
-Sequence::Sequence()
+Sequence::Sequence() :  delay_ms(0)
 {
 	v.reserve(16);
 }
@@ -18,7 +18,6 @@ Sequence::Sequence()
 void Sequence::addStep(const SequenceStep& newStep)
 {
 	v.push_back(newStep);
-	std::vector<SequenceStep> w;
 }
 
 void Sequence::createSequence(const unsigned int& numPrices, const unsigned int& numDigits,
@@ -29,9 +28,9 @@ void Sequence::createSequence(const unsigned int& numPrices, const unsigned int&
 	for (int prix = 0; prix < numPrices; prix++) {
 		for (int chiffre = 0; chiffre < numDigits; chiffre++) {
 			v.push_back({ unsigned char(0x30 + prix * numDigits + chiffre) , c, (unsigned char)prices[prix][chiffre][0] });
-			DBG((unsigned char)prices[prix][chiffre][0]);
 		}
 	}
+	delay_ms = delay_in_milliseconds;
 }
 
 
@@ -47,4 +46,14 @@ void Sequence::createSequence(const Core& core)
 void Sequence::operator+=(const Sequence& seq2)
 {
 	v.insert(v.end(), seq2.v.begin(), seq2.v.end());
+}
+
+size_t Sequence::getSize() const
+{
+	return v.size();
+}
+
+Sequence::SequenceStep Sequence::operator[](size_t index) const
+{
+	return v[index];
 }

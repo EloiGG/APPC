@@ -1488,6 +1488,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Disabled.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GridTool.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>

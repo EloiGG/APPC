@@ -17,10 +17,11 @@ loadConfigButton("Charger une configuration"), connectButton("Se connecter au re
 connectWindow("Se connecter a CentoFuel", "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
 networkErrorWindow("Erreur reseau", "", AlertWindow::AlertIconType::WarningIcon),
 networkSuccessWindow("Connexion reussie", "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
-lineControl("Controle des segments"), resetLine("Effacer si erreur")
+lineControl("Controle des segments"), resetLine("Effacer si erreur"), delay("Delai d'affichage (ms)", 50)
 {
 	addAndMakeVisible(nPrices);
 	addAndMakeVisible(nDigits);
+	addAndMakeVisible(delay);
 	addChildComponent(grid);
 	addAndMakeVisible(connectButton);
 	addAndMakeVisible(loadConfigButton);
@@ -60,6 +61,15 @@ lineControl("Controle des segments"), resetLine("Effacer si erreur")
 	};
 	nDigits.min = 1;
 	nDigits.max = Core::MAX_DIGITS;
+
+	delay.onUpdate = [](const String& input)
+	{
+		Core::get().setDelay_ms(input.getIntValue());
+	};
+	delay.min = 0;
+	delay.max = 20000;
+	delay.increment = 50;
+	delay.decrement = 50;
 
 	connectButton.onClick = [this]()
 	{
@@ -125,6 +135,7 @@ void GeneralTab::resized()
 	nDigits.setBounds(grid.getRectangle(0, 1, 4, 2));
 	lineControl.setBounds(grid.getRectangle(0, 2, 4, 3));
 	resetLine.setBounds(grid.getRectangle(0, 3, 4, 4));
+	delay.setBounds(grid.getRectangle(0, 4, 4, 5));
 	connectButton.setBounds(grid.getRectangle(0, 10, 2, 12));
 	loadConfigButton.setBounds(grid.getRectangle(2, 10, 4, 12));
 }

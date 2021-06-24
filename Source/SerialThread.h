@@ -11,11 +11,21 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "Sequence.h"
 #include "UART.h"
+
 class SerialThread : public Thread
 {
 public:
     SerialThread();
+    SerialThread(const Sequence& sequence);
+    void setSequence(const Sequence& sequence);
+    float getProgression() const;
+
 private:
+   
+    float progression;
     virtual void run() override;
+    UART uart;
+    Sequence sequence;
 };
