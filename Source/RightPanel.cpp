@@ -39,4 +39,5 @@ void RightPanel::resized()
 void RightPanel::updateParameters()
 {
     tabs.updateParameters();
+    buttons.updateVizualisation();
 }

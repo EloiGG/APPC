@@ -20,6 +20,7 @@ class Disabled : public juce::Component
 public:
 	Disabled() : isDisabled(false)
 	{
+		setInterceptsMouseClicks(false, false);
 	}
 
 	~Disabled() override
@@ -28,6 +29,8 @@ public:
 
 	void paint(juce::Graphics& g) override
 	{
+		if (!isDisabled)
+			return;
 		g.fillAll(Colours::grey.withAlpha(0.3f));
 		g.setColour(Colours::black);
 		int spacing = 5, w = 0, h = 0;
@@ -35,10 +38,10 @@ public:
 			g.drawLine(w, 0, w + getHeight(), getHeight());
 		for (h = 0; h + getWidth() <= getHeight(); h += spacing) 
 			g.drawLine(0, h, getWidth(), getWidth() + h);
-		for (; w < getWidth(); w += spacing) {
-			g.drawLine(w, 0, getWidth(), getWidth() - w);
-			g.drawLine(0, getHeight() + w - getWidth(), getWidth() - w, getHeight());
-		}
+		for (; w < getWidth(); w += spacing) 
+			g.drawLine(w, 0, getWidth(), getWidth() - w);		
+		for (h += spacing; h < getHeight(); h += spacing)
+			g.drawLine(0, h, getHeight() - h, getHeight());
 	}
 
 	void resized() override
@@ -47,6 +50,7 @@ public:
 	void setDisabled(bool shouldBeDisabled)
 	{
 		isDisabled = shouldBeDisabled;
+		setInterceptsMouseClicks(shouldBeDisabled, shouldBeDisabled);
 	}
 private:
 	bool isDisabled;

@@ -41,7 +41,7 @@ public:
 
 	void paint(juce::Graphics&) override;
 	void resized() override;
-
+	void updateVizualisation();
 private:
 
 	SerialThread sendThread;

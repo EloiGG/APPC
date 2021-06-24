@@ -48,7 +48,8 @@ public:
     void setLineControl(bool newLineControl) { lineControl = newLineControl; }
     bool getResetLine() { return resetLine; }
     void setResetLine(bool newResetLine) { resetLine = newResetLine; }
-
+    bool getIsInTransmission();
+    void setInTransmission(bool shouldBeInTransmission);
 
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
     void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
@@ -67,7 +68,7 @@ private:
 
     Network network;
     unsigned int numDigits, numPrices, delay_ms;
-    bool networkInit, lineControl, resetLine;
+    bool networkInit, lineControl, resetLine, isInTransmission;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
 };

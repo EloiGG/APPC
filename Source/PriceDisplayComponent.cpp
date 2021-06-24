@@ -94,7 +94,7 @@ Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& 
 
 void PriceDisplayComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
-	for (int i = 0; i < numPrices; i++) {
+	for (int i = 0; i < Core::get().getNumPrices(); i++) {
 		prices[i].updatePrices(whoCalled, priceIndex);
 	}
 }

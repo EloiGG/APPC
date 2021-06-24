@@ -27,6 +27,7 @@ public:
 	{
 		Core::get().setNumDigits(4);
 		Core::get().setNumPrices(4);
+		Core::get().setDelay_ms(50);
 		for (int i = 0; i < Core::MAX_PRICES; ++i)
 			Core::get().setPrice(i, Price("0"));
 

@@ -60,6 +60,16 @@ void Core::setDelay_ms(unsigned int newDelay)
 	delay_ms = newDelay;
 }
 
+bool Core::getIsInTransmission()
+{
+	return isInTransmission;
+}
+
+void Core::setInTransmission(bool shouldBeInTransmission)
+{
+	isInTransmission = shouldBeInTransmission;
+}
+
 void Core::updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex)
 {
 	if (pricesUpdateFunction)

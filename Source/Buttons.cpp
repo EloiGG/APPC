@@ -35,11 +35,16 @@ Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 1), progression(send
 		s.createSequence(Core::get());
 		sendThread.setSequence(s);
 		stop.setEnabled(true);
+		Core::get().setInTransmission(true);
+		Core::get().updateVisualization();
 		progression.start();
 		sendThread.startThread();
 	};
 
-	stop.onClick = [this]() {sendThread.stopThread(2500); };
+	stop.onClick = [this]() 
+	{
+		sendThread.askToExit();
+	};
 }
 
 Buttons::~Buttons()
@@ -49,8 +54,6 @@ Buttons::~Buttons()
 
 void Buttons::paint(juce::Graphics& g)
 {
-	/*g.setColour(Colours::antiquewhite);
-	g.fillRect(send.getBounds().withWidth(jmap<float>(sendThread.getProgression(), 0, getWidth())).toFloat());*/
 }
 
 void Buttons::resized()
@@ -60,6 +63,14 @@ void Buttons::resized()
 	send.setBounds(grid.getRectangle(1, 0, 4, 1));
 	stop.setBounds(grid.getRectangle(0, 0, 1, 1));
 	progression.setBounds(send.getBounds());
+}
+
+void Buttons::updateVizualisation()
+{
+	if (Core::get().getIsInTransmission())
+		stop.setEnabled(true);
+	else
+		stop.setEnabled(false);
 }
 
 
@@ -78,13 +89,14 @@ void Progression::paint(juce::Graphics& g)
 	g.setColour(Colours::white.withAlpha((float)0.8));
 	if (p <= 0.999f)
 		g.fillRect(getLocalBounds().withWidth(jmap<float>(thread.getProgression(), 0, getWidth())).toFloat());
+	g.setColour(Colours::black);
+	g.drawFittedText(String(int(p*100)) + String("%"), getLocalBounds(), Justification::centred, 1);
 }
 
 void Progression::timerCallback()
 {
 	repaint();
 	if (thread.getProgression() >= 0.999f) {
-		DBG("fin");
 		stopTimer();
 	}
 }

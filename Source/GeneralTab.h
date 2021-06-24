@@ -14,6 +14,7 @@
 #include "GridTool.h"
 #include "LookAndFeel.h"
 #include "InputComponent.h"
+#include "Disabled.h"
 //==============================================================================
 /*
 */
@@ -37,5 +38,6 @@ private:
     GridTool grid;
     InputComponent nPrices, nDigits, delay;
     CheckBox lineControl, resetLine;
+    Disabled disabled;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)
 };

@@ -10,7 +10,7 @@
 
 #include "SerialThread.h"
 
-SerialThread::SerialThread() : Thread("SerialThread"), progression(0.0f)
+SerialThread::SerialThread() : Thread("SerialThread"), progression(0.0f), exitAsked(false)
 {
 }
 
@@ -32,12 +32,7 @@ float SerialThread::getProgression() const
 
 void SerialThread::run()
 {
-	auto check = [this]() 
-	{
-		if (threadShouldExit()) {
-			uart.close();
-		}
-	};
+
 	auto delay = sequence.getDelay();
 	uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 3);
 	wait(100);
@@ -51,7 +46,16 @@ void SerialThread::run()
 		uart.send();
 		DBG(0x02 << step.order << step.adress << step.character << 0x03);
 		wait(delay);
-		progression = i / (sequence.getSize() - 1);
-		check();
+		progression = (float)i / (sequence.getSize() - 1);
+		if (threadShouldExit() || exitAsked)
+			break;
+	}
+	exitAsked = false;
+	MessageManagerLock mml(this);
+	uart.close();
+	if (mml.lockWasGained())
+	{
+		Core::get().setInTransmission(false);
+		Core::get().updateVisualization();
 	}
 }

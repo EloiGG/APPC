@@ -27,7 +27,8 @@ lineControl("Controle des segments"), resetLine("Effacer si erreur"), delay("Del
 	addAndMakeVisible(loadConfigButton);
 	addAndMakeVisible(lineControl);
 	addAndMakeVisible(resetLine);
-
+	addAndMakeVisible(disabled);
+	disabled.setDisabled(true);
 	loadConfigButton.setLookAndFeel(Core::get().getLookAndFeel().get());
 	connectButton.setLookAndFeel(Core::get().getLookAndFeel().get());
 	loadConfigButton.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
@@ -138,6 +139,7 @@ void GeneralTab::resized()
 	delay.setBounds(grid.getRectangle(0, 4, 4, 5));
 	connectButton.setBounds(grid.getRectangle(0, 10, 2, 12));
 	loadConfigButton.setBounds(grid.getRectangle(2, 10, 4, 12));
+	disabled.setBounds(getLocalBounds());
 }
 
 void GeneralTab::setNumPrices(int newNumPrices)
@@ -155,4 +157,9 @@ void GeneralTab::updateAllParameters()
 	auto& c = Core::get();
 	setNumPrices(c.getNumPrices());
 	setNumDigits(c.getNumDigits());
+	if (c.getIsInTransmission())
+		disabled.setDisabled(true);
+	else
+		disabled.setDisabled(false);
+	repaint();
 }
