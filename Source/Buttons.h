@@ -43,13 +43,14 @@ public:
 	void resized() override;
 	void updateVizualisation();
 private:
-
+	void networkWindows(const Network& net, bool retry = true);
 	FileChooser filechooser;
-	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow;
+	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow, configSuccessWindow;
 	SerialThread sendThread;
 	TextButton connectButton, loadConfigButton;
 	TextButton send, stop;
 	GridTool grid;
 	Progression progression;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Buttons)
 };

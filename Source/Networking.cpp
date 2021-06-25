@@ -10,13 +10,13 @@
 
 #include "Networking.h"
 
-bool Network::err_ok(const String& output)
+bool Network::err_ok(const String& output) 
 {
 	return output.substring(0, 6) != String("Failed") &&
 		output != "{\"message\":\"Username could not be found.\"}";
 }
 
-std::tuple<bool, int> Network::connected()
+std::tuple<bool, int> Network::connected() const
 {
 	URL realURL(url + String("/fuel_prices"));
 	StringPairArray responseHeaders;
@@ -41,7 +41,7 @@ url("https://centofuel2.centaure-systems.fr/api")
 {
 }
 
-String Network::getFuelPrice(int timeout_ms)
+String Network::getFuelPrice(int timeout_ms) const
 {
 	URL realURL(url + String("/fuel_prices"));
 	StringPairArray responseHeaders;
@@ -68,7 +68,7 @@ void Network::setAuthentication(const String& token, const String& password)
 	authPassword = password;
 }
 
-String Network::makeHeader()
+String Network::makeHeader() const
 {
 	return authToken + String(": ") + authPassword;
 }

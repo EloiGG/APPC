@@ -115,10 +115,6 @@ ConfigJSON::ConfigJSON(const File& json)
     parsedJSON = JSON::parse(json);
 }
 
-ConfigJSON::~ConfigJSON()
-{
-}
-
 void ConfigJSON::setFile(const File& json)
 {
     parsedJSON = JSON::parse(json);
@@ -147,4 +143,33 @@ int ConfigJSON::getLineControl()
 int ConfigJSON::getResetLine()
 {
     return (bool)parsedJSON.getProperty("reset_line", -1);
+}
+
+String ConfigJSON::getAPIKey()
+{
+    return parsedJSON.getProperty("api_key", "error");
+}
+
+int ConfigJSON::getDelay()
+{
+    return parsedJSON.getProperty("delay", -1);
+}
+
+String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay)
+{
+    DynamicObject* obj = new DynamicObject();
+    obj->setProperty("id", id);
+    obj->setProperty("base_api", base_api);
+    obj->setProperty("api_key", api_key);
+    obj->setProperty("line_control", line_control);
+    obj->setProperty("reset_line", reset_line);
+
+    var json(obj); // store the outer object in a var [we could have done this earlier]
+
+    return JSON::toString(json);
+}
+
+String ConfigJSON::toString()
+{
+    return makeConfigJSON(getID(), getBaseAPI(), getBaseAPI(), getLineControl(), getResetLine(), getDelay());
 }

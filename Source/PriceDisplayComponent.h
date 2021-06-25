@@ -34,9 +34,10 @@ public:
 
     void setNumDigits(unsigned int num_of_digits);
 
-    Rectangle<int> getFittingRectangle(const Rectangle<int>& r);
+    juce::Rectangle<int> getFittingRectangle(const juce::Rectangle<int>& r);
 
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
+
 
 
 private:

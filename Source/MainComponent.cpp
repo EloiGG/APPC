@@ -1,7 +1,7 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent()
+MainComponent::MainComponent() 
 {
 	Core::get().setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)

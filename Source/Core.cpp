@@ -10,6 +10,7 @@
 
 #include "Core.h"
 
+
 Core& Core::get()
 {
 	static Core core_instance;
@@ -97,6 +98,13 @@ bool Core::hasNetwork()
 	return networkInit;
 }
 
+void Core::saveConfigJSON(const File& f)
+{
+	f.deleteFile();
+	f.create();
+	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), network.getPassword(), lineControl, resetLine, configjson->getDelay()));
+}
+
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit) return;
@@ -113,16 +121,18 @@ void Core::loadInformationsFromNetwork()
 	setNumDigits(nd - 1);
 	for (int i = 0; i < numPrices; i++)
 		updatePrices(TextUpdateOrigin::Omni, i);
-	updateVisualization();
+	if (updateVisualization)
+		updateVisualization();
 }
 
 void Core::loadInformationsFromJSON()
 {
-	auto pwrd = configjson.getAuthPassword();
-	auto id_ = configjson.getID();
-	auto baseAPI = configjson.getBaseAPI();
-	auto reset_line = configjson.getResetLine();
-	auto line_control = configjson.getLineControl();
+	auto pwrd = configjson->getAuthPassword();
+	auto id_ = configjson->getID();
+	auto baseAPI = configjson->getBaseAPI();
+	auto reset_line = configjson->getResetLine();
+	auto line_control = configjson->getLineControl();
+	auto delay = configjson->getDelay();
 
 	if (pwrd != "error")
 		setNetwork(Network("X-AUTH-TOKEN", pwrd));
@@ -134,12 +144,13 @@ void Core::loadInformationsFromJSON()
 		resetLine = reset_line;
 	if (line_control != -1)
 		lineControl = line_control;
-
-	loadInformationsFromNetwork();
+	if (delay != -1)
+		delay_ms = delay;
 
 	for (int i = 0; i < numPrices; i++)
 		updatePrices(TextUpdateOrigin::Omni, i);
-	updateVisualization();
+	if (updateVisualization)
+		updateVisualization();
 }
 
 std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
@@ -148,6 +159,6 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 }
 
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
-networkInit(false), delay_ms(0)
+networkInit(false), delay_ms(0), configjson(nullptr)
 {
 }

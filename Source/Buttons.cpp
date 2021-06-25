@@ -12,11 +12,12 @@
 
 //==============================================================================
 Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 2), progression(sendThread),
-loadConfigButton("Charger une configuration"), connectButton("Se connecter au reseau"),
-connectWindow("Se connecter a CentoFuel", "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
-networkErrorWindow("Erreur reseau", "", AlertWindow::AlertIconType::WarningIcon),
-networkSuccessWindow("Connexion reussie", "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
-filechooser("test", File::getCurrentWorkingDirectory().getChildFile("test.config"), String("*.config"))
+loadConfigButton("Charger une configuration"), connectButton(L"Se connecter au réseau"),
+connectWindow(L"Se connecter à CentoFuel", "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
+networkErrorWindow(L"Erreur réseau", "", AlertWindow::AlertIconType::WarningIcon),
+networkSuccessWindow(L"Connexion à CentoFuel réussie", "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
+configSuccessWindow(L"Chargement de la configuration réussie", "", AlertWindow::AlertIconType::InfoIcon),
+filechooser(L"Sélectionner un fichier de config", File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config"))
 {
 	addAndMakeVisible(grid);
 
@@ -47,14 +48,37 @@ filechooser("test", File::getCurrentWorkingDirectory().getChildFile("test.config
 	networkSuccessWindow.addButton("Non", 2, KeyPress(KeyPress::escapeKey, 0, 0));
 	networkErrorWindow.addButton("Fermer", 0);
 
+	configSuccessWindow.addButton("Ok", 1, KeyPress(KeyPress::returnKey, 0, 0));
+
+
+	if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
+		auto& c = Core::get();
+		c.setJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
+		c.loadInformationsFromJSON();
+		if (c.hasNetwork()) {
+			networkWindows(c.getNetwork());
+		}
+	}
+
 	loadConfigButton.onClick = [this]()
 	{
 		if (filechooser.browseForFileToOpen()) {
-			Core::get().setJSON(ConfigJSON(filechooser.getResult()));
-			Core::get().loadInformationsFromJSON();
+			auto& c = Core::get();
+			c.setJSON(filechooser.getResult()); 
+			c.loadInformationsFromJSON();
+			configSuccessWindow.enterModalState(true, ModalCallbackFunction::create([this, &c](int r)
+				{
+					if (r == 1) {
+						configSuccessWindow.setVisible(false);
+						if (c.hasNetwork())
+							networkWindows(c.getNetwork(), false);
+					}
+					else
+						configSuccessWindow.setVisible(false);
+				}
+			));
 		}
 	};
-
 	connectButton.onClick = [this]()
 	{
 		connectWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
@@ -63,38 +87,7 @@ filechooser("test", File::getCurrentWorkingDirectory().getChildFile("test.config
 				{
 					auto text = connectWindow.getTextEditorContents("MDP");
 					Network net("X-AUTH-TOKEN", text);
-					auto connected = net.connected();
-					if (std::get<0>(connected)) {
-						Core::get().setNetwork(net);
-						networkSuccessWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
-							{if (r == 1)Core::get().loadInformationsFromNetwork(); networkSuccessWindow.setVisible(false); }
-						), false);
-					}
-					else {
-						String errorMessage;
-						switch (std::get<1>(connected)) // code erreur	
-						{
-						case 404:
-							errorMessage = "Resource not found";
-							break;
-						case 403:
-							errorMessage = "Access denied";
-							break;
-						case 401:
-							errorMessage = "Authentication problems";
-							break;
-						case 400:
-							errorMessage = "Bad Type";
-							break;
-						default:
-							break;
-						}
-						networkErrorWindow.setMessage(String("Message d'erreur : \n\"") + errorMessage + String("\"\n")
-							+ String("Code erreur : ") + String(std::get<1>(connected)) + String("\n"));
-						networkErrorWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
-							{networkErrorWindow.setVisible(false); connectButton.onClick(); }
-						), false);
-					}
+					networkWindows(net);
 				}
 				connectWindow.setVisible(false);
 			}), false);
@@ -114,7 +107,7 @@ filechooser("test", File::getCurrentWorkingDirectory().getChildFile("test.config
 		sendThread.startThread();
 	};
 
-	stop.onClick = [this]() 
+	stop.onClick = [this]()
 	{
 		sendThread.askToExit();
 	};
@@ -147,6 +140,54 @@ void Buttons::updateVizualisation()
 		stop.setEnabled(false);
 }
 
+void Buttons::networkWindows(const Network& net, bool retry)
+{
+	if (net.getPassword() == "")
+		return;
+	auto connected = net.connected();
+	if (std::get<0>(connected)) {
+		Core::get().setNetwork(net);
+		networkSuccessWindow.setAlwaysOnTop(true);
+		networkSuccessWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
+			{
+				if (r == 1)
+					Core::get().loadInformationsFromNetwork();
+				networkSuccessWindow.setVisible(false);
+			}
+		), false);
+	}
+	else {
+		String errorMessage;
+		switch (std::get<1>(connected)) // code erreur	
+		{
+		case 404:
+			errorMessage = "Resource not found";
+			break;
+		case 403:
+			errorMessage = "Access denied";
+			break;
+		case 401:
+			errorMessage = "Authentication problems";
+			break;
+		case 400:
+			errorMessage = "Bad Type";
+			break;
+		default:
+			break;
+		}
+		networkErrorWindow.setMessage(String("Message d'erreur : \n\"") + errorMessage + String("\"\n")
+			+ String("Code erreur : ") + String(std::get<1>(connected)) + String("\n"));
+		networkErrorWindow.setAlwaysOnTop(true);
+		networkErrorWindow.enterModalState(true, ModalCallbackFunction::create([this, retry](int r)
+			{
+				networkErrorWindow.setVisible(false);
+				if (retry)
+					connectButton.onClick();
+			}
+		), false);
+	}
+}
+
 
 void Progression::start()
 {
@@ -164,7 +205,7 @@ void Progression::paint(juce::Graphics& g)
 	if (p <= 0.999f)
 		g.fillRect(getLocalBounds().withWidth(jmap<float>(thread.getProgression(), 0, getWidth())).toFloat());
 	g.setColour(Colours::black);
-	g.drawFittedText(String(int(p*100)) + String("%"), getLocalBounds(), Justification::centred, 1);
+	g.drawFittedText(String(int(p * 100)) + String("%"), getLocalBounds(), Justification::centred, 1);
 }
 
 void Progression::timerCallback()

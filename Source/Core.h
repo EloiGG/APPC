@@ -31,6 +31,9 @@ public:
 
     Core(const Core&) = delete;
     static Core& get();
+    ~Core() {  }
+    void kill() { delete configjson; }
+
 
     unsigned int getNumDigits();
     void setNumDigits(unsigned int newNumDigits);
@@ -59,22 +62,29 @@ public:
     void setNetwork(const Network& net);
     bool hasNetwork();
 
-    void setJSON(const ConfigJSON& newJSON) { configjson = newJSON; }
+    void setJSON(const File& f) { if (configjson != nullptr) delete configjson; configjson = new ConfigJSON(f); }
+    void saveConfigJSON(const File& f);
 
     void loadInformationsFromNetwork();
     void loadInformationsFromJSON();
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
     std::function<void()> updateVisualization;
+
+
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
-    ConfigJSON configjson;
+    ConfigJSON* configjson;
     Network network;
     unsigned int numDigits, numPrices, delay_ms, id;
     bool networkInit, lineControl, resetLine, isInTransmission;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
+
+    JUCE_LEAK_DETECTOR(Core)
 };
+
+
 
 #endif // !CORE_H

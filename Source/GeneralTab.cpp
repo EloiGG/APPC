@@ -13,7 +13,7 @@
 
 //==============================================================================
 GeneralTab::GeneralTab() : grid(4, 12), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
-lineControl("Controle des segments"), resetLine("Effacer si erreur"), delay("Delai d'affichage (ms)", 50), id("id", 1)
+lineControl(L"Contrôle des segments"), resetLine("Effacer si erreur"), delay(L"Délai d'affichage (ms)", 50), id("id", 1)
 {
 	addAndMakeVisible(nPrices);
 	addAndMakeVisible(nDigits);
@@ -99,6 +99,10 @@ void GeneralTab::updateAllParameters()
 	auto& c = Core::get();
 	setNumPrices(c.getNumPrices());
 	setNumDigits(c.getNumDigits());
+	id.setInput(String(c.getID()));
+	resetLine.setToggleState(c.getResetLine(), NotificationType::sendNotification);
+	lineControl.setToggleState(c.getLineControl(), NotificationType::sendNotification);
+	delay.setInput(String(c.getDelay()));
 	if (c.getIsInTransmission())
 		disabled.setDisabled(true);
 	else

@@ -15,16 +15,17 @@ class Network
 {
 public:
     static bool err_ok(const String& output);
-    std::tuple<bool, int> connected();
+    std::tuple<bool, int> connected() const;
 
 public:
 
     Network();
     Network(const String& token, const String& password);
-    String getFuelPrice(int timeout_ms = 10000);
+    String getFuelPrice(int timeout_ms = 10000) const;
     void setAuthentication(const String& token, const String& password);
+    String getPassword() const { return authPassword; }
 private:
-    String makeHeader();
+    String makeHeader() const;
     String authToken, authPassword;
     String url;
 };
