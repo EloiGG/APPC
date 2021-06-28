@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    RightPanel.h
-    Created: 19 Jun 2021 1:07:30am
-    Author:  Eloi
+    DebugTab.h
+    Created: 28 Jun 2021 3:24:13pm
+    Author:  admin
 
   ==============================================================================
 */
@@ -12,27 +12,27 @@
 
 #include <JuceHeader.h>
 #include "LookAndFeel.h"
-#include "GeneralTab.h"
-#include "PricesTab.h"
-#include "DebugTab.h"
+#include "JSON.h"
+#include "GridTool.h"
+#include "Core.h"
+#include "InputComponent.h"
 
 //==============================================================================
 /*
 */
-class TabComponent  : public juce::TabbedComponent
+class DebugTab  : public juce::Component
 {
 public:
-    TabComponent();
-    ~TabComponent() override;
+    DebugTab();
+    ~DebugTab() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void updateParameters();
-
 private:
-    PricesTab priceTab;
-    GeneralTab genTab;
-    DebugTab debugTab;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TabComponent)
+    TextButton loadSequence;
+    GridTool grid;
+    FileChooser fileSelector;
+    CheckBox playSequenceCB;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DebugTab)
 };

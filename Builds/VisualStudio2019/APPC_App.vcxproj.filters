@@ -232,6 +232,9 @@
     <ClCompile Include="..\..\Source\LookAndFeel.cpp">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DebugTab.cpp">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PriceTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
@@ -1493,6 +1496,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\SpecialLabel.h">
       <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DebugTab.h">
+      <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PriceTab.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>

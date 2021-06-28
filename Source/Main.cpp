@@ -34,32 +34,10 @@ public:
 
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
-		//ConfigJSON configJSON(File("C:/Users/admin/Desktop/configAPPC.json"));
-		//auto authTk = configJSON.getAuthToken(), authPswrd = configJSON.getAuthPassword();
-		//if (ConfigJSON::err_ok(authPswrd) && ConfigJSON::err_ok(authTk)) {
-		//	Network net(authTk, authPswrd);
-		//	auto a = net.getFuelPrice();
-		//	if (Network::err_ok(a)) {
-		//		PricesJSON prx(a);
-		//		for (int i = 0; i < prx.getNumPrices(); i++) {
-		//			DBG(prx[i].getPrice() << " " << prx[i].getGasStation());
-
-		//		}
-		//		Price p = String("3222");// prx[0].getPrice();
-
-		//	}
-		//	else
-		//		jassertfalse; //Erreur réseau
-		//}
-		//else
-		//	jassertfalse; //Impossible de lire l'authentification dans le JSON
-
 	}
 
 	void shutdown() override
 	{
-		// Add your application's shutdown code here..
-
 		mainWindow = nullptr; // (deletes our window)
 		Core::get().kill();
 	}
@@ -73,9 +51,6 @@ public:
 
 	void anotherInstanceStarted(const juce::String& commandLine) override
 	{
-		// When another instance of the app is launched while this one is running,
-		// this method is invoked, and the commandLine parameter tells you what
-		// the other instance's command-line arguments were.
 	}
 
 	//==============================================================================

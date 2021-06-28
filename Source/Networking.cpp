@@ -10,7 +10,7 @@
 
 #include "Networking.h"
 
-bool Network::err_ok(const String& output) 
+bool Network::err_ok(const String& output)
 {
 	return output.substring(0, 6) != String("Failed") &&
 		output != "{\"message\":\"Username could not be found.\"}";
@@ -18,6 +18,7 @@ bool Network::err_ok(const String& output)
 
 std::tuple<bool, int> Network::connected() const
 {
+	Log::write(L"Test de communication avec CentoFuel : ");
 	URL realURL(url + String("/fuel_prices"));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
@@ -25,10 +26,12 @@ std::tuple<bool, int> Network::connected() const
 		5000, // timeout in millisecs
 		&responseHeaders, &statusCode)))
 	{
+		Log::write(L"test réussi !\n");
 		if (statusCode == 200)
 			return { true, statusCode };
 	}
 
+	Log::write(L"échec de la connexion au réseau !\n");
 	return { false, statusCode };
 }
 

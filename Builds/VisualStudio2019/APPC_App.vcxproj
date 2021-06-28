@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\DebugTab.cpp"/>
     <ClCompile Include="..\..\Source\PriceTab.cpp"/>
     <ClCompile Include="..\..\Source\RightPanel.cpp"/>
     <ClCompile Include="..\..\Source\TabbedComponent.cpp"/>
@@ -1275,6 +1276,7 @@
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel.h"/>
     <ClInclude Include="..\..\Source\SpecialLabel.h"/>
+    <ClInclude Include="..\..\Source\DebugTab.h"/>
     <ClInclude Include="..\..\Source\PriceTab.h"/>
     <ClInclude Include="..\..\Source\RightPanel.h"/>
     <ClInclude Include="..\..\Source\TabbedComponent.h"/>

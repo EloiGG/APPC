@@ -57,6 +57,13 @@ input([this]()
 		input.setText(String(n), NotificationType::sendNotification);
 		input.textManuallyUpdated();
 	};
+
+	input.onTextChange = [this]()
+	{
+		Log::write(L"Changement du paramètre \"" + String(title.getText().substring(0, title.getText().length() - 3)) + L"\". \tNouvelle valeur : " + String(input.getText()), 2);
+		Log::ln(2);
+		Log::update();
+	};
 }
 
 	InputComponent::InputComponent(const String& parameterName, const int& defaultValue) : InputComponent(parameterName, String(defaultValue))
@@ -92,4 +99,12 @@ input([this]()
 	CheckBox::CheckBox(const String& text) : ToggleButton(text + String(" : "))
 	{
 		setLookAndFeel(Core::get().getLookAndFeel().get());
+		onClick = [this]() {
+			Log::write(L"Changement d'état du paramètre \"", 2);
+			Log::write(getButtonText().substring(0, getButtonText().length() - 3), 2);
+			Log::write(L"\". Nouvel état : ");
+			Log::write(String((int)getToggleState()));
+			Log::ln(2);
+			Log::update();
+		};
 	}

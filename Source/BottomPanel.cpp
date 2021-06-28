@@ -15,10 +15,13 @@
 BottomPanel::BottomPanel()
 {
     addAndMakeVisible(t);
-    t.setFont(Font(15));
+    t.setFont(Font(16));
     t.setMultiLine(true);
     t.setReturnKeyStartsNewLine(true);
-    Log::get().updateFunction = [this]() {t.setText(Log::get().getString(debuggingLevel)); };
+    t.setColour(TextEditor::ColourIds::backgroundColourId, lfColours::priceBackground);
+    t.setReadOnly(true);
+    t.setScrollToShowCursor(true);
+    Log::get().updateFunction = [this]() {t.setText(Log::get().getString(debuggingLevel)); t.pageDown(false); };
 }
 
 BottomPanel::~BottomPanel()

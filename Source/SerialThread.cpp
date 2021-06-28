@@ -33,9 +33,16 @@ float SerialThread::getProgression() const
 
 void SerialThread::run()
 {
+	Log::title("Transmission");
 	auto delay = sequence.getDelay();
-
-	uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 3);
+	Log::write("\nOuverture du port COM3...");
+	Log::write("avec baud rate = 1200, 8 bits/byte, un stop bit, pas de parity bit...", 2);
+	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 3))
+		Log::write("port ouvert !\n");
+	//else {
+	//	Log::write("erreur lors de l'ouverture\n");
+	//	goto fin;
+	//}
 
 	wait(100);
 	for (int i = 0; i < sequence.getSize(); i++) {
@@ -47,15 +54,44 @@ void SerialThread::run()
 		uart.addByte(0x03);				// fin séquence
 		uart.send();
 
-		getModuleResponse(step.adress - 0x30, timeout_ms);
+		Log::write(CharPointer_UTF8("Envoi de la requête d'affichage du caractère "));
+		Log::write(String(step.character - 48));
+		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
+		Log::write(CharPointer_UTF8(" à l'adresse "));
+		Log::write(String(step.adress - 48));
+		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) + String(step.order) + String(" ") + String(step.adress) + String(" ") +
+			String(step.character) + String(" ") + String("03"));
+		Log::ln();
 
+		Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
+		auto response = getModuleResponse(step.adress - 0x30, timeout_ms);
+		if (response.err_ok)
+			Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
+		else if (response.err_illisible)
+			Log::write(CharPointer_UTF8("réponse du module illisible !"));
+		else {
+			Log::write("Il y a des erreurs sur les segments suivants : ");
+			for (int i = 0; i < 7; i++)
+				if (response.erreurs[i] == true) {
+					char str[] = "A";
+					str[0] += i;
+					Log::write(str);
+				}
+		}
+		Log::ln();
+		{
+			MessageManagerLock m(this);
+			Log::update();
+		}
 		wait(delay);
 		progression = (float)i / (sequence.getSize() - 1);
 		if (threadShouldExit() || exitAsked)
 			break;
 	}
+fin:
 	exitAsked = false;
 	MessageManagerLock mml(this);
+
 	uart.close();
 	if (mml.lockWasGained())
 	{
@@ -70,7 +106,9 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 	s.reset();
 	unsigned char c = 0;
 	while (c != 0x02) {
-		s.wait_ms(30);
+		wait(30);
+		if (threadShouldExit() || exitAsked)
+			return em;
 		uart.read(&c); //...0x02
 		if (s.elapsed_time_ms() > timeout_ms) {
 			em.err_ok = false;

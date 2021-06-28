@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "Core.h"
 #include "SpecialLabel.h"
+#include "Log.h"
 
 //==============================================================================
 /*

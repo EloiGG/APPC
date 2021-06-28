@@ -19,6 +19,8 @@
         </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
           <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
+            <FILE id="fpO3xU" name="DebugTab.cpp" compile="1" resource="0" file="Source/DebugTab.cpp"/>
+            <FILE id="Kn13wz" name="DebugTab.h" compile="0" resource="0" file="Source/DebugTab.h"/>
             <FILE id="kxRsal" name="PriceTab.cpp" compile="1" resource="0" file="Source/PriceTab.cpp"/>
             <FILE id="PSCvYn" name="PriceTab.h" compile="0" resource="0" file="Source/PriceTab.h"/>
             <FILE id="wL6Gxe" name="RightPanel.cpp" compile="1" resource="0" file="Source/RightPanel.cpp"/>

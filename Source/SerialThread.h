@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "Sequence.h"
 #include "UART.h"
+#include "Core.h"
 
 class Stopwatch
 {
@@ -44,8 +45,6 @@ public:
 	}
 	void wait(double seconds)
 	{
-		/*Clock::time_point start = Clock::now();
-		while (std::chrono::duration_cast<std::chrono::seconds>(Clock::now() - start).count() < seconds);*/
 		std::this_thread::sleep_for(std::chrono::duration<double>(seconds));
 	}
 	void wait_ms(double milliseconds)

@@ -10,6 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "Log.h"
 
 /// <summary>
 /// Contient toutes les informations autour d'un prix. Informations récupérables via les accesseurs
@@ -80,5 +81,18 @@ public:
 	String toString();
 
 private:
+	var parsedJSON;
+};
+
+class SequenceJSON
+{
+public:
+	SequenceJSON(const File& json = File());
+	String getPrice(int sequenceStep, int price);
+	int getSequenceSize();
+	int getNumPrices();
+private:
+	int sequenceSize;
+	int numPrices;
 	var parsedJSON;
 };

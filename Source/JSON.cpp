@@ -112,7 +112,18 @@ bool ConfigJSON::err_ok(const String& output)
 
 ConfigJSON::ConfigJSON(const File& json)
 {
+    Log::write("\nLecture du fichier JSON ");
+    Log::write(json.getFullPathName());
+    Log::ln();
+
     parsedJSON = JSON::parse(json);
+
+    if (parsedJSON == var())
+        Log::write("Impossible de lire le fichier");
+    else
+        Log::write(L"Lecture réussie");
+    Log::ln(1,2);
+    Log::update();
 }
 
 void ConfigJSON::setFile(const File& json)
@@ -164,7 +175,7 @@ String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& 
     obj->setProperty("line_control", line_control);
     obj->setProperty("reset_line", reset_line);
 
-    var json(obj); // store the outer object in a var [we could have done this earlier]
+    var json(obj);
 
     return JSON::toString(json);
 }
@@ -172,4 +183,29 @@ String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& 
 String ConfigJSON::toString()
 {
     return makeConfigJSON(getID(), getBaseAPI(), getBaseAPI(), getLineControl(), getResetLine(), getDelay());
+}
+
+SequenceJSON::SequenceJSON(const File& json)
+{
+    parsedJSON = JSON::parse(json);
+    sequenceSize = parsedJSON.getArray()->size();
+    auto a  = parsedJSON.getArray();
+    numPrices = a->operator[](0).getProperty("prices", "error").getArray()->size();
+    String b = a->operator[](0).getProperty("prices", "error").getArray()->operator[](0);
+}
+
+String SequenceJSON::getPrice(int sequenceStep, int price)
+{
+    auto a = parsedJSON.getArray();
+    return a->operator[](sequenceStep).getProperty("prices", "error").getArray()->operator[](price);
+}
+
+int SequenceJSON::getSequenceSize()
+{
+    return sequenceSize;
+}
+
+int SequenceJSON::getNumPrices()
+{
+    return numPrices;
 }

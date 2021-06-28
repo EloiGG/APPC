@@ -108,7 +108,7 @@ void Core::saveConfigJSON(const File& f)
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit) return;
-
+	Log::write(L"Chargement des informations depuis le réseau...\n\n");
 	auto s = network.getFuelPrice();
 	PricesJSON p(s);
 	numPrices = p.getNumPrices();
@@ -127,6 +127,7 @@ void Core::loadInformationsFromNetwork()
 
 void Core::loadInformationsFromJSON()
 {
+	Log::write(L"Lecture des informations du fichier JSON. Paramètres détectés : \n", 2);
 	auto pwrd = configjson->getAuthPassword();
 	auto id_ = configjson->getID();
 	auto baseAPI = configjson->getBaseAPI();
@@ -134,23 +135,42 @@ void Core::loadInformationsFromJSON()
 	auto line_control = configjson->getLineControl();
 	auto delay = configjson->getDelay();
 
-	if (pwrd != "error")
+	if (pwrd != "error") {
+		Log::write("Mot de passe\n",2);
 		setNetwork(Network("X-AUTH-TOKEN", pwrd));
-	if (id_ != -1)
+	}
+	if (id_ != -1) {
+		Log::write("ID\n", 2);
 		id = id_;
-	if (baseAPI != "error");
+	}
+	if (baseAPI != "error") {
+		Log::write("Adresse API\n", 2);
 	// a faire
-	if (reset_line != -1)
+	}
+	if (reset_line != -1) {
+		Log::write("Reset line\n", 2);
 		resetLine = reset_line;
-	if (line_control != -1)
+	}
+	if (line_control != -1) {
+		Log::write("Line control\n", 2);
 		lineControl = line_control;
-	if (delay != -1)
+	}
+	if (delay != -1) {
+		Log::write("Delay\n", 2);
 		delay_ms = delay;
+	}
+
+	Log::ln(2, 1);
 
 	for (int i = 0; i < numPrices; i++)
 		updatePrices(TextUpdateOrigin::Omni, i);
 	if (updateVisualization)
 		updateVisualization();
+}
+
+void Core::setSequence(const Sequence& newSequence)
+{
+	sequence = newSequence;
 }
 
 std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()

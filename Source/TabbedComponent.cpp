@@ -13,8 +13,9 @@
 //==============================================================================
 TabComponent::TabComponent() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
 {
-    addTab(L"Général", lfColours::tabBackground, &genTab, true);
+    addTab(CharPointer_UTF8("Général"), lfColours::tabBackground, &genTab, true);
     addTab("Prix", lfColours::tabBackground, &priceTab, true);
+    addTab(CharPointer_UTF8("Dépannage"), lfColours::tabBackground, &debugTab, true);
 }
 
 TabComponent::~TabComponent()
@@ -24,15 +25,6 @@ TabComponent::~TabComponent()
 void TabComponent::paint (juce::Graphics& g) 
 {
     TabbedComponent::paint(g);
-    //g.fillAll(lfColours::panelBackground);
-
-    //g.setColour (juce::Colours::grey);
-    //g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    //g.setColour (juce::Colours::white);
-    //g.setFont (14.0f);
-    //g.drawText ("RightPanel", getLocalBounds(),
-    //            juce::Justification::centred, true);   // draw some placeholder text
 }
 
 void TabComponent::resized()

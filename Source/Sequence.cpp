@@ -10,6 +10,13 @@
 
 #include "Sequence.h"
 
+Sequence Sequence::getNewSequence(const unsigned int& numPrices, const unsigned int& numDigits, Price* prices, const unsigned int& delay_in_milliseconds, const bool& lineControl)
+{
+	Sequence s;
+	s.createSequence(numPrices, numDigits, prices, delay_in_milliseconds, lineControl);
+	return s;
+}
+
 Sequence::Sequence() :  delay_ms(0)
 {
 	v.reserve(16);
@@ -34,14 +41,14 @@ void Sequence::createSequence(const unsigned int& numPrices, const unsigned int&
 }
 
 
-void Sequence::createSequence(const Core& core)
-{
-	auto& c = core.get();
-	Price prices[Core::MAX_PRICES];
-	for (int i = 0; i < c.getNumPrices(); i++)
-		prices[i] = c.getPrice(i);
-	createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
-}
+//void Sequence::createSequence(const Core& core)
+//{
+//	auto& c = core.get();
+//	Price prices[Core::MAX_PRICES];
+//	for (int i = 0; i < c.getNumPrices(); i++)
+//		prices[i] = c.getPrice(i);
+//	createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
+//}
 
 void Sequence::operator+=(const Sequence& seq2)
 {

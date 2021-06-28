@@ -17,6 +17,7 @@
 #include "LookAndFeel.h"
 #include "Networking.h"
 #include "JSON.h"
+#include "Sequence.h"
 
 enum class TextUpdateOrigin
 {
@@ -67,10 +68,15 @@ public:
 
     void loadInformationsFromNetwork();
     void loadInformationsFromJSON();
+    
+    void setSequence(const Sequence& newSequence);
+    Sequence getSequence() { return sequence; }
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
     std::function<void()> updateVisualization;
 
+    void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
+    bool getPlaySequence() { return playSequence; }
 
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
@@ -78,10 +84,10 @@ private:
     ConfigJSON* configjson;
     Network network;
     unsigned int numDigits, numPrices, delay_ms, id;
-    bool networkInit, lineControl, resetLine, isInTransmission;
+    bool networkInit, lineControl, resetLine, isInTransmission, playSequence;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
-
+    Sequence sequence;
     JUCE_LEAK_DETECTOR(Core)
 };
 
