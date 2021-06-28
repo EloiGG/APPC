@@ -62,6 +62,8 @@
       <GROUP id="{F64676A4-8177-02D2-7F33-B9CAF93DCB89}" name="Core">
         <FILE id="SXdiMT" name="Core.cpp" compile="1" resource="0" file="Source/Core.cpp"/>
         <FILE id="a4krBc" name="Core.h" compile="0" resource="0" file="Source/Core.h"/>
+        <FILE id="dJOiSX" name="Log.cpp" compile="1" resource="0" file="Source/Log.cpp"/>
+        <FILE id="i1eu5s" name="Log.h" compile="0" resource="0" file="Source/Log.h"/>
         <FILE id="fLbqtz" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
         <FILE id="GRa8gy" name="Price.cpp" compile="1" resource="0" file="Source/Price.cpp"/>
         <FILE id="fGkoQz" name="Price.h" compile="0" resource="0" file="Source/Price.h"/>

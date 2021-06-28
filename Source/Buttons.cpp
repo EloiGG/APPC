@@ -12,12 +12,12 @@
 
 //==============================================================================
 Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 2), progression(sendThread),
-loadConfigButton("Charger une configuration"), connectButton(L"Se connecter au réseau"),
-connectWindow(L"Se connecter à CentoFuel", "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
-networkErrorWindow(L"Erreur réseau", "", AlertWindow::AlertIconType::WarningIcon),
-networkSuccessWindow(L"Connexion à CentoFuel réussie", "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
-configSuccessWindow(L"Chargement de la configuration réussie", "", AlertWindow::AlertIconType::InfoIcon),
-filechooser(L"Sélectionner un fichier de config", File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config"))
+loadConfigButton("Charger une configuration"), connectButton(L"Se connecter au rÃ©seau"),
+connectWindow(L"Se connecter Ã  CentoFuel", "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
+networkErrorWindow(L"Erreur rÃ©seau", "", AlertWindow::AlertIconType::WarningIcon),
+networkSuccessWindow(L"Connexion Ã  CentoFuel rÃ©ussie", "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
+configSuccessWindow(L"Chargement de la configuration rÃ©ussie", "", AlertWindow::AlertIconType::InfoIcon),
+filechooser(L"SÃ©lectionner un fichier de config", File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config"))
 {
 	addAndMakeVisible(grid);
 
@@ -198,8 +198,9 @@ void Progression::paint(juce::Graphics& g)
 {
 	if (!thread.isThreadRunning())
 		return;
-
 	auto p = thread.getProgression();
+	Log::write(String("aaaaaaaaaaaaa"));
+	Log::update();
 	g.fillAll(lfColours::sendButton);
 	g.setColour(Colours::white.withAlpha((float)0.8));
 	if (p <= 0.999f)

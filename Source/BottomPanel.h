@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "LookAndFeel.h"
+#include "Log.h"
 
 //==============================================================================
 /*
@@ -25,6 +26,10 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    TextEditor* getTextEditor();
+
 private:
+    TextEditor t;
+    int debuggingLevel = 1;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BottomPanel)
 };

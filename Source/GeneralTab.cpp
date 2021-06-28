@@ -13,7 +13,7 @@
 
 //==============================================================================
 GeneralTab::GeneralTab() : grid(4, 12), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
-lineControl(L"Contrôle des segments"), resetLine("Effacer si erreur"), delay(L"Délai d'affichage (ms)", 50), id("id", 1)
+lineControl(L"ContrÃ´le des segments"), resetLine("Effacer si erreur"), delay(L"DÃ©lai d'affichage (ms)", 50), id("id", 1)
 {
 	addAndMakeVisible(nPrices);
 	addAndMakeVisible(nDigits);

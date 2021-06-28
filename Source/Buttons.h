@@ -16,6 +16,7 @@
 #include "Core.h"
 #include "SerialThread.h"
 #include "Sequence.h"
+#include "Log.h"
 
 //==============================================================================
 /*

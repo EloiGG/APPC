@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\Source\BottomPanel.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Core.cpp"/>
+    <ClCompile Include="..\..\Source\Log.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\Price.cpp"/>
     <ClCompile Include="..\..\Source\Sequence.cpp"/>
@@ -1287,6 +1288,7 @@
     <ClInclude Include="..\..\Source\BottomPanel.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\Core.h"/>
+    <ClInclude Include="..\..\Source\Log.h"/>
     <ClInclude Include="..\..\Source\Price.h"/>
     <ClInclude Include="..\..\Source\Sequence.h"/>
     <ClInclude Include="..\..\Source\SerialThread.h"/>

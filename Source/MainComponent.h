@@ -7,25 +7,26 @@
 #include "LeftPanel.h"
 #include "BottomPanel.h"
 #include "Disabled.h"
+#include "Log.h"
 
 
-class MainComponent  : public juce::Component
+class MainComponent : public juce::Component
 {
 public:
-    //==============================================================================
-    MainComponent();
-    ~MainComponent() override;
+	//==============================================================================
+	MainComponent();
+	~MainComponent() override;
 
-    //==============================================================================
-    void paint (juce::Graphics&) override;
-    void resized() override;
+	//==============================================================================
+	void paint(juce::Graphics&) override;
+	void resized() override;
 
-    void updatePrices(TextUpdateOrigin whoCalled, unsigned int index);
+	void updatePrices(TextUpdateOrigin whoCalled, unsigned int index);
 
 private:
-    MiddlePanel mPanel;
-    RightPanel rPanel;
-    BottomPanel bPanel;
+	MiddlePanel mPanel;
+	RightPanel rPanel;
+	BottomPanel bPanel;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

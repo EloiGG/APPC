@@ -271,6 +271,9 @@
     <ClCompile Include="..\..\Source\Core.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Log.cpp">
+      <Filter>APPC\Source\Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
@@ -1528,6 +1531,9 @@
       <Filter>APPC\Source\UI\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Core.h">
+      <Filter>APPC\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Log.h">
       <Filter>APPC\Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Price.h">

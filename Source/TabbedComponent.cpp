@@ -13,7 +13,7 @@
 //==============================================================================
 TabComponent::TabComponent() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
 {
-    addTab(L"Général", lfColours::tabBackground, &genTab, true);
+    addTab(L"GÃ©nÃ©ral", lfColours::tabBackground, &genTab, true);
     addTab("Prix", lfColours::tabBackground, &priceTab, true);
 }
 
