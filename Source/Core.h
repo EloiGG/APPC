@@ -63,8 +63,9 @@ public:
     void setNetwork(const Network& net);
     bool hasNetwork();
 
-    void setJSON(const File& f) { if (configjson != nullptr) delete configjson; configjson = new ConfigJSON(f); }
+    void setConfigJSON(const File& f) { if (configjson != nullptr) delete configjson; configjson = new ConfigJSON(f); }
     void saveConfigJSON(const File& f);
+    void savePriceSave(const File& f);
 
     void loadInformationsFromNetwork();
     void loadInformationsFromJSON();

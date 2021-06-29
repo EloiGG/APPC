@@ -105,6 +105,16 @@ void Core::saveConfigJSON(const File& f)
 	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), network.getPassword(), lineControl, resetLine, configjson->getDelay()));
 }
 
+void Core::savePriceSave(const File& f)
+{
+	String p[MAX_PRICES];
+	for (int i = 0; i < MAX_PRICES; i++)
+		p[i] = prices[i].toString(MAX_DIGITS);
+	f.deleteFile();
+	f.create();
+	f.replaceWithText(PriceSave::makePriceSave(p, numPrices));
+}
+
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit) return;

@@ -29,9 +29,13 @@ public:
 		Core::get().setNumPrices(4);
 		Core::get().setDelay_ms(50);
 		Core::get().setID(17);
-		for (int i = 0; i < Core::MAX_PRICES; ++i)
+		PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
+		for (int i = 0; i < lastPrices.getNumPrices(); ++i)
+			Core::get().setPrice(i, lastPrices.getPrice(i));
+		for (int i = lastPrices.getNumPrices(); i < Core::MAX_PRICES; ++i)
 			Core::get().setPrice(i, Price("0"));
 
+		
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 	}
@@ -45,6 +49,7 @@ public:
 	//==============================================================================
 	void systemRequestedQuit() override
 	{
+		Core::get().savePriceSave(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 		Core::get().saveConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
 		quit();
 	}

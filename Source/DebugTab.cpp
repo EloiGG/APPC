@@ -12,7 +12,7 @@
 #include "DebugTab.h"
 
 //==============================================================================
-DebugTab::DebugTab() : grid(4, 10), loadSequence(CharPointer_UTF8("Charger une séquence")),
+DebugTab::DebugTab() : grid(4, 10), loadSequence(CharPointer_UTF8("Charger une sequence")),
 fileSelector(L"Charger une séquence", File::getCurrentWorkingDirectory().getParentDirectory(), "*.sequence"),
 playSequenceCB(L"Jouer la séquence")
 {

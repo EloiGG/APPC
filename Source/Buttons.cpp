@@ -55,7 +55,7 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 		Log::write("Chargement du fichier init.config");
 		Log::ln();
 		auto& c = Core::get();
-		c.setJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
+		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
 		c.loadInformationsFromJSON();
 		if (c.hasNetwork()) {
 			networkWindows(c.getNetwork());
@@ -66,7 +66,7 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 	{
 		if (filechooser.browseForFileToOpen()) {
 			auto& c = Core::get();
-			c.setJSON(filechooser.getResult());
+			c.setConfigJSON(filechooser.getResult());
 			c.loadInformationsFromJSON();
 			configSuccessWindow.enterModalState(true, ModalCallbackFunction::create([this, &c](int r)
 				{

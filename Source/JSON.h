@@ -22,6 +22,7 @@ public:
 	PriceJSON(DynamicObject* d);
 
 	String getPrice();
+	void setPrice(const String& newPrice);
 	int getId(); 
 	String getGasStation();
 	String getFuel();
@@ -53,6 +54,7 @@ public:
 	float getPrice();
 
 	PriceJSON operator[](int index);
+
 private:
 	var parsedJSON;
 };
@@ -95,4 +97,16 @@ private:
 	int sequenceSize;
 	int numPrices;
 	var parsedJSON;
+};
+
+class PriceSave
+{
+public:
+	PriceSave(const File& file = File());
+	String getPrice(int index);
+	static String makePriceSave(const String* prices, int numPrices);
+	int getNumPrices();
+
+private:
+	var parsedPriceSave;
 };

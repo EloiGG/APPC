@@ -50,6 +50,13 @@ String PriceJSON::getPrice()
     return dynObj->getProperty("price").toString();
 }
 
+void PriceJSON::setPrice(const String& newPrice)
+{
+    dynObj->setProperty("oldPrice", getPrice());
+    dynObj->setProperty("price", newPrice.getFloatValue());
+    //String s = Time::getCurrentTime().toString(true);
+}
+
 int PriceJSON::getId()
 {
     return dynObj->getProperty("id");
@@ -208,4 +215,33 @@ int SequenceJSON::getSequenceSize()
 int SequenceJSON::getNumPrices()
 {
     return numPrices;
+}
+
+PriceSave::PriceSave(const File& file)
+{
+    parsedPriceSave = JSON::parse(file);
+}
+
+String PriceSave::getPrice(int index)
+{
+    auto& v = *parsedPriceSave.getProperty("prices", "error").getArray();
+    return v[index];
+}
+
+String PriceSave::makePriceSave(const String* prices, int numPrices)
+{
+    DynamicObject* obj = new DynamicObject();
+    var p;
+    for (int i = 0; i < numPrices; i++)
+        p.append(prices[i]);
+    obj->setProperty("prices", p);
+
+    var json(obj);
+
+    return JSON::toString(json);
+}
+
+int PriceSave::getNumPrices()
+{
+    return parsedPriceSave.getProperty("prices", "error").getArray()->size();
 }

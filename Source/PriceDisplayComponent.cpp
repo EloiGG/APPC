@@ -12,9 +12,8 @@
 #include "PriceDisplayComponent.h"
 
 //==============================================================================
-PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0)
+PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0), prices{0,1,2,3,4,5,6,7,8,9}
 {
-	
 	addChildComponent(grid);
 	init();
 }
