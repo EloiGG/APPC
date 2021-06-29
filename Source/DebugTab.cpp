@@ -12,16 +12,28 @@
 #include "DebugTab.h"
 
 //==============================================================================
-DebugTab::DebugTab() : grid(4, 10), loadSequence(CharPointer_UTF8("Charger une sequence")),
+DebugTab::DebugTab() : grid(4, 10), loadSequence(L"Charger une séquence"),
 fileSelector(L"Charger une séquence", File::getCurrentWorkingDirectory().getParentDirectory(), "*.sequence"),
-playSequenceCB(L"Jouer la séquence")
+playSequenceCB(L"Jouer la séquence"),
+checkPositions("Verifier"), blackout("Tout mettre au noir")
 {
 	addAndMakeVisible(grid);
 	addAndMakeVisible(loadSequence);
 	addAndMakeVisible(playSequenceCB);
+	addAndMakeVisible(checkPositions);
+	addAndMakeVisible(blackout);
+
 	playSequenceCB.setToggleState(false, NotificationType::sendNotification);
 	playSequenceCB.setEnabled(false);
+
 	loadSequence.setLookAndFeel(Core::get().getLookAndFeel().get());
+	blackout.setLookAndFeel(Core::get().getLookAndFeel().get());
+	checkPositions.setLookAndFeel(Core::get().getLookAndFeel().get());
+
+	loadSequence.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	blackout.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	checkPositions.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+
 	loadSequence.onClick = [this]()
 	{
 		if (fileSelector.browseForFileToOpen()) {
@@ -40,14 +52,30 @@ playSequenceCB(L"Jouer la séquence")
 			delete[] prices;
 		}
 	};
-	playSequenceCB.onStateChange = [this]()
+	playSequenceCB.onClick = [this]()
 	{
 		Core::get().setPlaySequence(playSequenceCB.getToggleState());
+	};
+	blackout.onClick = [this]()
+	{
+		auto& c = Core::get();
+		Price p[Core::MAX_PRICES];
+		for (int i = 0; i < Core::MAX_PRICES; i++) {
+			p[i] = " .          ";
+		c.setPrice(i, p[i]);
+		c.updatePrices(TextUpdateOrigin::Omni, i);
+		}
+		sendThread.setSequence(Sequence::getNewSequence(c.getNumPrices(), c.getNumDigits(), p, 20, false));
+		sendThread.setWaitForResponse(false);
+		sendThread.startThread();
 	};
 }
 
 DebugTab::~DebugTab()
 {
+	sendThread.askToExit();
+	sendThread.stopThread(2000);
+	sendThread.waitForThreadToExit(2000);
 }
 
 void DebugTab::paint(juce::Graphics& g)
@@ -60,4 +88,7 @@ void DebugTab::resized()
 	grid.setBounds(getLocalBounds());
 	loadSequence.setBounds(grid.getRectangle(1, 1, 3, 2));
 	playSequenceCB.setBounds(grid.getRectangle(1, 2, 4, 3));
+
+	checkPositions.setBounds(grid.getRectangle(1, 4, 3, 5));
+	blackout.setBounds(grid.getRectangle(1, 5, 3, 6));
 }

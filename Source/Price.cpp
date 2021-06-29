@@ -22,7 +22,7 @@ void Price::operator=(const String& newPrice)
 	if (s.length() >= MAX_LENGH) {
 		s = s.substring(0, MAX_LENGH);
 	}
-	else if (s.length() != 0)
+	if (s.length() != 0)
 	{
 		if (s[1] == '.')
 			s = s.upToFirstOccurrenceOf(".", false, false) + s.substring(s.indexOfChar('.') + 1);

@@ -16,7 +16,7 @@
 #include "GridTool.h"
 #include "Core.h"
 #include "InputComponent.h"
-
+#include "SerialThread.h"
 //==============================================================================
 /*
 */
@@ -30,9 +30,10 @@ public:
     void resized() override;
 
 private:
-    TextButton loadSequence;
+    TextButton loadSequence, checkPositions, blackout;
     GridTool grid;
     FileChooser fileSelector;
     CheckBox playSequenceCB;
+    SerialThread sendThread;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DebugTab)
 };

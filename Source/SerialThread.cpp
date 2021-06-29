@@ -10,7 +10,7 @@
 
 #include "SerialThread.h"
 
-SerialThread::SerialThread() : Thread("SerialThread"), progression(0.0f), exitAsked(false), timeout_ms(3000)
+SerialThread::SerialThread() : Thread("SerialThread"), progression(0.0f), exitAsked(false), timeout_ms(3000), waitForResponse(true)
 {
 	setPriority(9);
 }
@@ -64,37 +64,40 @@ void SerialThread::run()
 			String(step.character) + String(" ") + String("03"));
 		Log::ln();
 
-		Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
-		auto response = getModuleResponse(step.adress - 0x30, getTimeout_ms(step.order));
-		if (response.err_ok)
-			Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
+		if (waitForResponse)
+		{
+			Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
+			auto response = getModuleResponse(step.adress - 0x30, getTimeout_ms(step.order));
+			if (response.err_ok)
+				Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
 
-		else if (response.erreurs[response.err_illisible])
-			Log::write(CharPointer_UTF8("réponse du module illisible !"));
-		else if (response.erreurs[response.err_reponse])
-			Log::write(CharPointer_UTF8("pas de réponse du module"));
-		else {
-			Log::write("Il y a des erreurs sur les segments suivants : ");
-			for (int i = 0; i < 7; i++)
-				if (response.erreurs[i] == true) {
-					char str[] = "A";
-					str[0] += i;
-					Log::write(str);
+			else if (response.erreurs[response.err_illisible])
+				Log::write(CharPointer_UTF8("réponse du module illisible !"));
+			else if (response.erreurs[response.err_reponse])
+				Log::write(CharPointer_UTF8("pas de réponse du module"));
+			else {
+				Log::write("Il y a des erreurs sur les segments suivants : ");
+				for (int i = 0; i < 7; i++)
+					if (response.erreurs[i] == true) {
+						char str[] = "A";
+						str[0] += i;
+						Log::write(str);
+					}
+			}
+			Log::ln();
+
+			{ // messageThread Lock
+				MessageManagerLock m(this);
+				if (m.lockWasGained()) {
+					c.setModuleState(step.adress - 0x30, response);
+					ErrModule r;
+					r.work_in_progress = true;
+					if (!(threadShouldExit() || exitAsked))
+						c.setModuleState(step.adress - 0x30 + 1, r);
+					Log::update();
 				}
-		}
-		Log::ln();
-
-		{ // messageThread Lock
-			MessageManagerLock m(this);
-			if (m.lockWasGained()) {
-				c.setModuleState(step.adress - 0x30, response);
-				ErrModule r;
-				r.work_in_progress = true;
-				c.setModuleState(step.adress - 0x30 + 1, r);
-				Log::update();
 			}
 		}
-
 		wait(delay);
 		progression = (float)i / (sequence.getSize() - 1);
 		if (threadShouldExit() || exitAsked)
@@ -121,7 +124,7 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 		wait(30);
 		if (threadShouldExit() || exitAsked) {
 			em.err_ok = false;
-			em.erreurs[em.err_reponse] = true;
+			em.work_in_progress = true;
 			return em;
 		}
 		uart.read(&c); //...0x02
@@ -131,10 +134,10 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 			return em;
 		}
 	}
-	uart.read(&c);		//0x52
-	uart.read(&c);		//<adresse>
+	uart.read(&c);			//0x52
+	uart.read(&c);			//<adresse>
 	if (c == digitNumber + 0x30) {
-		uart.read(&c);	//<code_err>
+		uart.read(&c);		//<code_err>
 		if (c == 0) {		// si pas d'erreur
 			em.err_ok = true;
 			return em;

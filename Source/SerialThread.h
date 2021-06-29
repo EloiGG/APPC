@@ -64,10 +64,12 @@ public:
 	void askToExit() { exitAsked = true; }
 	ErrModule getModuleResponse(int digitNumber, int timeout_ms);
 	int getTimeout_ms(unsigned char ordre);
+	void setWaitForResponse(bool shouldWaitForResponse) { waitForResponse = shouldWaitForResponse; }
 private:
 	bool exitAsked;
 	float progression;
 	int timeout_ms;
+	bool waitForResponse;
 	virtual void run() override;
 	Stopwatch s;
 	UART uart;
