@@ -41,6 +41,10 @@
                   file="Source/DigitComponent.cpp"/>
             <FILE id="WNBeOL" name="DigitComponent.h" compile="0" resource="0"
                   file="Source/DigitComponent.h"/>
+            <FILE id="N7NSw5" name="ErrorStateIndicator.cpp" compile="1" resource="0"
+                  file="Source/ErrorStateIndicator.cpp"/>
+            <FILE id="okPVlr" name="ErrorStateIndicator.h" compile="0" resource="0"
+                  file="Source/ErrorStateIndicator.h"/>
             <FILE id="Ry1sR7" name="MiddlePanel.cpp" compile="1" resource="0" file="Source/MiddlePanel.cpp"/>
             <FILE id="eVQG2R" name="MiddlePanel.h" compile="0" resource="0" file="Source/MiddlePanel.h"/>
             <FILE id="aL0P05" name="PriceComponent.cpp" compile="1" resource="0"

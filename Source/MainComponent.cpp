@@ -1,7 +1,7 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent() 
+MainComponent::MainComponent()  : tooltip(this, 200)
 {
 	Core::get().setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)
@@ -19,6 +19,7 @@ MainComponent::MainComponent()
 	addAndMakeVisible(mPanel);
 	addAndMakeVisible(rPanel);
 	addAndMakeVisible(bPanel);
+	addAndMakeVisible(tooltip);
 
 	Core::get().updateVisualization();
 
@@ -45,6 +46,7 @@ void MainComponent::resized()
 	//lPanel.setBounds(bounds.removeFromLeft(leftWidth));
 	mPanel.setBounds(bounds.removeFromLeft(middleWidth));
 	rPanel.setBounds(bounds);
+	tooltip.setBounds(getLocalBounds());
 }
 
 void MainComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int index)

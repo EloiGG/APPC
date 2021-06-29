@@ -29,6 +29,7 @@ public:
 		Core::get().setNumPrices(4);
 		Core::get().setDelay_ms(50);
 		Core::get().setID(17);
+
 		PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 		for (int i = 0; i < lastPrices.getNumPrices(); ++i)
 			Core::get().setPrice(i, lastPrices.getPrice(i));

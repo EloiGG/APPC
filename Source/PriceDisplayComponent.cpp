@@ -12,8 +12,12 @@
 #include "PriceDisplayComponent.h"
 
 //==============================================================================
-PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0), prices{0,1,2,3,4,5,6,7,8,9}
+PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0), prices{ 0,1,2,3,4,5,6,7,8,9 }
 {
+	Core::get().setModuleState = [this](int moduleNumber, const ErrModule& newState)
+	{
+		prices[moduleNumber / Core::get().getNumDigits()].setModuleState(moduleNumber % Core::get().getNumDigits(), newState);
+	};
 	addChildComponent(grid);
 	init();
 }
@@ -78,14 +82,14 @@ void PriceDisplayComponent::setNumDigits(unsigned int num_of_digits)
 }
 
 
-Rectangle<int> PriceDisplayComponent::getFittingRectangle(const Rectangle<int>& rect)
+juce::Rectangle<int> PriceDisplayComponent::getFittingRectangle(const juce::Rectangle<int>& rect)
 {
 	float spacingBetwinNumbers = 1.1;
 	float width = numPrices, height = Core::get().getNumDigits() * spacingBetwinNumbers, ratio = width / height;
-	Rectangle<int> r(10, 10, width, height);
+	juce::Rectangle<int> r(10, 10, width, height);
 
 	r.setCentre(rect.getCentre());
-	int exp = std::min((rect.getWidth() - width), (rect.getHeight() - height) / ratio) / 2;
+	int exp = jmin((rect.getWidth() - width), (rect.getHeight() - height) / ratio) / 2;
 	r.expand(exp, exp * ratio);
 
 	return r;
@@ -96,4 +100,9 @@ void PriceDisplayComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned in
 	for (int i = 0; i < Core::get().getNumPrices(); i++) {
 		prices[i].updatePrices(whoCalled, priceIndex);
 	}
+}
+
+void PriceDisplayComponent::setModuleState(int moduleNumber, const ErrModule& newState)
+{
+	prices[moduleNumber / Core::get().getNumDigits()].setModuleState(moduleNumber / Core::get().getNumDigits(), newState);
 }

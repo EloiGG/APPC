@@ -24,7 +24,7 @@ public:
     String toString(size_t stringLengh, bool withComa = true) const;
     void changeOneDigit(unsigned int digitIndex, const String& newDigit);
     bool isEmpty();
-
+    unsigned char getUARTchar(int index);
 
 private:
     String priceString;

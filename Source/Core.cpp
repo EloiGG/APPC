@@ -102,7 +102,7 @@ void Core::saveConfigJSON(const File& f)
 {
 	f.deleteFile();
 	f.create();
-	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), network.getPassword(), lineControl, resetLine, configjson->getDelay()));
+	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), network.getPassword(), lineControl, resetLine, configjson->getDelay(), numDigits, numPrices));
 }
 
 void Core::savePriceSave(const File& f)
@@ -144,6 +144,8 @@ void Core::loadInformationsFromJSON()
 	auto reset_line = configjson->getResetLine();
 	auto line_control = configjson->getLineControl();
 	auto delay = configjson->getDelay();
+	auto numLines = configjson->getNumLines();
+	auto numColumns = configjson->getNumColumns();
 
 	if (pwrd != "error") {
 		Log::write("Mot de passe\n",2);
@@ -166,8 +168,16 @@ void Core::loadInformationsFromJSON()
 		lineControl = line_control;
 	}
 	if (delay != -1) {
-		Log::write("Delay\n", 2);
+		Log::write("Delai\n", 2);
 		delay_ms = delay;
+	}
+	if (numLines != -1) {
+		Log::write("Nombre de lignes\n", 2);
+		numPrices = numLines;
+	}
+	if (numColumns != -1) {
+		Log::write("Nombre de colonnes\n", 2);
+		numDigits = numColumns;
 	}
 
 	Log::ln(2, 1);

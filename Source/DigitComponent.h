@@ -14,6 +14,8 @@
 #include "LookAndFeel.h"
 #include "Core.h"
 #include "SpecialLabel.h"
+#include "ErrorStateIndicator.h"
+#include "SerialThread.h"
 //==============================================================================
 /*
 */
@@ -26,10 +28,13 @@ public:
 	void setDigit(const String& newDigit);
 	String getDigit();
 	void resized() override;
+	void setState(const ErrModule& newState);
+	ErrModule getState() { return state; }
 
 private:
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
+	ErrorStateIndicator stateIndicator;
+	ErrModule state;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
-
 };

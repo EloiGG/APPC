@@ -38,7 +38,7 @@ public:
 
     void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
 
-
+    void setModuleState(int moduleNumber, const ErrModule& newState);
 
 private:
     PriceComponent prices[MAX_PRICES];

@@ -54,7 +54,7 @@ public:
         return Point<int>{ int(getWidth() * x / numcolumns), int(getHeight() * y / numrows) };
     }
 
-    Rectangle<int> getRectangle(float x1, float y1, float x2, float y2)
+    juce::Rectangle<int> getRectangle(float x1, float y1, float x2, float y2)
     {
         return { getPoint(x1,y1), getPoint(x2,y2) };
     }

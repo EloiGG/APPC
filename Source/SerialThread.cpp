@@ -33,16 +33,17 @@ float SerialThread::getProgression() const
 
 void SerialThread::run()
 {
+	auto& c = Core::get();
 	Log::title("Transmission");
 	auto delay = sequence.getDelay();
 	Log::write("\nOuverture du port COM3...");
-	Log::write("avec baud rate = 1200, 8 bits/byte, un stop bit, pas de parity bit...", 2);
+	Log::write("avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...", 2);
 	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 3))
 		Log::write("port ouvert !\n");
-	//else {
-	//	Log::write("erreur lors de l'ouverture\n");
-	//	goto fin;
-	//}
+	else {
+		Log::write("erreur lors de l'ouverture\n");
+		goto fin;
+	}
 
 	wait(100);
 	for (int i = 0; i < sequence.getSize(); i++) {
@@ -54,7 +55,7 @@ void SerialThread::run()
 		uart.addByte(0x03);				// fin séquence
 		uart.send();
 
-		Log::write(CharPointer_UTF8("Envoi de la requête d'affichage du caractère "));
+		Log::write(CharPointer_UTF8("\nEnvoi de la requête d'affichage du caractère "));
 		Log::write(String(step.character - 48));
 		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
 		Log::write(CharPointer_UTF8(" à l'adresse "));
@@ -64,11 +65,14 @@ void SerialThread::run()
 		Log::ln();
 
 		Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
-		auto response = getModuleResponse(step.adress - 0x30, timeout_ms);
+		auto response = getModuleResponse(step.adress - 0x30, getTimeout_ms(step.order));
 		if (response.err_ok)
 			Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
-		else if (response.err_illisible)
+
+		else if (response.erreurs[response.err_illisible])
 			Log::write(CharPointer_UTF8("réponse du module illisible !"));
+		else if (response.erreurs[response.err_reponse])
+			Log::write(CharPointer_UTF8("pas de réponse du module"));
 		else {
 			Log::write("Il y a des erreurs sur les segments suivants : ");
 			for (int i = 0; i < 7; i++)
@@ -79,10 +83,18 @@ void SerialThread::run()
 				}
 		}
 		Log::ln();
-		{
+
+		{ // messageThread Lock
 			MessageManagerLock m(this);
-			Log::update();
+			if (m.lockWasGained()) {
+				c.setModuleState(step.adress - 0x30, response);
+				ErrModule r;
+				r.work_in_progress = true;
+				c.setModuleState(step.adress - 0x30 + 1, r);
+				Log::update();
+			}
 		}
+
 		wait(delay);
 		progression = (float)i / (sequence.getSize() - 1);
 		if (threadShouldExit() || exitAsked)
@@ -107,8 +119,11 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 	unsigned char c = 0;
 	while (c != 0x02) {
 		wait(30);
-		if (threadShouldExit() || exitAsked)
+		if (threadShouldExit() || exitAsked) {
+			em.err_ok = false;
+			em.erreurs[em.err_reponse] = true;
 			return em;
+		}
 		uart.read(&c); //...0x02
 		if (s.elapsed_time_ms() > timeout_ms) {
 			em.err_ok = false;
@@ -138,4 +153,47 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 		em.err_ok = false;
 		return em;
 	}
+}
+
+int SerialThread::getTimeout_ms(unsigned char ordre)
+{
+	int time_out_rep_module = 0;
+	switch (ordre)
+	{
+	case 'P':
+		time_out_rep_module = 2;
+		break;
+
+	case 'W':
+		time_out_rep_module = 2;
+		break;
+
+	case 'F':
+		time_out_rep_module = 8;
+		break;
+
+	case 'A':
+		time_out_rep_module = 3;
+		break;
+
+	case 'T':
+		time_out_rep_module = 8;
+		break;
+
+
+	case 'C':
+		time_out_rep_module = 7;
+		break;
+
+	case 'I':
+		time_out_rep_module = 3;
+		break;
+
+
+	default:
+		time_out_rep_module = 8;
+		break;
+
+	}
+	return time_out_rep_module * 2000;
 }

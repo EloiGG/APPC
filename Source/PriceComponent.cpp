@@ -109,6 +109,11 @@ void PriceComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int price
 	}
 }
 
+void PriceComponent::setModuleState(int digitNumber, const ErrModule& newState)
+{
+	digits[digitNumber].setState(newState);
+}
+
 void PriceComponent::updateDigits()
 {
 	startTimerHz(4);
@@ -178,7 +183,7 @@ void PriceEditor::paint(juce::Graphics& g)
 	if (!isTextEditing) {
 		auto size = getHeight() / 6;
 		float rounding = 3.0f;
-		auto rect = Rectangle(0, 0, size, size).withCentre({ getWidth() / (int)Core::get().getNumDigits(), getHeight() * 3 / 4 }).toFloat();
+		auto rect = juce::Rectangle(0, 0, size, size).withCentre({ getWidth() / (int)Core::get().getNumDigits(), getHeight() * 3 / 4 }).toFloat();
 		g.setColour(lfColours::digitColour);
 		g.fillRoundedRectangle(rect, rounding);
 	}

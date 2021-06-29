@@ -53,22 +53,6 @@ public:
 	}
 };
 
-struct ErrModule
-{
-	bool err_ok = 0;
-	bool erreurs[9] = { 0 };
-	enum {
-		err_A = 0,
-		err_B = 1,
-		err_C = 2,
-		err_D = 3,
-		err_E = 4,
-		err_F = 5,
-		err_G = 6,
-		err_reponse = 7,
-		err_illisible = 8
-	};
-};
 
 class SerialThread : public Thread
 {
@@ -79,6 +63,7 @@ public:
 	float getProgression() const;
 	void askToExit() { exitAsked = true; }
 	ErrModule getModuleResponse(int digitNumber, int timeout_ms);
+	int getTimeout_ms(unsigned char ordre);
 private:
 	bool exitAsked;
 	float progression;

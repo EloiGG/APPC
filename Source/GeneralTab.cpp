@@ -59,8 +59,8 @@ lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si e
 	id.min = 0;
 	id.max = 1000;
 
-	lineControl.onStateChange = [this]() {Core::get().setLineControl(lineControl.getState()); };
-	resetLine.onStateChange = [this]() {Core::get().setResetLine(resetLine.getState()); };
+	lineControl.onClick = [this]() {Core::get().setLineControl(lineControl.getToggleState()); };
+	resetLine.onClick = [this]() {Core::get().setResetLine(resetLine.getState()); };
 }
 
 GeneralTab::~GeneralTab()

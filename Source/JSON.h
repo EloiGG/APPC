@@ -78,8 +78,10 @@ public:
 	int getResetLine();
 	String getAPIKey();
 	int getDelay();
+	int getNumLines();
+	int getNumColumns();
 
-	String makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay);
+	String makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay, int numColumns, int numLines);
 	String toString();
 
 private:

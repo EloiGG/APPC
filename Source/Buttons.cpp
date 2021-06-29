@@ -51,11 +51,11 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 	configSuccessWindow.addButton("Ok", 1, KeyPress(KeyPress::returnKey, 0, 0));
 
 
-	if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
-		Log::write("Chargement du fichier init.config");
+	if (File::getCurrentWorkingDirectory().getChildFile("lastconfig.config").existsAsFile()) {
+		Log::write("Chargement du fichier lastconfig.config");
 		Log::ln();
 		auto& c = Core::get();
-		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
+		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
 		c.loadInformationsFromJSON();
 		if (c.hasNetwork()) {
 			networkWindows(c.getNetwork());
@@ -127,7 +127,9 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 
 Buttons::~Buttons()
 {
-	sendThread.stopThread(1500);
+	sendThread.askToExit();
+	sendThread.stopThread(2500);
+	sendThread.waitForThreadToExit(2500);
 }
 
 void Buttons::paint(juce::Graphics& g)

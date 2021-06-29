@@ -93,6 +93,8 @@ bool Price::isValid(const String& s)
 			return true;
 		else if (c == '.')
 			return true;
+		else if (c == ' ')
+			return true;
 		else
 			return false;
 
@@ -125,4 +127,9 @@ void Price::changeOneDigit(unsigned int digitIndex, const String& newDigit)
 bool Price::isEmpty()
 {
 	return priceString.length() == 0;
+}
+
+unsigned char Price::getUARTchar(int index)
+{
+	return toUARTchar(priceString[index]);
 }

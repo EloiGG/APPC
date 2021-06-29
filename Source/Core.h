@@ -19,6 +19,24 @@
 #include "JSON.h"
 #include "Sequence.h"
 
+struct ErrModule
+{
+    bool err_ok = 0;
+    bool work_in_progress = 0;
+    bool erreurs[9] = { 0 };
+    enum {
+        err_A = 0,
+        err_B = 1,
+        err_C = 2,
+        err_D = 3,
+        err_E = 4,
+        err_F = 5,
+        err_G = 6,
+        err_reponse = 7,
+        err_illisible = 8
+    };
+};
+
 enum class TextUpdateOrigin
 {
     PriceEditor, DigitEditor, InputComponent, Omni
@@ -78,6 +96,8 @@ public:
 
     void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
     bool getPlaySequence() { return playSequence; }
+
+    std::function<void(int, const ErrModule&)> setModuleState;
 
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;

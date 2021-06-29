@@ -256,6 +256,9 @@
     <ClCompile Include="..\..\Source\DigitComponent.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ErrorStateIndicator.cpp">
+      <Filter>APPC\Source\UI\Components\Middle</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MiddlePanel.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClCompile>
@@ -1519,6 +1522,9 @@
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DigitComponent.h">
+      <Filter>APPC\Source\UI\Components\Middle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ErrorStateIndicator.h">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MiddlePanel.h">

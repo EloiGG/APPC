@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\Source\GeneralTab.cpp"/>
     <ClCompile Include="..\..\Source\PricesTab.cpp"/>
     <ClCompile Include="..\..\Source\DigitComponent.cpp"/>
+    <ClCompile Include="..\..\Source\ErrorStateIndicator.cpp"/>
     <ClCompile Include="..\..\Source\MiddlePanel.cpp"/>
     <ClCompile Include="..\..\Source\PriceComponent.cpp"/>
     <ClCompile Include="..\..\Source\PriceDisplayComponent.cpp"/>
@@ -1284,6 +1285,7 @@
     <ClInclude Include="..\..\Source\GeneralTab.h"/>
     <ClInclude Include="..\..\Source\PricesTab.h"/>
     <ClInclude Include="..\..\Source\DigitComponent.h"/>
+    <ClInclude Include="..\..\Source\ErrorStateIndicator.h"/>
     <ClInclude Include="..\..\Source\MiddlePanel.h"/>
     <ClInclude Include="..\..\Source\PriceComponent.h"/>
     <ClInclude Include="..\..\Source\PriceDisplayComponent.h"/>
