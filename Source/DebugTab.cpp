@@ -17,7 +17,6 @@ fileSelector(L"Charger une séquence", File::getCurrentWorkingDirectory().getPare
 playSequenceCB(L"Jouer la séquence"),
 allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au noir"), segmentsErrors(L"Détecter les erreurs segments")
 {
-	addAndMakeVisible(grid);
 	addAndMakeVisible(loadSequence);
 	addAndMakeVisible(playSequenceCB);
 	addAndMakeVisible(allDigits);
@@ -62,6 +61,9 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 	blackout.onClick = [this]()
 	{
 		auto& c = Core::get();
+		if (c.getIsInTransmission())
+			return;
+
 		Price p[Core::MAX_PRICES];
 		for (int i = 0; i < Core::MAX_PRICES; i++) {
 			p[i] = " .          ";
@@ -74,6 +76,8 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 	allDigits.onClick = [this]()
 	{
 		auto& c = Core::get();
+		if (c.getIsInTransmission())
+			return;
 
 		Sequence s(c.getNumDigits() * c.getNumPrices() * 11);
 		s.setDelay(250);
@@ -92,6 +96,8 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 	segmentsErrors.onClick = [this]()
 	{
 		auto& c = Core::get();
+		if (c.getIsInTransmission())
+			return;
 
 		Sequence s(c.getNumDigits() * c.getNumPrices());
 
@@ -107,9 +113,6 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 
 DebugTab::~DebugTab()
 {
-	sendThread.askToExit();
-	sendThread.stopThread(2000);
-	sendThread.waitForThreadToExit(2000);
 }
 
 void DebugTab::paint(juce::Graphics& g)

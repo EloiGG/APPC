@@ -21,7 +21,7 @@ BottomPanel::BottomPanel()
     t.setColour(TextEditor::ColourIds::backgroundColourId, lfColours::priceBackground);
     t.setReadOnly(true);
     t.setScrollToShowCursor(true);
-    Log::get().updateFunction = [this]() {t.setText(Log::get().getString(debuggingLevel)); t.pageDown(false); repaint(); };
+    Log::get().updateFunction = [this]() {t.setText(Log::get().getString(debuggingLevel)); t.moveCaretToEnd(false); repaint(); };
 }
 
 BottomPanel::~BottomPanel()
@@ -43,3 +43,4 @@ TextEditor* BottomPanel::getTextEditor()
 {
     return &t;
 }
+

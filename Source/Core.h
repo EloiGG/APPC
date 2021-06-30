@@ -23,6 +23,7 @@ struct ErrModule
 {
     bool err_ok = 0;
     bool work_in_progress = 0;
+    bool stopping = 0;
     bool erreurs[9] = { 0 };
     enum {
         err_A = 0,
@@ -103,6 +104,9 @@ public:
     Price* getPrices() { return prices; }
 
     PricesJSON* getpricesjson(){ return pricesjson; }
+
+    bool isConnected() { return connected; }
+    void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
@@ -110,7 +114,7 @@ private:
     PricesJSON* pricesjson;
     Network network;
     unsigned int numDigits, numPrices, delay_ms, id;
-    bool networkInit, lineControl, resetLine, isInTransmission, playSequence;
+    bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
     Sequence sequence;

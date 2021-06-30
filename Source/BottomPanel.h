@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BottomPanel.h
-    Created: 19 Jun 2021 1:08:30am
-    Author:  Eloi
+	BottomPanel.h
+	Created: 19 Jun 2021 1:08:30am
+	Author:  Eloi
 
   ==============================================================================
 */
@@ -17,19 +17,21 @@
 //==============================================================================
 /*
 */
-class BottomPanel  : public juce::Component
+class BottomPanel : public juce::Component
 {
 public:
-    BottomPanel();
-    ~BottomPanel() override;
+	BottomPanel();
+	~BottomPanel() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
+	void paint(juce::Graphics&) override;
+	void resized() override;
 
-    TextEditor* getTextEditor();
+	TextEditor* getTextEditor();
 
 private:
-    TextEditor t;
-    int debuggingLevel = 1;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BottomPanel)
+
+	TextEditor t;
+	int debuggingLevel = 1;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BottomPanel)
+
 };

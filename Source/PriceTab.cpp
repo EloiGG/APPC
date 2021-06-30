@@ -17,7 +17,7 @@ id("ID"), price("Prix"), gasStation("Station"), fuel("Carburant"), created(L"Cré
 position("Position"), emptied(L"Vidé"), modifyAt("\"ModyfyAt\""), modifyDone("Modification faite"), 
 status("Statut"), oldPrice("Dernier prix")
 {
-    grid.setBounds(0, 0, getWidth(), 300);
+    grid.setBounds(0, 0, getWidth(), 240);
 
     addAndMakeVisible(id);
     addAndMakeVisible(price);
@@ -40,6 +40,17 @@ PriceTab::~PriceTab()
 void PriceTab::init(const PriceJSON& json)
 {
     id.setInput(String(json.getId()));
+    price.setInput(String(json.getPrice()));
+    gasStation.setInput(String(json.getGasStation()));
+    fuel.setInput(String(json.getFuel()));
+    created.setInput(String(json.getCreated()));
+    updated.setInput(String(json.getUpdated()));
+    position.setInput(String(json.getPosition()));
+    emptied.setInput(json.getEmptied() ? "vrai" : "faux");
+    modifyAt.setInput(String(json.getModifyAt()));
+    modifyDone.setInput(json.getModifyDone() ? "vrai" : "faux");
+    status.setInput(json.getStatus() ? "vrai" : "faux");
+    oldPrice.setInput(String(json.getOldPrice()));
 }
 
 void PriceTab::paint (juce::Graphics& g)

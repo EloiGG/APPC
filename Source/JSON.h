@@ -51,8 +51,6 @@ public:
 	PricesJSON(const File& json);
 
 	size_t getNumPrices();
-	float getPrice();
-
 	PriceJSON operator[](int index);
 
 private:

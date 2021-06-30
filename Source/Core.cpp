@@ -91,6 +91,34 @@ Network Core::getNetwork()
 void Core::setNetwork(const Network& net)
 {
 	network = net;
+	Log::write(L"\nVérification de la configuration réseau...\n");
+
+	if (std::get<0>(net.connected()))
+		Log::write(L"Connecté à CentoFuel\n");
+	else {
+		Log::write(L"Impossible de se connecter à CentoFuel\n");
+		String errorMessage;
+		switch (std::get<1>(net.connected())) // code erreur	
+		{
+		case 404:
+			errorMessage = "Resource not found";
+			break;
+		case 403:
+			errorMessage = "Access denied";
+			break;
+		case 401:
+			errorMessage = "Authentication problems";
+			break;
+		case 400:
+			errorMessage = "Bad Type";
+			break;
+		default:
+			break;
+		}
+		Log::write("Message d'erreur : ");
+		Log::write(errorMessage);
+	}
+	Log::update();
 	networkInit = true;
 }
 
@@ -118,10 +146,12 @@ void Core::savePriceSave(const File& f)
 
 void Core::loadInformationsFromNetwork()
 {
-	if (!networkInit) return;
+	if (!networkInit || !connected) return;
 	Log::write(L"Chargement des informations depuis le réseau...\n\n");
 	auto s = network.getFuelPrice();
 	PricesJSON p(s);
+	if (pricesjson != nullptr)
+		delete pricesjson;
 	pricesjson = new PricesJSON(p);
 	numPrices = p.getNumPrices();
 	unsigned int nd = 0;
@@ -148,10 +178,10 @@ void Core::loadInformationsFromJSON()
 	auto delay = configjson->getDelay();
 	auto numLines = configjson->getNumLines();
 	auto numColumns = configjson->getNumColumns();
-
+	bool hasNetwork = false;
 	if (pwrd != "error") {
-		Log::write("Mot de passe\n",2);
-		setNetwork(Network("X-AUTH-TOKEN", pwrd));
+		Log::write("Mot de passe\n", 2);
+		hasNetwork = true;
 	}
 	if (id_ != -1) {
 		Log::write("ID\n", 2);
@@ -159,7 +189,7 @@ void Core::loadInformationsFromJSON()
 	}
 	if (baseAPI != "error") {
 		Log::write("Adresse API\n", 2);
-	// a faire
+		// a faire
 	}
 	if (reset_line != -1) {
 		Log::write("Reset line\n", 2);
@@ -184,6 +214,9 @@ void Core::loadInformationsFromJSON()
 
 	Log::ln(2, 1);
 
+	if (hasNetwork)
+		setNetwork(Network("X-AUTH-TOKEN", pwrd));
+
 	for (int i = 0; i < numPrices; i++)
 		updatePrices(TextUpdateOrigin::Omni, i);
 	if (updateVisualization)
@@ -201,6 +234,6 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 }
 
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
-networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr)
+networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false)
 {
 }

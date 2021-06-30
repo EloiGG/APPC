@@ -17,21 +17,26 @@ PricesJSON::PricesJSON(const String& json)
 
 PricesJSON::PricesJSON(const File& json)
 {
+	Log::write("\nLecture du fichier JSON ");
+	Log::write(json.getFullPathName());
+	Log::ln();
+
 	parsedJSON = JSON::parse(json);
+
+	if (parsedJSON == var())
+		Log::write("Impossible de lire le fichier");
+	else
+		Log::write(L"Lecture réussie");
+	Log::ln(1, 2);
+	Log::update();
 }
+
 
 size_t PricesJSON::getNumPrices()
 {
 	return parsedJSON.getArray()->size();
 }
 
-float PricesJSON::getPrice()
-{
-	auto v = *parsedJSON.getArray();
-	auto w = v[1].getDynamicObject();
-	auto x = w->getProperty("id");
-	return 0.0f;
-}
 
 PriceJSON PricesJSON::operator[](int index)
 {
@@ -54,7 +59,6 @@ void PriceJSON::setPrice(const String& newPrice)
 {
 	dynObj->setProperty("oldPrice", getPrice());
 	dynObj->setProperty("price", newPrice.getFloatValue());
-	//String s = Time::getCurrentTime().toString(true);
 }
 
 int PriceJSON::getId() const

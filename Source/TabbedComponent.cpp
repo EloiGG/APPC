@@ -14,8 +14,8 @@
 TabComponent::TabComponent() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
 {
     addTab(CharPointer_UTF8("Général"), lfColours::tabBackground, &genTab, true);
-    addTab("Prix", lfColours::tabBackground, &priceTab, true);
     addTab(CharPointer_UTF8("Dépannage"), lfColours::tabBackground, &debugTab, true);
+    addTab("Info prix CentoFuel", lfColours::tabBackground, &priceTab, true);
 }
 
 TabComponent::~TabComponent()

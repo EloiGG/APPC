@@ -14,6 +14,7 @@ MainComponent::MainComponent()  : tooltip(this, 200)
 	{
 		mPanel.updateVisualization();
 		rPanel.updateParameters();
+		Log::update();
 	};
 
 	addAndMakeVisible(mPanel);

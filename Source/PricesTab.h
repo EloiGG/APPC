@@ -15,6 +15,7 @@
 #include "Core.h"
 #include "LookAndFeel.h"
 #include "JSON.h"
+#include "Disabled.h"
 //==============================================================================
 /*
 */
@@ -30,5 +31,6 @@ public:
 private:
     PricesJSON* pricesjson;
     PriceTab pTab[Core::MAX_PRICES];
+    Disabled dis;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PricesTab)
 };

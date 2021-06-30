@@ -34,6 +34,5 @@ private:
     GridTool grid;
     FileChooser fileSelector;
     CheckBox playSequenceCB;
-    SerialThread sendThread;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DebugTab)
 };

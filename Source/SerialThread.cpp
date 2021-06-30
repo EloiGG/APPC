@@ -60,22 +60,29 @@ void SerialThread::run()
 		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
 		Log::write(CharPointer_UTF8(" à l'adresse "));
 		Log::write(String(step.adress - 48));
-		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) + String(step.order) + String(" ") + String(step.adress) + String(" ") +
+		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) +
+			String(step.order) + String(" ") + String(step.adress) + String(" ") +
 			String(step.character) + String(" ") + String("03"));
 		Log::ln();
-
+		{
+			MessageManagerLock m(this);
+			if (m.lockWasGained())
+				Log::update();
+		}
 		if (waitForResponse)
 		{
 			Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
 			auto response = getModuleResponse(step.adress - 0x30, getTimeout_ms(step.order));
 			if (response.err_ok)
 				Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
-
+			else if (response.stopping)
+				Log::write(CharPointer_UTF8("arrêt de la séquence"));
 			else if (response.erreurs[response.err_illisible])
 				Log::write(CharPointer_UTF8("réponse du module illisible !"));
 			else if (response.erreurs[response.err_reponse])
 				Log::write(CharPointer_UTF8("pas de réponse du module"));
-			else {
+			else
+			{
 				Log::write("Il y a des erreurs sur les segments suivants : ");
 				for (int i = 0; i < 7; i++)
 					if (response.erreurs[i] == true) {
@@ -106,7 +113,7 @@ void SerialThread::run()
 fin:
 	exitAsked = false;
 	MessageManagerLock mml(this);
-
+	Log::title("fin de la transmission");
 	uart.close();
 	if (mml.lockWasGained())
 	{
@@ -124,10 +131,10 @@ ErrModule SerialThread::getModuleResponse(int digitNumber, int timeout_ms)
 		wait(30);
 		if (threadShouldExit() || exitAsked) {
 			em.err_ok = false;
-			em.work_in_progress = true;
+			em.stopping = true;
 			return em;
 		}
-		uart.read(&c); //...0x02
+		uart.read(&c);		//...0x02
 		if (s.elapsed_time_ms() > timeout_ms) {
 			em.err_ok = false;
 			em.erreurs[em.err_reponse] = true;

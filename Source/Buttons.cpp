@@ -81,7 +81,7 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 			));
 		}
 	};
-	
+
 	connectButton.onClick = [this]()
 	{
 		connectWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
@@ -170,14 +170,13 @@ void Buttons::updateVizualisation()
 
 void Buttons::networkWindows(const Network& net, bool retry)
 {
-	Log::write(CharPointer_UTF8("\nVérification de la configuration réseau...\n"));
+	Core::get().setNetwork(net);
 	if (net.getPassword() == "") {
 		Log::write("Pas de mot de passe fourni !\n\n");
 		return;
 	}
 	auto connected = net.connected();
 	if (std::get<0>(connected)) {
-		Core::get().setNetwork(net);
 		networkSuccessWindow.setAlwaysOnTop(true);
 		networkSuccessWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
 			{
@@ -206,8 +205,6 @@ void Buttons::networkWindows(const Network& net, bool retry)
 		default:
 			break;
 		}
-		Log::write("Message d'erreur : ");
-		Log::write(errorMessage);
 		networkErrorWindow.setMessage(String("Message d'erreur : \n\"") + errorMessage + String("\"\n")
 			+ String("Code erreur : ") + String(std::get<1>(connected)) + String("\n"));
 		networkErrorWindow.setAlwaysOnTop(true);

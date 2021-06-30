@@ -41,7 +41,7 @@ void DigitEditor::paint(juce::Graphics& g)
 
 	Colour clr;
 	if (state.err_ok) clr = lfColours::errModuleOK;
-	else if (state.work_in_progress) clr = lfColours::errModuleWIP;
+	else if (state.work_in_progress || state.stopping) clr = lfColours::errModuleWIP;
 	else if (state.erreurs[state.err_illisible] || state.erreurs[state.err_reponse]) clr = lfColours::errModuleTimeout;
 	else clr = lfColours::errModuleSegment;
 	g.setColour(clr);

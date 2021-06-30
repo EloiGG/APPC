@@ -57,3 +57,23 @@ private:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CheckBox)
 };
+
+class ConstInputComponent : public juce::Component
+{
+public:
+	ConstInputComponent(const String& parameterName, const String& value = "");
+
+	void paint(juce::Graphics&) override;
+	void resized() override;
+
+	void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
+	void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
+
+
+
+private:
+	Label title;
+	SpecialLabel input;
+	int titleWidth;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConstInputComponent)
+};

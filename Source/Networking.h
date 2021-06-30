@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include <tuple>
 #include "Log.h"
+
 class Network 
 {
 public:

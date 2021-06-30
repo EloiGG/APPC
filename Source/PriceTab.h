@@ -29,7 +29,7 @@ public:
     void resized() override;
 
 private:
-    InputComponent id, price, gasStation, fuel, created, updated, 
+    ConstInputComponent id, price, gasStation, fuel, created, updated, 
         position, emptied, modifyAt, modifyDone, status, oldPrice;
     GridTool grid;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PriceTab)
