@@ -21,19 +21,19 @@ class PriceJSON
 public:
 	PriceJSON(DynamicObject* d);
 
-	String getPrice();
 	void setPrice(const String& newPrice);
-	int getId(); 
-	String getGasStation();
-	String getFuel();
-	String getCreated();
-	String getUpdated();
-	int getPosition();
-	bool getEmptied();
-	String getModifyAt(); // TYPE A VERIFIER
-	bool getModifyDone();
-	bool getStatus();
-	String getOldPrice();
+	String getPrice() const;
+	int getId() const; 
+	String getGasStation() const;
+	String getFuel() const;
+	String getCreated() const;
+	String getUpdated() const;
+	int getPosition() const;
+	bool getEmptied() const;
+	String getModifyAt() const; // TYPE A VERIFIER
+	bool getModifyDone() const;
+	bool getStatus() const;
+	String getOldPrice() const;
 
 private:
 	DynamicObject* dynObj;

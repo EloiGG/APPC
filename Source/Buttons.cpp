@@ -81,6 +81,7 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 			));
 		}
 	};
+	
 	connectButton.onClick = [this]()
 	{
 		connectWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
@@ -122,6 +123,19 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 	stop.onClick = [this]()
 	{
 		sendThread.askToExit();
+	};
+
+	Core::get().sendSequence = [this]()
+	{
+		if (sendThread.isThreadRunning())
+			return;
+
+		stop.setEnabled(true);
+		Core::get().setInTransmission(true);
+		Core::get().updateVisualization();
+		sendThread.setSequence(Core::get().getSequence());
+		progression.start();
+		sendThread.startThread();
 	};
 }
 

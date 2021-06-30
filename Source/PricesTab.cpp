@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PriceTab.cpp
-    Created: 19 Jun 2021 10:42:31am
-    Author:  Eloi
+	PriceTab.cpp
+	Created: 19 Jun 2021 10:42:31am
+	Author:  Eloi
 
   ==============================================================================
 */
@@ -12,37 +12,36 @@
 #include "PricesTab.h"
 
 //==============================================================================
-PricesTab::PricesTab() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop)
+PricesTab::PricesTab() : TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop), pricesjson(nullptr)
 {
+	init();
+	
+}
+
+void PricesTab::init()
+{
+	if (pricesjson != Core::get().getpricesjson() && Core::get().getpricesjson() != nullptr) {
+		pricesjson = Core::get().getpricesjson();
+		for (int i = 0; i < pricesjson->getNumPrices(); i++)
+			pTab[i].init(pricesjson->operator[](i));
+	}
+
+	clearTabs();
+	for (int i = 0; i < Core::get().getNumPrices(); i++) {
+		String tabname = String("Prix ") + String(1 + i);
+		addTab(tabname, lfColours::tabBackground, &pTab[i], false);
+	}
 }
 
 PricesTab::~PricesTab()
 {
 }
 
-void PricesTab::paint (juce::Graphics& g)
+void PricesTab::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("PriceTab", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
 }
 
 void PricesTab::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+	TabbedComponent::resized();
 }

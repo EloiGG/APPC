@@ -15,24 +15,27 @@
 DebugTab::DebugTab() : grid(4, 10), loadSequence(L"Charger une séquence"),
 fileSelector(L"Charger une séquence", File::getCurrentWorkingDirectory().getParentDirectory(), "*.sequence"),
 playSequenceCB(L"Jouer la séquence"),
-checkPositions("Verifier"), blackout("Tout mettre au noir")
+allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au noir"), segmentsErrors(L"Détecter les erreurs segments")
 {
 	addAndMakeVisible(grid);
 	addAndMakeVisible(loadSequence);
 	addAndMakeVisible(playSequenceCB);
-	addAndMakeVisible(checkPositions);
+	addAndMakeVisible(allDigits);
 	addAndMakeVisible(blackout);
+	addAndMakeVisible(segmentsErrors);
 
 	playSequenceCB.setToggleState(false, NotificationType::sendNotification);
 	playSequenceCB.setEnabled(false);
 
 	loadSequence.setLookAndFeel(Core::get().getLookAndFeel().get());
 	blackout.setLookAndFeel(Core::get().getLookAndFeel().get());
-	checkPositions.setLookAndFeel(Core::get().getLookAndFeel().get());
+	allDigits.setLookAndFeel(Core::get().getLookAndFeel().get());
+	segmentsErrors.setLookAndFeel(Core::get().getLookAndFeel().get());
 
 	loadSequence.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	blackout.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	checkPositions.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	allDigits.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	segmentsErrors.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 
 	loadSequence.onClick = [this]()
 	{
@@ -62,12 +65,43 @@ checkPositions("Verifier"), blackout("Tout mettre au noir")
 		Price p[Core::MAX_PRICES];
 		for (int i = 0; i < Core::MAX_PRICES; i++) {
 			p[i] = " .          ";
-		c.setPrice(i, p[i]);
-		c.updatePrices(TextUpdateOrigin::Omni, i);
+			c.setPrice(i, p[i]);
+			c.updatePrices(TextUpdateOrigin::Omni, i);
 		}
-		sendThread.setSequence(Sequence::getNewSequence(c.getNumPrices(), c.getNumDigits(), p, 20, false));
-		sendThread.setWaitForResponse(false);
-		sendThread.startThread();
+		c.setSequence(Sequence::getNewSequence(c.getNumPrices(), c.getNumDigits(), p, 20, false));
+		c.sendSequence();
+	};
+	allDigits.onClick = [this]()
+	{
+		auto& c = Core::get();
+
+		Sequence s(c.getNumDigits() * c.getNumPrices() * 11);
+		s.setDelay(250);
+		for (int prix = 0; prix < c.getNumPrices(); prix++)
+			for (int digit = 0; digit < c.getNumDigits(); digit++)
+				s.addStep(Sequence::SequenceStep(0x30 + prix * c.getNumDigits() + digit, 0x41, 0x0a));
+		for (char character = '0'; character != '9' + 1; character++)
+			for (int prix = 0; prix < c.getNumPrices(); prix++)
+				for (int digit = 0; digit < c.getNumDigits(); digit++)
+					s.addStep(Sequence::SequenceStep(0x30 + prix * c.getNumDigits() + digit, 0x41, character));
+
+		c.setSequence(s);
+
+		c.sendSequence();
+	};
+	segmentsErrors.onClick = [this]()
+	{
+		auto& c = Core::get();
+
+		Sequence s(c.getNumDigits() * c.getNumPrices());
+
+		for (int prix = 0; prix < c.getNumPrices(); prix++)
+			for (int digit = 0; digit < c.getNumDigits(); digit++)
+				s.addStep(Sequence::SequenceStep(0x30 + prix * c.getNumDigits() + digit, 0x46, '8'));
+
+		c.setSequence(s);
+
+		c.sendSequence();
 	};
 }
 
@@ -89,6 +123,7 @@ void DebugTab::resized()
 	loadSequence.setBounds(grid.getRectangle(1, 1, 3, 2));
 	playSequenceCB.setBounds(grid.getRectangle(1, 2, 4, 3));
 
-	checkPositions.setBounds(grid.getRectangle(1, 4, 3, 5));
+	allDigits.setBounds(grid.getRectangle(1, 4, 3, 5));
 	blackout.setBounds(grid.getRectangle(1, 5, 3, 6));
+	segmentsErrors.setBounds(grid.getRectangle(1, 6, 3, 7));
 }

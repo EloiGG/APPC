@@ -58,7 +58,10 @@ public:
     {
         return { getPoint(x1,y1), getPoint(x2,y2) };
     }
-
+    juce::Rectangle<int> getLine(int lineIndex, int lineHeight= 1)
+    {
+        return getRectangle(0, lineIndex, numcolumns, lineIndex + 1);
+    }
     void resized() override
     {
     }

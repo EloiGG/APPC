@@ -17,9 +17,14 @@ Sequence Sequence::getNewSequence(const unsigned int& numPrices, const unsigned 
 	return s;
 }
 
-Sequence::Sequence() :  delay_ms(0)
+Sequence::Sequence() :  delay_ms(50)
 {
 	v.reserve(16);
+}
+
+Sequence::Sequence(int reserve) : Sequence()
+{
+	v.reserve(reserve);
 }
 
 void Sequence::addStep(const SequenceStep& newStep)
@@ -53,6 +58,7 @@ void Sequence::createSequence(const unsigned int& numPrices, const unsigned int&
 void Sequence::operator+=(const Sequence& seq2)
 {
 	v.insert(v.end(), seq2.v.begin(), seq2.v.end());
+	delay_ms = jmax(delay_ms, seq2.delay_ms);
 }
 
 size_t Sequence::getSize() const

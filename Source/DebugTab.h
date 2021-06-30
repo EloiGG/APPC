@@ -30,7 +30,7 @@ public:
     void resized() override;
 
 private:
-    TextButton loadSequence, checkPositions, blackout;
+    TextButton loadSequence, allDigits, blackout, segmentsErrors;
     GridTool grid;
     FileChooser fileSelector;
     CheckBox playSequenceCB;

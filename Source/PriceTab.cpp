@@ -12,40 +12,55 @@
 #include "PriceTab.h"
 
 //==============================================================================
-PriceTab::PriceTab()
+PriceTab::PriceTab() : grid(4, 12),
+id("ID"), price("Prix"), gasStation("Station"), fuel("Carburant"), created(L"Créé"), updated(L"Mis à jour"),
+position("Position"), emptied(L"Vidé"), modifyAt("\"ModyfyAt\""), modifyDone("Modification faite"), 
+status("Statut"), oldPrice("Dernier prix")
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+    grid.setBounds(0, 0, getWidth(), 300);
 
+    addAndMakeVisible(id);
+    addAndMakeVisible(price);
+    addAndMakeVisible(gasStation);
+    addAndMakeVisible(fuel);
+    addAndMakeVisible(created);
+    addAndMakeVisible(updated);
+    addAndMakeVisible(position);
+    addAndMakeVisible(emptied);
+    addAndMakeVisible(modifyAt);
+    addAndMakeVisible(modifyDone);
+    addAndMakeVisible(status);
+    addAndMakeVisible(oldPrice);
 }
 
 PriceTab::~PriceTab()
 {
 }
 
+void PriceTab::init(const PriceJSON& json)
+{
+    id.setInput(String(json.getId()));
+}
+
 void PriceTab::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("PriceTab", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.fillAll(lfColours::tabBackground);
 }
 
 void PriceTab::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    grid.setBounds(grid.getLocalBounds().withWidth(getWidth()));
 
+    id.setBounds(grid.getLine(0));
+    price.setBounds(grid.getLine(1));
+    gasStation.setBounds(grid.getLine(2));
+    fuel.setBounds(grid.getLine(3));
+    created.setBounds(grid.getLine(4));
+    updated.setBounds(grid.getLine(5));
+    position.setBounds(grid.getLine(6));
+    emptied.setBounds(grid.getLine(7));
+    modifyAt.setBounds(grid.getLine(8));
+    modifyDone.setBounds(grid.getLine(9));
+    status.setBounds(grid.getLine(10));
+    oldPrice.setBounds(grid.getLine(11));
 }

@@ -51,7 +51,7 @@ public:
     Core(const Core&) = delete;
     static Core& get();
     ~Core() {  }
-    void kill() { delete configjson; }
+    void kill() { delete configjson; delete pricesjson; }
 
 
     unsigned int getNumDigits();
@@ -90,19 +90,24 @@ public:
     
     void setSequence(const Sequence& newSequence);
     Sequence getSequence() { return sequence; }
+    void setSequenceDelay(unsigned int newDelay) { sequence.setDelay(newDelay); }
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
     std::function<void()> updateVisualization;
+    std::function<void(int, const ErrModule&)> setModuleState;
+    std::function<void()> sendSequence;
 
     void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
     bool getPlaySequence() { return playSequence; }
 
-    std::function<void(int, const ErrModule&)> setModuleState;
+    Price* getPrices() { return prices; }
 
+    PricesJSON* getpricesjson(){ return pricesjson; }
 private:
     std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
     ConfigJSON* configjson;
+    PricesJSON* pricesjson;
     Network network;
     unsigned int numDigits, numPrices, delay_ms, id;
     bool networkInit, lineControl, resetLine, isInTransmission, playSequence;

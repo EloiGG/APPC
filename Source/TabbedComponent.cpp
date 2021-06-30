@@ -35,4 +35,5 @@ void TabComponent::resized()
 void TabComponent::updateParameters()
 {
     genTab.updateAllParameters();
+    priceTab.init();
 }

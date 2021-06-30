@@ -26,6 +26,7 @@ public:
 	static Sequence getNewSequence(const unsigned int& numPrices, const unsigned int& numDigits,
 		Price* prices, const unsigned int& delay_in_milliseconds, const bool& lineControl);
 	Sequence();
+	Sequence(int reserve);
 	void addStep(const SequenceStep& newStep);
 	void createSequence(const unsigned int& numPrices, const unsigned int& numDigits, 
 		Price* prices, const unsigned int& delay_in_milliseconds, const bool& lineControl);
@@ -34,6 +35,7 @@ public:
 	size_t getSize() const;
 	SequenceStep operator[](size_t index) const;
 	unsigned int getDelay() const { return delay_ms; }
+	void setDelay(unsigned int newDelay) { delay_ms = newDelay; }
 	
 
 private:

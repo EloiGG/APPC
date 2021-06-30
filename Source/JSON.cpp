@@ -45,7 +45,7 @@ PriceJSON::PriceJSON(DynamicObject* d) : dynObj(d)
 {
 }
 
-String PriceJSON::getPrice()
+String PriceJSON::getPrice() const
 {
 	return dynObj->getProperty("price").toString();
 }
@@ -57,57 +57,57 @@ void PriceJSON::setPrice(const String& newPrice)
 	//String s = Time::getCurrentTime().toString(true);
 }
 
-int PriceJSON::getId()
+int PriceJSON::getId() const
 {
 	return dynObj->getProperty("id");
 }
 
-String PriceJSON::getGasStation()
+String PriceJSON::getGasStation() const
 {
 	return dynObj->getProperty("GasStation");
 }
 
-String PriceJSON::getFuel()
+String PriceJSON::getFuel() const
 {
 	return dynObj->getProperty("Fuel");
 }
 
-String PriceJSON::getCreated()
+String PriceJSON::getCreated() const
 {
 	return dynObj->getProperty("created");
 }
 
-String PriceJSON::getUpdated()
+String PriceJSON::getUpdated() const
 {
 	return dynObj->getProperty("updated");
 }
 
-int PriceJSON::getPosition()
+int PriceJSON::getPosition() const
 {
 	return dynObj->getProperty("position");
 }
 
-bool PriceJSON::getEmptied()
+bool PriceJSON::getEmptied() const
 {
 	return dynObj->getProperty("emptied");
 }
 
-String PriceJSON::getModifyAt()
+String PriceJSON::getModifyAt() const
 {
 	return dynObj->getProperty("modifyAt");
 }
 
-bool PriceJSON::getModifyDone()
+bool PriceJSON::getModifyDone() const
 {
 	return dynObj->getProperty("modifyDone");
 }
 
-bool PriceJSON::getStatus()
+bool PriceJSON::getStatus() const
 {
 	return dynObj->getProperty("status");
 }
 
-String PriceJSON::getOldPrice()
+String PriceJSON::getOldPrice() const
 {
 	return dynObj->getProperty("oldPrice");
 }

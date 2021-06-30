@@ -59,6 +59,7 @@ unsigned int Core::getDelay()
 void Core::setDelay_ms(unsigned int newDelay)
 {
 	delay_ms = newDelay;
+	setSequenceDelay(newDelay);
 }
 
 bool Core::getIsInTransmission()
@@ -121,6 +122,7 @@ void Core::loadInformationsFromNetwork()
 	Log::write(L"Chargement des informations depuis le réseau...\n\n");
 	auto s = network.getFuelPrice();
 	PricesJSON p(s);
+	pricesjson = new PricesJSON(p);
 	numPrices = p.getNumPrices();
 	unsigned int nd = 0;
 	setNumPrices(p.getNumPrices());
@@ -199,6 +201,6 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 }
 
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
-networkInit(false), delay_ms(0), configjson(nullptr)
+networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr)
 {
 }
