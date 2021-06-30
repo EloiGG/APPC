@@ -103,7 +103,7 @@ void Core::saveConfigJSON(const File& f)
 {
 	f.deleteFile();
 	f.create();
-	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), network.getPassword(), lineControl, resetLine, configjson->getDelay(), numDigits, numPrices));
+	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), "", lineControl, resetLine, configjson->getDelay(), numDigits, numPrices));
 }
 
 void Core::savePriceSave(const File& f)
