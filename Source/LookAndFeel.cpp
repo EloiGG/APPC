@@ -56,9 +56,11 @@ void APPCLookAndFeel::drawToggleButton(Graphics& g, ToggleButton& button,
 {
 	auto fontSize = jmin(15.0f, (float)button.getHeight() * 0.75f);
 	auto tickWidth = fontSize * 1.1f;
-	auto titleWidth = button.getButtonText().length() * 10;
+	Font f(g.getCurrentFont());
+	f.setHeight(fontSize);
+	auto titleWidth  = f.getStringWidth(button.getButtonText());
 
-
+	
 
 	g.setColour(button.findColour(ToggleButton::textColourId));
 	g.setFont(fontSize);
@@ -66,9 +68,9 @@ void APPCLookAndFeel::drawToggleButton(Graphics& g, ToggleButton& button,
 	if (!button.isEnabled())
 		g.setOpacity(0.5f);
 	auto r = button.getLocalBounds();
-	float inputwidth = 0.75;
+	float inputwidth = 1;
 
-	g.drawFittedText(button.getButtonText(), r.removeFromLeft(jmin<int>(titleWidth, r.getWidth() * 0.5))
+	g.drawFittedText(button.getButtonText(), r.removeFromLeft(jmin(jmax<int>(titleWidth, r.getWidth() * 0.6), int(r.getWidth() * 0.8)))
 		.withTrimmedTop(1).withTrimmedLeft(5).withTrimmedBottom(2).withTrimmedRight(5), Justification::left, 10);
 
 	g.setColour(Colours::white);

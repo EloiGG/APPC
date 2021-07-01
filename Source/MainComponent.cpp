@@ -7,6 +7,12 @@ MainComponent::MainComponent()  : tooltip(this, 200)
 		[this](TextUpdateOrigin o, unsigned int index)
 		{
 			mPanel.updatePrices(o, index);
+			Log::write("Changement du prix ");
+			Log::write(String(index + 1));
+			Log::write(". Nouveau prix : ");
+			Log::write(Core::get().getPrice(index).toString(Core::MAX_DIGITS));
+			Log::ln();
+			Log::update();
 		}
 	);
 

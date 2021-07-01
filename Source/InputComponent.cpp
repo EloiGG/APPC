@@ -30,7 +30,7 @@ input([this]()
 	m.setLookAndFeel(Core::get().getLookAndFeel().get());
 	p.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	m.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	titleWidth = title.getText().length() * 8;
+	titleWidth = title.getFont().getStringWidth(title.getText());
 	input.setEditable(true);
 
 	addAndMakeVisible(title);
@@ -102,8 +102,8 @@ input([this]()
 		onClick = [this]() {
 			Log::write(L"Changement d'état du paramètre \"", 2);
 			Log::write(getButtonText().substring(0, getButtonText().length() - 3), 2);
-			Log::write(L"\". Nouvel état : ");
-			Log::write(String((int)getToggleState()));
+			Log::write(L"\". Nouvel état : ", 2);
+			Log::write(String((int)getToggleState()), 2);
 			Log::ln(2);
 			Log::update();
 		};
@@ -112,7 +112,7 @@ input([this]()
 	ConstInputComponent::ConstInputComponent(const String& parameterName, const String& value) : 
 		title(parameterName, parameterName + String(" : "))
 	{
-		titleWidth = title.getText().length() * 8;
+		titleWidth = title.getFont().getStringWidth(title.getText());
 		input.setEditable(false);
 
 		addAndMakeVisible(title);
@@ -134,6 +134,6 @@ input([this]()
 	{
 		float inputwidth = 0.75;
 		auto r = getLocalBounds();
-		title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.6)));
+		title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.8)));
 		input.setBounds(r);
 	}

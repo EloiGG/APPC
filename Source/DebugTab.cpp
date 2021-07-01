@@ -100,7 +100,10 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 			return;
 
 		Sequence s(c.getNumDigits() * c.getNumPrices());
-
+		for (int i = 0; i < Core::MAX_PRICES; i++) {
+			c.setPrice(i, Price("8.88888888"));
+			c.updatePrices(TextUpdateOrigin::Omni, i);
+		}
 		for (int prix = 0; prix < c.getNumPrices(); prix++)
 			for (int digit = 0; digit < c.getNumDigits(); digit++)
 				s.addStep(Sequence::SequenceStep(0x30 + prix * c.getNumDigits() + digit, 0x46, '8'));

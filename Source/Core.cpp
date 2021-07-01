@@ -93,8 +93,10 @@ void Core::setNetwork(const Network& net)
 	network = net;
 	Log::write(L"\nVérification de la configuration réseau...\n");
 
-	if (std::get<0>(net.connected()))
+	if (std::get<0>(net.connected())) {
+		connected = true;
 		Log::write(L"Connecté à CentoFuel\n");
+	}
 	else {
 		Log::write(L"Impossible de se connecter à CentoFuel\n");
 		String errorMessage;

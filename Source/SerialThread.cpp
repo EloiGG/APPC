@@ -62,7 +62,7 @@ void SerialThread::run()
 		Log::write(String(step.adress - 48));
 		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) +
 			String(step.order) + String(" ") + String(step.adress) + String(" ") +
-			String(step.character) + String(" ") + String("03"));
+			String(step.character) + String(" ") + String("03"), 2);
 		Log::ln();
 		{
 			MessageManagerLock m(this);
