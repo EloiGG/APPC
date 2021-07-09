@@ -91,14 +91,14 @@ Network Core::getNetwork()
 void Core::setNetwork(const Network& net)
 {
 	network = net;
-	Log::write(L"\nVérification de la configuration réseau...\n");
+	Log::write(CharPointer_UTF16(CharPointer_UTF16(L"\nV\u00E9rification de la configuration r\u00E9seau...\n")));
 
 	if (std::get<0>(net.connected())) {
 		connected = true;
-		Log::write(L"Connecté à CentoFuel\n");
+		Log::write(CharPointer_UTF16(L"Connect\u00E9 \u00E0 CentoFuel\n"));
 	}
 	else {
-		Log::write(L"Impossible de se connecter à CentoFuel\n");
+		Log::write(CharPointer_UTF16(L"Impossible de se connecter \u00E0 CentoFuel\n"));
 		String errorMessage;
 		switch (std::get<1>(net.connected())) // code erreur	
 		{
@@ -149,7 +149,7 @@ void Core::savePriceSave(const File& f)
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit || !connected) return;
-	Log::write(L"Chargement des informations depuis le réseau...\n\n");
+	Log::write(CharPointer_UTF16(L"Chargement des informations depuis le r\u00E9seau...\n\n"));
 	auto s = network.getFuelPrice();
 	PricesJSON p(s);
 	if (pricesjson != nullptr)
@@ -171,7 +171,7 @@ void Core::loadInformationsFromNetwork()
 
 void Core::loadInformationsFromJSON()
 {
-	Log::write(L"Lecture des informations du fichier JSON. Paramètres détectés : \n", 2);
+	Log::write(CharPointer_UTF16(L"Lecture des informations du fichier JSON. Param\u00E8tres d\u00E9tect\u00E9s : \n"), 2);
 	auto pwrd = configjson->getAuthPassword();
 	auto id_ = configjson->getID();
 	auto baseAPI = configjson->getBaseAPI();
@@ -235,7 +235,19 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 	return lfptr;
 }
 
+bool Core::getBatteryAlarm()
+{
+	bool b = false;
+	bool res = gpio.getPinLevel(ALARM_PIN, b) == GPIO::Level::High;
+	if (b == false)
+		Log::write("erreur lecture pin");
+	return res;
+}
+
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
 networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false)
 {
+	gpio.setPinType(ALARM_PIN, GPIO::PinType::Input);
+	gpio.setPinType(DOOR_PIN, GPIO::PinType::Input);
+	gpio.setPinLevel(GPIO::PinNumber::GPIO_1, GPIO::Level::High);
 }

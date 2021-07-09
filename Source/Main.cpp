@@ -10,6 +10,7 @@
 #include "JSON.h"
 #include "Networking.h"
 #include "Price.h"
+#include "GPIO.h"
 
 //==============================================================================
 class APPCApplication : public juce::JUCEApplication
@@ -29,14 +30,16 @@ public:
 		Core::get().setNumPrices(4);
 		Core::get().setDelay_ms(50);
 		Core::get().setID(17);
-
-		PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
-		for (int i = 0; i < lastPrices.getNumPrices(); ++i)
-			Core::get().setPrice(i, lastPrices.getPrice(i));
-		for (int i = lastPrices.getNumPrices(); i < Core::MAX_PRICES; ++i)
-			Core::get().setPrice(i, Price("0"));
-
-		
+		if (File::getCurrentWorkingDirectory().getChildFile("lastprices.prices").existsAsFile()) {
+			PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
+			for (int i = 0; i < lastPrices.getNumPrices(); ++i)
+				Core::get().setPrice(i, lastPrices.getPrice(i));
+			for (int i = lastPrices.getNumPrices(); i < Core::MAX_PRICES; ++i)
+				Core::get().setPrice(i, Price("0"));
+		}
+		else
+			for (int i = 0; i < Core::MAX_PRICES; ++i)
+				Core::get().setPrice(i, Price("0"));
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 	}

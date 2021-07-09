@@ -14,7 +14,7 @@
 //==============================================================================
 DebugTab::DebugTab() : grid(4, 10), loadSequence(L"Charger une séquence"),
 fileSelector(L"Charger une séquence", File::getCurrentWorkingDirectory().getParentDirectory(), "*.sequence"),
-playSequenceCB(L"Jouer la séquence"),
+playSequenceCB(L"Jouer la séquence"), getBatteryAlarm(CharPointer_UTF16(L"V\u00E9rification alarme batterie")),
 allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au noir"), segmentsErrors(L"Détecter les erreurs segments")
 {
 	addAndMakeVisible(loadSequence);
@@ -22,16 +22,19 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 	addAndMakeVisible(allDigits);
 	addAndMakeVisible(blackout);
 	addAndMakeVisible(segmentsErrors);
-
+	addAndMakeVisible(getBatteryAlarm);
 	playSequenceCB.setToggleState(false, NotificationType::sendNotification);
 	playSequenceCB.setEnabled(false);
 
-	loadSequence.setLookAndFeel(Core::get().getLookAndFeel().get());
-	blackout.setLookAndFeel(Core::get().getLookAndFeel().get());
-	allDigits.setLookAndFeel(Core::get().getLookAndFeel().get());
-	segmentsErrors.setLookAndFeel(Core::get().getLookAndFeel().get());
+	auto lf = Core::get().getLookAndFeel().get();
+	loadSequence.setLookAndFeel(lf);
+	blackout.setLookAndFeel(lf);
+	allDigits.setLookAndFeel(lf);
+	segmentsErrors.setLookAndFeel(lf);
+	getBatteryAlarm.setLookAndFeel(lf);
 
 	loadSequence.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	getBatteryAlarm.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	blackout.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	allDigits.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	segmentsErrors.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
@@ -112,6 +115,14 @@ allDigits(L"Afficher tous les chiffres à la suite"), blackout("Tout mettre au no
 
 		c.sendSequence();
 	};
+	getBatteryAlarm.onClick = []()
+	{
+		Log::get().write("ALARME BATTERIE : ");
+		Log::get().write(String((int)Core::get().getBatteryAlarm()));
+		Log::get().ln();
+		Log::get().update();
+	};
+
 }
 
 DebugTab::~DebugTab()
@@ -132,4 +143,5 @@ void DebugTab::resized()
 	allDigits.setBounds(grid.getRectangle(1, 4, 3, 5));
 	blackout.setBounds(grid.getRectangle(1, 5, 3, 6));
 	segmentsErrors.setBounds(grid.getRectangle(1, 6, 3, 7));
+	getBatteryAlarm.setBounds(grid.getRectangle(1, 7, 3, 8));
 }

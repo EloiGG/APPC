@@ -36,9 +36,9 @@ void SerialThread::run()
 	auto& c = Core::get();
 	Log::title("Transmission");
 	auto delay = sequence.getDelay();
-	Log::write("\nOuverture du port COM3...");
+	Log::write("\nOuverture du port COM20...");
 	Log::write("avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...", 2);
-	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 3))
+	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 20))
 		Log::write("port ouvert !\n");
 	else {
 		Log::write("erreur lors de l'ouverture\n");

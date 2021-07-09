@@ -3,14 +3,12 @@
 
     Core.h
     Created: 19 Jun 2021 11:11:52am
-    Author:  Eloi
+    Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
 
 #pragma once
-#ifndef CORE_H
-#define CORE_H
 
 #include "Price.h"
 #include <functional>
@@ -18,6 +16,7 @@
 #include "Networking.h"
 #include "JSON.h"
 #include "Sequence.h"
+#include "GPIO.h"
 
 struct ErrModule
 {
@@ -54,7 +53,6 @@ public:
     ~Core() {  }
     void kill() { delete configjson; delete pricesjson; }
 
-
     unsigned int getNumDigits();
     void setNumDigits(unsigned int newNumDigits);
 
@@ -69,21 +67,24 @@ public:
 
     bool getLineControl() { return lineControl; }
     void setLineControl(bool newLineControl) { lineControl = newLineControl; }
+
     bool getResetLine() { return resetLine; }
     void setResetLine(bool newResetLine) { resetLine = newResetLine; }
+    
     bool getIsInTransmission();
     void setInTransmission(bool shouldBeInTransmission);
+    
     void setID(int newID) { id = newID; }
     int getID() { return id; }
-    void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
-    void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
-
+    
     Network getNetwork();
     void setNetwork(const Network& net);
+
     bool hasNetwork();
 
     void setConfigJSON(const File& f) { if (configjson != nullptr) delete configjson; configjson = new ConfigJSON(f); }
     void saveConfigJSON(const File& f);
+
     void savePriceSave(const File& f);
 
     void loadInformationsFromNetwork();
@@ -91,9 +92,13 @@ public:
     
     void setSequence(const Sequence& newSequence);
     Sequence getSequence() { return sequence; }
+
     void setSequenceDelay(unsigned int newDelay) { sequence.setDelay(newDelay); }
 
     std::shared_ptr<APPCLookAndFeel> getLookAndFeel();
+
+    void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
+    void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
     std::function<void()> updateVisualization;
     std::function<void(int, const ErrModule&)> setModuleState;
     std::function<void()> sendSequence;
@@ -107,20 +112,25 @@ public:
 
     bool isConnected() { return connected; }
     void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
+
+    bool getBatteryAlarm();
+
 private:
-    std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     Core();
+
+    static constexpr GPIO::PinNumber ALARM_PIN = GPIO::PinNumber::GPIO_6;
+    static constexpr GPIO::PinNumber DOOR_PIN = GPIO::PinNumber::GPIO_3;
+
+    unsigned int numDigits, numPrices, delay_ms, id;
+    bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected;
+    std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
     ConfigJSON* configjson;
     PricesJSON* pricesjson;
     Network network;
-    unsigned int numDigits, numPrices, delay_ms, id;
-    bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected;
     Price prices[MAX_PRICES];
     std::shared_ptr<APPCLookAndFeel> lfptr;
     Sequence sequence;
+    GPIO gpio;
+
     JUCE_LEAK_DETECTOR(Core)
 };
-
-
-
-#endif // !CORE_H

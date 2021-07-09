@@ -16,7 +16,7 @@ class Log
 {
 public:
 	static constexpr int DEBUG_LEVELS = 2;
-
+	Log(const Log&) = delete;
 	static void write(const String& string, int debugLevel = 1);
 	void writeImpl(const String& string, int debugLevel);
 	

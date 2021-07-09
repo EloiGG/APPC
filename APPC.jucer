@@ -2,8 +2,12 @@
 
 <JUCERPROJECT id="FaZXBM" name="APPC" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="1" jucerFormatVersion="1"
-              cppLanguageStandard="latest">
+              cppLanguageStandard="latest" compilerFlagSchemes="NewScheme"
+              headerPath="$(SolutionDir)..\..\Include">
   <MAINGROUP id="ouGN8x" name="APPC">
+    <GROUP id="{2648ED7B-1160-AB98-1876-18D7A42EB8EE}" name="Resources">
+      <FILE id="E6OUJq" name="icon.png" compile="0" resource="1" file="icon.png"/>
+    </GROUP>
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
         <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
@@ -80,6 +84,8 @@
         <FILE id="oDOYkD" name="SerialThread.h" compile="0" resource="0" file="Source/SerialThread.h"/>
       </GROUP>
       <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
+        <FILE id="Za1ODM" name="GPIO.cpp" compile="1" resource="0" file="Source/GPIO.cpp"/>
+        <FILE id="Kc3wHO" name="GPIO.h" compile="0" resource="0" file="Source/GPIO.h"/>
         <FILE id="kgmNAY" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>
         <FILE id="V1s69T" name="UART.h" compile="0" resource="0" file="Source/UART.h"/>
         <FILE id="mJwWan" name="JSON.cpp" compile="1" resource="0" file="Source/JSON.cpp"/>
@@ -91,10 +97,12 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <VS2019 targetFolder="Builds/VisualStudio2019">
+    <VS2019 targetFolder="Builds/VisualStudio2019" smallIcon="Gmy9l9" bigIcon="Gmy9l9">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="APPC"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="APPC"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="APPC" headerPath="$(SolutionDir)..\..\Include"
+                       libraryPath="$(SolutionDir)..\..\Lib"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="APPC" headerPath="$(SolutionDir)..\..\Include"
+                       libraryPath="$(SolutionDir)..\..\Lib" usePrecompiledHeaderFile="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../../../../Program Files/JUCE/modules"/>
