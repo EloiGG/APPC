@@ -12,15 +12,7 @@ echo Copie de la police...
 copy "SEVEN SEGMENT.TTF" "C:\Windows\Fonts\"
 regedit /s Data\font.reg
 FontReg.exe
-echo Installation des fonctions necessaires...
-cd "%ProgramFiles%\APPC\"
-VC_redist.x64.exe
-cd "%~dp0"
-if %ERRORLEVEL% NEQ 0 ( 
-   echo PROBLEME D'INSTALLATION - LE PROGRAMME NECESSITE VC REDIST POUR FONCTIONNER
-   )
-echo. 
-del "C:\Program Files\APPC\VC_redist.x64.exe"
+
 echo Creation d'un raccourci sur le bureau...
 set SCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
 echo Set oWS = WScript.CreateObject("WScript.Shell") >> %SCRIPT%
@@ -32,6 +24,16 @@ echo oLink.WorkingDirectory = "C:\Program Files\APPC\" >> %SCRIPT%
 echo oLink.Save >> %SCRIPT%
 cscript /nologo %SCRIPT%
 del %SCRIPT%
+
+echo Installation des fonctions necessaires...
+cd "%ProgramFiles%\APPC\"
+VC_redist.x64.exe
+cd "%~dp0"
+if %ERRORLEVEL% NEQ 0 ( 
+   echo PROBLEME D'INSTALLATION - LE PROGRAMME NECESSITE VC REDIST POUR FONCTIONNER
+   )
+echo. 
+del "C:\Program Files\APPC\VC_redist.x64.exe"
 
 echo.
 echo installation terminee !
