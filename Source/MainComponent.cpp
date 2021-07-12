@@ -54,6 +54,7 @@ void MainComponent::resized()
 	mPanel.setBounds(bounds.removeFromLeft(middleWidth));
 	rPanel.setBounds(bounds);
 	tooltip.setBounds(getLocalBounds());
+	//mPanel.setBounds(getLocalBounds());
 }
 
 void MainComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int index)

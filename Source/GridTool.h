@@ -20,6 +20,7 @@ class GridTool  : public juce::Component
 public:
     GridTool(int columns = 0, int rows = 0) : numcolumns(columns), numrows(rows)
     {
+        setInterceptsMouseClicks(false, true);
     }
 
     ~GridTool() override
@@ -49,14 +50,14 @@ public:
                 jmap(c, 0, numcolumns , 0, getWidth()), getHeight());
     }
 
-    Point<int> getPoint(float x, float y)
+    Point<int> getPoint(float x, float y, bool absolute = false)
     {
-        return Point<int>{ int(getWidth() * x / numcolumns), int(getHeight() * y / numrows) };
+        return Point<int>{ int(getWidth() * x / numcolumns + absolute*getPosition().getX()), int(getHeight() * y / numrows + absolute * getPosition().getY()) };
     }
 
-    juce::Rectangle<int> getRectangle(float x1, float y1, float x2, float y2)
+    juce::Rectangle<int> getRectangle(float x1, float y1, float x2, float y2, bool absolute = false)
     {
-        return { getPoint(x1,y1), getPoint(x2,y2) };
+        return { getPoint(x1,y1, absolute), getPoint(x2,y2,absolute) };
     }
     juce::Rectangle<int> getLine(int lineIndex, int lineHeight= 1)
     {

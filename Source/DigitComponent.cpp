@@ -13,7 +13,7 @@
 
 //==============================================================================
 
-DigitEditor::DigitEditor() : frameCounter(0)
+DigitEditor::DigitEditor() : frameCounter(0), hasState(true)
 {
 	state.err_ok = true;
 	setEditable(true);
@@ -39,6 +39,7 @@ void DigitEditor::paint(juce::Graphics& g)
 		g.drawRoundedRectangle(getLocalBounds().reduced(updateRectangleMargin).toFloat(), cornerSize, 1.0f);
 	}
 
+	if (!hasState) return;
 	Colour clr;
 	if (state.err_ok) clr = lfColours::errModuleOK;
 	else if (state.work_in_progress || state.stopping) clr = lfColours::errModuleWIP;
@@ -92,6 +93,11 @@ void DigitEditor::setState(const ErrModule& newState)
 	}
 	setTooltip(tip);
 	repaint();
+}
+
+void DigitEditor::setShowState(bool shouldShowState)
+{
+	hasState = shouldShowState;
 }
 
 void DigitEditor::timerCallback()

@@ -3,7 +3,7 @@
 
 	PriceComponent.cpp
 	Created: 17 Jun 2021 9:16:21am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -36,14 +36,10 @@ void PriceComponent::init()
 
 	for (int i = 0; i < numDigits; i++) digits[i].textManuallyUpdated = [this, i]()
 	{
-		if (Price::isValid(digits[i].getText()) && digits[i].getText().length() == 1) {
-			currentPrice.changeOneDigit(i, digits[i].getText());
-			updatePriceEditor(currentPrice);
-			Core::get().setPrice(ID, currentPrice);
-			Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
-		}
-		else
-			digits[i].setText(String(currentPrice.toString(Core::MAX_DIGITS, true)[i] - 0x30), NotificationType::sendNotification);
+		currentPrice.changeOneDigit(i, digits[i].getText());
+		updatePriceEditor(currentPrice);
+		Core::get().setPrice(ID, currentPrice);
+		Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 	};
 
 	addAndMakeVisible(priceEditor);
@@ -127,14 +123,14 @@ void PriceComponent::updatePriceEditor(const Price& newPrice)
 
 void PriceComponent::timerCallback()
 {
-		currentPrice = Core::get().getPrice(ID);
-		for (int i = 0; i < numDigits; i++) {
-			if (digits[i].getDigit() != currentPrice[i]) {
-				digits[i].setDigit(currentPrice[i]);
-				return;
-			}
+	currentPrice = Core::get().getPrice(ID);
+	for (int i = 0; i < numDigits; i++) {
+		if (digits[i].getDigit() != currentPrice[i]) {
+			digits[i].setDigit(currentPrice[i]);
+			return;
 		}
-		stopTimer();
+	}
+	stopTimer();
 }
 
 
@@ -203,7 +199,7 @@ void PriceEditor::setNumberOfDigits(int new_number_of_digits)
 }
 
 
-void PriceEditor::editorAboutToBeHidden(TextEditor* te) 
+void PriceEditor::editorAboutToBeHidden(TextEditor* te)
 {
 	SpecialLabel::editorAboutToBeHidden(te);
 	setAlwaysOnTop(false);

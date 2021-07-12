@@ -40,6 +40,8 @@ public:
 
     void setModuleState(int moduleNumber, const ErrModule& newState);
 
+    PriceComponent* operator[](size_t index) { return &prices[index]; }
+
 private:
     PriceComponent prices[MAX_PRICES];
     GridTool grid;

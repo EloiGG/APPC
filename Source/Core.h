@@ -114,6 +114,7 @@ public:
     void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
 
     bool getBatteryAlarm();
+    StringRef getDigitEditorAcceptedCharacters() { return digitEditorAcceptedCharacters; }
 
 private:
     Core();
@@ -131,6 +132,6 @@ private:
     std::shared_ptr<APPCLookAndFeel> lfptr;
     Sequence sequence;
     GPIO gpio;
-
+    String digitEditorAcceptedCharacters;
     JUCE_LEAK_DETECTOR(Core)
 };

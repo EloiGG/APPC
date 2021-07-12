@@ -19,7 +19,7 @@
 //==============================================================================
 /*
 */
-class DigitEditor : public SpecialLabel, private Timer
+class DigitEditor : public DigitEdiorLabel, private Timer
 {
 public:
 	DigitEditor();
@@ -30,8 +30,9 @@ public:
 	void resized() override;
 	void setState(const ErrModule& newState);
 	ErrModule getState() { return state; }
-
+	void setShowState(bool shouldShowState);
 private:
+	bool hasState;
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
 	ErrorStateIndicator stateIndicator;

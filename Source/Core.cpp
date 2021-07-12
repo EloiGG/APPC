@@ -250,4 +250,5 @@ networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), conne
 	gpio.setPinType(ALARM_PIN, GPIO::PinType::Input);
 	gpio.setPinType(DOOR_PIN, GPIO::PinType::Input);
 	gpio.setPinLevel(GPIO::PinNumber::GPIO_1, GPIO::Level::High);
+	digitEditorAcceptedCharacters = " abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ0123456789-";
 }

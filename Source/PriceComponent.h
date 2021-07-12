@@ -58,6 +58,7 @@ public:
 	void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
 
 	void setModuleState(int digitNumber, const ErrModule& newState);
+
 private:
 	void updateDigits();
 	void updatePriceEditor(const Price& newPrice);

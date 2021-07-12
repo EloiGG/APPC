@@ -22,9 +22,6 @@
     <Filter Include="APPC\Source\UI">
       <UniqueIdentifier>{AF3BAF9F-EBCB-E879-4541-038F947D494C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="APPC\Source\Core">
-      <UniqueIdentifier>{E9A1D2C6-68B3-950E-E75D-EB251187C61F}</UniqueIdentifier>
-    </Filter>
     <Filter Include="APPC\Source\Communication">
       <UniqueIdentifier>{DBE5E050-B727-ACE7-B9E0-817CDCE22D33}</UniqueIdentifier>
     </Filter>
@@ -226,6 +223,9 @@
     <Filter Include="JUCE Library Code">
       <UniqueIdentifier>{7ED5A90E-41AF-A1EF-659B-37CEEAB9BA61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="APPC\Source\Communication\Core">
+      <UniqueIdentifier>{E9A1D2C6-68B3-950E-E75D-EB251187C61F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\InputComponent.cpp">
@@ -277,22 +277,22 @@
       <Filter>APPC\Source\UI\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Core.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Log.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Price.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Sequence.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SerialThread.cpp">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GPIO.cpp">
       <Filter>APPC\Source\Communication</Filter>
@@ -1485,19 +1485,19 @@
       <Filter>APPC\Source\UI\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Core.h">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Log.h">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Price.h">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Sequence.h">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SerialThread.h">
-      <Filter>APPC\Source\Core</Filter>
+      <Filter>APPC\Source\Communication\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GPIO.h">
       <Filter>APPC\Source\Communication</Filter>
