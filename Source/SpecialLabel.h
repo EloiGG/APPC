@@ -31,13 +31,17 @@ protected:
 	String lastText;
 };
 
-class DigitEdiorLabel : public SpecialLabel
+class DigitEditorLabel : public SpecialLabel
 {
 public:
-	DigitEdiorLabel() {
+	DigitEditorLabel() {
 		setEditable(true, true, true);
 	}
 protected:
+	virtual void editorShown(TextEditor*) override
+	{
+		Core::get().showKeyboard(getBounds(), 1);
+	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
 		if (lastText != getText()) {
@@ -55,10 +59,7 @@ class PriceEditorLabel : public SpecialLabel
 public:
 	PriceEditorLabel() {}
 protected:
-	virtual void editorShown(TextEditor*)
-	{
-		Core::get().showKeyboard(getPosition(), 1);
-	}
+
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
 		if (lastText != getText()) {
@@ -66,8 +67,8 @@ protected:
 			if (str.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
 				lastText = str;
 			setText(lastText, NotificationType::sendNotification);
-			if(textManuallyUpdated)
-			textManuallyUpdated();
+			if (textManuallyUpdated)
+				textManuallyUpdated();
 		}
 	}
 };

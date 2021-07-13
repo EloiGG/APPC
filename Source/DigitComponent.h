@@ -19,7 +19,7 @@
 //==============================================================================
 /*
 */
-class DigitEditor : public DigitEdiorLabel, private Timer
+class DigitEditor : public DigitEditorLabel, private Timer
 {
 public:
 	DigitEditor();

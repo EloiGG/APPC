@@ -23,10 +23,10 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
 
-	Core::get().showKeyboard = [this](juce::Point<int> componentCoords, unsigned int maxChar = Core::MAX_DIGITS)
+	Core::get().showKeyboard = [this](juce::Rectangle<int> componentBounds, unsigned int maxChar = Core::MAX_DIGITS)
 	{
+		// à faire
 		kb.resetAndShow(maxChar);
-		kb.setBounds(keyboardArea);
 	};
 	Path p;
 	int i;
