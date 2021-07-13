@@ -11,11 +11,32 @@
 #include "MiddlePanel.h"
 
 //==============================================================================
-MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5)
+MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de la station"),
+openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
 {
+	addAndMakeVisible(buttons);
 	addAndMakeVisible(prices);
 	addAndMakeVisible(cornerDigit);
+	addAndMakeVisible(name);
+	addAndMakeVisible(openConfig);
+	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
+
+	Path p;
+	int i;
+	for (i = 0; i < 7; i++) {
+		p.addLineSegment(Line<float>(3, 4 * i, 7, 4 * i), 1.0);
+		p.addLineSegment(Line<float>(10, 4 * i, 20, 4 * i), 1.0);
+	}
+	p.addLineSegment(Line<float>(0, -4, 23, -4), 1.0);
+	p.addLineSegment(Line<float>(23, -4, 23, 4 * (i + 0.5f)), 1.0);
+	p.addLineSegment(Line<float>(23, 4 * (i + 0.5f), 0, 4 * (i + 0.5f)), 1.0);
+	p.addLineSegment(Line<float>(0, 4 * (i + 0.5f), 0, -4), 1.0);
+	openConfig.setShape(p, false, true, true);
+	openConfig.setClickingTogglesState(true);
+	openConfig.shouldUseOnColours(true);
+	openConfig.setOnColours(Colours::white, Colours::white, Colours::white);
+
 
 	// colonnes
 	for (int i = 0; i < Core::MAX_DIGITS; i++) {
@@ -65,9 +86,17 @@ MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5)
 		updateVisualization();
 	};
 	addAndMakeVisible(highlights);
-	highlights.resize(4, 4);
-	addAndMakeVisible(topGrid);
-	addAndMakeVisible(leftGrid);
+	//addAndMakeVisible(topGrid);
+	//addAndMakeVisible(leftGrid);
+	highlights.resize(Core::get().getNumDigits(), Core::get().getNumPrices());
+
+	openConfig.onClick = [this]()
+	{
+		if (openConfig.getToggleState())
+			Core::get().openSettings();
+		else
+			Core::get().closeSettings();
+	};
 }
 
 MiddlePanel::~MiddlePanel()
@@ -77,8 +106,16 @@ MiddlePanel::~MiddlePanel()
 void MiddlePanel::paint(juce::Graphics& g)
 {
 	g.fillAll(lfColours::panelBackground);
+	g.setColour(lfColours::priceBackground);
+	g.fillRect(nameArea);
+	g.setColour(Colours::black);
+	g.drawRect(nameArea);
+	g.fillRect(openConfigArea);
+	g.setColour(openConfig.getToggleState() ? Colours::white : Colours::grey);
+	g.drawRect(openConfigArea);
+	if (Core::get().getNumDigits() == 1 || Core::get().getNumPrices() == 1) return;
 	auto heightdiff = topGrid.getHeight() - topDigits[0].getHeight();
-	auto trianglewidth = heightdiff / 4;
+	auto trianglewidth = jmin(heightdiff / 4, topGrid.getRectangle(0, 0, 1, 1).getWidth() / 10);
 	Path p;
 	bool mouseOnDigit = false;
 	for (size_t i = 0; i < Core::get().getNumDigits(); i++)
@@ -136,35 +173,67 @@ void MiddlePanel::paint(juce::Graphics& g)
 
 void MiddlePanel::resized()
 {
-	auto b = prices.getFittingRectangle(getLocalBounds());
-	int margin = jmin(getWidth(), getHeight()) * 0.2;
+	auto digitsSpace = getLocalBounds();
+	auto buttonSpace = digitsSpace.removeFromBottom(digitsSpace.getHeight() * 0.1);
+	nameArea = digitsSpace.removeFromTop(digitsSpace.getHeight() * 0.1);
 
-	auto leftRect = b.removeFromLeft(margin);
-	auto cornerRect = leftRect.removeFromTop(margin);
+	int configButtonSize = nameArea.getHeight();
+	auto r = nameArea;
+	openConfigArea = r.removeFromRight(configButtonSize);
+	openConfig.setBounds(openConfigArea);
 
-	b = prices.getFittingRectangle(getLocalBounds());
-	auto topRect = b.removeFromTop(margin);
-	topRect.removeFromLeft(margin);
-	b.removeFromLeft(margin);
+	Font f(jmax<int>(nameArea.getHeight() * 0.5, 16));
+	name.setFont(f);
+	name.setBounds(nameArea);
 
-	topGrid.setBounds(topRect);
-	leftGrid.setBounds(leftRect);
+	buttons.setBounds(buttonSpace);
+	auto b = prices.getFittingRectangle(digitsSpace);
 
-	highlights.setBounds(b);
-	float whRatio = 4.0f / 5.0f;
-	float smaller = 0.1f;
-	for (int i = 0; i < Core::get().getNumDigits(); i++) {
-		auto rect = topGrid.getRectangle(i, 0, i + 1, 1, true);
-		auto rect2 = rect.withWidth(rect.getHeight() * whRatio).withCentre(rect.getCentre()).reduced(rect.getWidth() * smaller);
-		topDigits[i].setBounds(rect2);
+	if (Core::get().getNumDigits() != 1 && Core::get().getNumPrices() != 1)
+	{
+		int marginX = b.getWidth() * 0.2, marginY = b.getHeight() * 0.2;
+		marginX = jmin(marginX, marginY);
+		marginY = marginX;
+
+		auto leftRect = b.removeFromLeft(marginX);
+		auto cornerRect = leftRect.removeFromTop(marginY);
+
+		b = prices.getFittingRectangle(digitsSpace);
+		auto topRect = b.removeFromTop(marginY);
+		topRect.removeFromLeft(marginX);
+		b.removeFromLeft(marginX);
+
+		topGrid.setBounds(topRect);
+		leftGrid.setBounds(leftRect);
+		highlights.setBounds(b);
+		float whRatio = 4.0f / 5.0f;
+		float smaller = 0.1f;
+		auto rectDimensions = topGrid.getRectangle(0, 0, 1, 1, true).getHeight() > leftGrid.getRectangle(0, 0, 1, 1, true).getHeight() ?
+			leftGrid.getRectangle(0, 0, 1, 1, true) : topGrid.getRectangle(0, 0, 1, 1, true);
+		int dimX = rectDimensions.getHeight() * whRatio, dimY = rectDimensions.getHeight();
+		if (dimX > topGrid.getRectangle(0, 0, 1, 1, true).getWidth()) {
+			dimX = topGrid.getRectangle(0, 0, 1, 1, true).getWidth();
+			dimY = dimX / whRatio;
+		}
+		if (dimX > leftGrid.getRectangle(0, 0, 1, 1, true).getWidth()) {
+			dimX = leftGrid.getRectangle(0, 0, 1, 1, true).getWidth();
+			dimY = dimX / whRatio;
+		}
+		for (int i = 0; i < Core::get().getNumDigits(); i++) {
+			auto rect = topGrid.getRectangle(i, 0, i + 1, 1, true).withSizeKeepingCentre(dimX, dimY);
+			auto rect2 = rect.reduced(rect.getWidth() * smaller);
+			topDigits[i].setBounds(rect2);
+		}
+		for (int i = 0; i < Core::get().getNumPrices(); i++) {
+			auto rect = leftGrid.getRectangle(0, i, 1, i + 1, true).withSizeKeepingCentre(dimX, dimY);
+			auto rect2 = rect.reduced(rect.getWidth() * smaller);
+			leftDigits[i].setBounds(rect2);
+		}
+		auto rect = cornerRect.withSizeKeepingCentre(dimX, dimY);
+		auto rect2 = rect.reduced(rect.getWidth() * smaller);
+		cornerDigit.setBounds(rect2);
 	}
-	for (int i = 0; i < Core::get().getNumPrices(); i++) {
-		auto rect = leftGrid.getRectangle(0, i, 1, i + 1, true);
-		auto rect2 = rect.withWidth(rect.getHeight() * whRatio).withCentre(rect.getCentre()).reduced(rect.getWidth() * smaller);
-		leftDigits[i].setBounds(rect2);
-	}
-	cornerDigit.setBounds(
-		cornerRect.withWidth(cornerRect.getWidth() * whRatio).withCentre(cornerRect.getCentre()).reduced(cornerRect.getWidth() * smaller));
+
 	prices.setBounds(b);
 }
 
@@ -177,19 +246,28 @@ void MiddlePanel::updateVisualization()
 {
 	auto ndigits = Core::get().getNumDigits(), nprices = Core::get().getNumPrices();
 	int i;
+	cornerDigit.setVisible(true);
 	for (i = 0; i < ndigits; i++)
 		addAndMakeVisible(topDigits[i]);
 	for (; i < Core::MAX_DIGITS; i++)
 		topDigits[i].setVisible(false);
 	for (i = 0; i < nprices; i++)
-		addAndMakeVisible(leftDigits[Core::MAX_DIGITS + i]);
-	for (; i < Core::MAX_DIGITS; ++i)
+		addAndMakeVisible(leftDigits[i]);
+	for (; i < Core::MAX_PRICES; ++i)
 		leftDigits[i].setVisible(false);
-
+	if (ndigits == 1 || nprices == 1) {
+		for (int i = 0; i < Core::get().getNumPrices(); i++)
+			leftDigits[i].setVisible(false);
+		for (int i = 0; i < Core::get().getNumDigits(); i++)
+			topDigits[i].setVisible(false);
+		cornerDigit.setVisible(false);
+	}
+	highlights.resize(ndigits, nprices);
 	topGrid.resize(ndigits, 1);
 	leftGrid.resize(1, nprices);
 	prices.setNumPrices(nprices);
 	prices.setNumDigits(ndigits);
+	repaint();
 }
 
 void MiddlePanel::mouseExit(const MouseEvent&)

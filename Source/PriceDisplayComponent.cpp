@@ -85,7 +85,7 @@ void PriceDisplayComponent::setNumDigits(unsigned int num_of_digits)
 juce::Rectangle<int> PriceDisplayComponent::getFittingRectangle(const juce::Rectangle<int>& rect)
 {
 	float spacingBetwinNumbers = 1.1;
-	float width = numPrices, height = Core::get().getNumDigits() * spacingBetwinNumbers, ratio = width / height;
+	float width = numPrices, height = (Core::get().getNumDigits())  * spacingBetwinNumbers, ratio = width / height;
 	juce::Rectangle<int> r(10, 10, width, height);
 
 	r.setCentre(rect.getCentre());

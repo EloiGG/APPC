@@ -50,6 +50,7 @@ private:
 	SerialThread sendThread;
 	TextButton connectButton, loadConfigButton;
 	TextButton send, stop;
+	TextButton verif;
 	GridTool grid;
 	Progression progression;
 

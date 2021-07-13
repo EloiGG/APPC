@@ -17,7 +17,7 @@
 #include "DigitComponent.h"
 #include "PriceComponent.h"
 #include "GridTool.h"
-
+#include "Buttons.h"
 //==============================================================================
 /*
 */
@@ -63,5 +63,9 @@ private:
     DigitEditor topDigits[Core::MAX_DIGITS];
     DigitEditor leftDigits[Core::MAX_PRICES];
     DigitEditor cornerDigit;
+    Buttons buttons;
+    Label name;
+    juce::Rectangle<int> nameArea, openConfigArea;
+    ShapeButton openConfig;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MiddlePanel)
 };

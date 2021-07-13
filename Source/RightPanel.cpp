@@ -14,9 +14,8 @@
 //==============================================================================
 RightPanel::RightPanel()
 {
-   
     addAndMakeVisible(tabs);
-    addAndMakeVisible(buttons);
+    //addAndMakeVisible(buttons);
 }
 
 RightPanel::~RightPanel()
@@ -32,7 +31,7 @@ void RightPanel::resized()
 {
     float separtion = 0.22f;
     auto r = getLocalBounds();
-    buttons.setBounds(r.removeFromBottom(separtion * getHeight()));
+    //buttons.setBounds(r.removeFromBottom(separtion * getHeight()));
     tabs.setBounds(r);
 }
 

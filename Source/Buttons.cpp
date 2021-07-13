@@ -11,28 +11,31 @@
 #include "Buttons.h"
 
 //==============================================================================
-Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 2), progression(sendThread),
+Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 1), progression(sendThread),
 loadConfigButton("Charger une configuration"), connectButton(CharPointer_UTF8("Se connecter au réseau")),
 connectWindow(CharPointer_UTF8("Se connecter à CentoFuel"), "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
 networkErrorWindow(CharPointer_UTF8("Erreur réseau"), "", AlertWindow::AlertIconType::WarningIcon),
 networkSuccessWindow(CharPointer_UTF8("Connexion à CentoFuel réussie"), "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
 configSuccessWindow(CharPointer_UTF8("Chargement de la configuration réussie"), "", AlertWindow::AlertIconType::InfoIcon),
-filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config"))
+filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config")),
+verif(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"))
 {
 	addAndMakeVisible(grid);
-
+	addAndMakeVisible(verif);
 	send.setLookAndFeel(Core::get().getLookAndFeel().get());
 	stop.setLookAndFeel(Core::get().getLookAndFeel().get());
+	verif.setLookAndFeel(Core::get().getLookAndFeel().get());
 
 	send.setColour(TextButton::ColourIds::buttonColourId, lfColours::sendButton);
 	stop.setColour(TextButton::ColourIds::buttonColourId, lfColours::stopButton);
+	verif.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 
 	stop.setEnabled(false);
 
 	addAndMakeVisible(send);
 	addAndMakeVisible(stop);
-	addAndMakeVisible(connectButton);
-	addAndMakeVisible(loadConfigButton);
+	//addAndMakeVisible(connectButton);
+	//addAndMakeVisible(loadConfigButton);
 	addAndMakeVisible(progression);
 	connectButton.setLookAndFeel(Core::get().getLookAndFeel().get());
 	connectButton.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
@@ -137,6 +140,17 @@ filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCur
 		progression.start();
 		sendThread.startThread();
 	};
+	verif.setColour(TextButton::ColourIds::buttonColourId, lfColours::stopButton);
+	verif.setColour(TextButton::ColourIds::buttonOnColourId, lfColours::sendButton);
+
+	verif.setClickingTogglesState(true);
+	verif.onClick = [this]()
+	{
+		if (verif.getToggleState() == true)
+			verif.setButtonText(CharPointer_UTF8("Vérifier tous les segments \n(ON)"));
+		else
+			verif.setButtonText(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"));
+	};
 }
 
 Buttons::~Buttons()
@@ -153,10 +167,11 @@ void Buttons::paint(juce::Graphics& g)
 void Buttons::resized()
 {
 	grid.setBounds(getLocalBounds());
-	connectButton.setBounds(grid.getRectangle(0, 0, 2, 1));
-	loadConfigButton.setBounds(grid.getRectangle(2, 0, 4, 1));
-	send.setBounds(grid.getRectangle(1, 1, 4, 2));
-	stop.setBounds(grid.getRectangle(0, 1, 1, 2));
+	//connectButton.setBounds(grid.getRectangle(0, 0, 2, 1));
+	//loadConfigButton.setBounds(grid.getRectangle(2, 0, 4, 1));
+	send.setBounds(grid.getRectangle(1, 0, 3, 1));
+	verif.setBounds(grid.getRectangle(3, 0, 4, 1));
+	stop.setBounds(grid.getRectangle(0, 0, 1, 1));
 	progression.setBounds(send.getBounds());
 }
 

@@ -102,6 +102,8 @@ public:
     std::function<void()> updateVisualization;
     std::function<void(int, const ErrModule&)> setModuleState;
     std::function<void()> sendSequence;
+    std::function<void()> openSettings;
+    std::function<void()> closeSettings;
 
     void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
     bool getPlaySequence() { return playSequence; }
