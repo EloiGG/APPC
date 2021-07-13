@@ -36,9 +36,9 @@ void APPCLookAndFeel::drawButtonBackground(Graphics& g, Button& button, const Co
 			g.drawLine(w, 0, w + bounds.getHeight(), bounds.getHeight());
 		for (h = 0; h + bounds.getWidth() <= bounds.getHeight(); h += spacing)
 			g.drawLine(0, h, bounds.getWidth(), bounds.getWidth() + h);
-		for (; w < bounds.getWidth(); w += spacing) 
+		for (; w < bounds.getWidth(); w += spacing)
 			g.drawLine(w, 0, bounds.getWidth(), bounds.getWidth() - w);
-		for (h+=spacing; h < bounds.getHeight(); h += spacing)
+		for (h += spacing; h < bounds.getHeight(); h += spacing)
 			g.drawLine(0, h, bounds.getHeight() - h, bounds.getHeight());
 	}
 
@@ -58,9 +58,9 @@ void APPCLookAndFeel::drawToggleButton(Graphics& g, ToggleButton& button,
 	auto tickWidth = fontSize * 1.1f;
 	Font f(g.getCurrentFont());
 	f.setHeight(fontSize);
-	auto titleWidth  = f.getStringWidth(button.getButtonText());
+	auto titleWidth = f.getStringWidth(button.getButtonText());
 
-	
+
 
 	g.setColour(button.findColour(ToggleButton::textColourId));
 	g.setFont(fontSize);
@@ -102,4 +102,9 @@ void APPCLookAndFeel::drawTickBox(Graphics& g, Component& component,
 		auto tick = getTickShape(0.75f);
 		g.fillPath(tick, tick.getTransformToScaleToFit(tickBounds.reduced(4, 5).toFloat(), false));
 	}
+}
+
+Font KeyboardLookAndFeel::getTextButtonFont(TextButton&, int buttonHeight)
+{
+	return Font("Seven Segment", jmin(buttonHeight, 38), 0);
 }

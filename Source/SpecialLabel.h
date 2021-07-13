@@ -34,7 +34,9 @@ protected:
 class DigitEdiorLabel : public SpecialLabel
 {
 public:
-	DigitEdiorLabel() {}
+	DigitEdiorLabel() {
+		setEditable(true, true, true);
+	}
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
@@ -43,6 +45,28 @@ protected:
 			if (digit.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
 				lastText = digit;
 			setText(lastText, NotificationType::sendNotification);
+			textManuallyUpdated();
+		}
+	}
+};
+
+class PriceEditorLabel : public SpecialLabel
+{
+public:
+	PriceEditorLabel() {}
+protected:
+	virtual void editorShown(TextEditor*)
+	{
+		Core::get().showKeyboard(getPosition(), 1);
+	}
+	virtual void editorAboutToBeHidden(TextEditor*) override
+	{
+		if (lastText != getText()) {
+			const auto& str = getText();
+			if (str.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
+				lastText = str;
+			setText(lastText, NotificationType::sendNotification);
+			if(textManuallyUpdated)
 			textManuallyUpdated();
 		}
 	}

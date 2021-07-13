@@ -104,6 +104,7 @@ public:
     std::function<void()> sendSequence;
     std::function<void()> openSettings;
     std::function<void()> closeSettings;
+    std::function<void(juce::Point<int>, unsigned int)> showKeyboard;
 
     void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
     bool getPlaySequence() { return playSequence; }

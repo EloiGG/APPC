@@ -19,9 +19,15 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	addAndMakeVisible(cornerDigit);
 	addAndMakeVisible(name);
 	addAndMakeVisible(openConfig);
+	addAndMakeVisible(kb);
 	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
 
+	Core::get().showKeyboard = [this](juce::Point<int> componentCoords, unsigned int maxChar = Core::MAX_DIGITS)
+	{
+		kb.resetAndShow(maxChar);
+		kb.setBounds(keyboardArea);
+	};
 	Path p;
 	int i;
 	for (i = 0; i < 7; i++) {

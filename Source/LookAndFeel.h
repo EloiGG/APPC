@@ -49,3 +49,9 @@ public:
     void drawToggleButton(Graphics& g, ToggleButton& button,
         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 };
+
+class KeyboardLookAndFeel : public APPCLookAndFeel
+{
+public:
+    Font getTextButtonFont(TextButton&, int buttonHeight) override;
+};

@@ -18,6 +18,8 @@
 #include "PriceComponent.h"
 #include "GridTool.h"
 #include "Buttons.h"
+#include "Keyboard.h"
+
 //==============================================================================
 /*
 */
@@ -65,7 +67,8 @@ private:
     DigitEditor cornerDigit;
     Buttons buttons;
     Label name;
-    juce::Rectangle<int> nameArea, openConfigArea;
+    juce::Rectangle<int> nameArea, openConfigArea, keyboardArea;
+    Keyboard kb;
     ShapeButton openConfig;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MiddlePanel)
 };

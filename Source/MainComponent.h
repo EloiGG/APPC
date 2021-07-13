@@ -8,7 +8,7 @@
 #include "BottomPanel.h"
 #include "Disabled.h"
 #include "Log.h"
-
+#include "Keyboard.h"
 
 class MainComponent : public juce::Component
 {
