@@ -19,6 +19,8 @@
 #include "GridTool.h"
 #include "Buttons.h"
 #include "Keyboard.h"
+#include "Disabled.h"
+
 
 //==============================================================================
 /*
@@ -70,5 +72,8 @@ private:
     juce::Rectangle<int> nameArea, openConfigArea, keyboardArea;
     Keyboard kb;
     ShapeButton openConfig;
+
+    ApplicationCommandManager commandManager;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MiddlePanel)
 };

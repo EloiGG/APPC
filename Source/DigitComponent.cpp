@@ -100,6 +100,12 @@ void DigitEditor::setShowState(bool shouldShowState)
 	hasState = shouldShowState;
 }
 
+void DigitEditor::updateAnimation()
+{
+	startTimerHz(60);
+	timerCallback();
+}
+
 void DigitEditor::timerCallback()
 {
 	repaint();

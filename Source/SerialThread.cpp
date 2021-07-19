@@ -56,10 +56,10 @@ void SerialThread::run()
 		uart.send();
 
 		Log::write(CharPointer_UTF8("\nEnvoi de la requête d'affichage du caractère "));
-		Log::write(String(step.character - 48));
+		Log::write(String(step.character));
 		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
 		Log::write(CharPointer_UTF8(" à l'adresse "));
-		Log::write(String(step.adress - 48));
+		Log::write(String(step.adress));
 		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) +
 			String(step.order) + String(" ") + String(step.adress) + String(" ") +
 			String(step.character) + String(" ") + String("03"), 2);

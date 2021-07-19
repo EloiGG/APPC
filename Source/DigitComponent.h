@@ -19,6 +19,31 @@
 //==============================================================================
 /*
 */
+
+class DigitEditorLabel : public SpecialLabel
+{
+public:
+	DigitEditorLabel() {
+		setEditable(true, true, true);
+	}
+protected:
+	virtual void editorShown(TextEditor* te) override
+	{
+		Core::get().showKeyboard((SpecialLabel*)this, te->getText(), 1);
+	}
+	virtual void editorAboutToBeHidden(TextEditor*) override
+	{
+		if (lastText != getText()) {
+			const auto& digit = getText().substring(0, 1);
+			if (digit.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
+				lastText = digit;
+			setText(lastText, NotificationType::sendNotification);
+			textManuallyUpdated();
+		}
+	}
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditorLabel)
+};
+
 class DigitEditor : public DigitEditorLabel, private Timer
 {
 public:
@@ -31,6 +56,8 @@ public:
 	void setState(const ErrModule& newState);
 	ErrModule getState() { return state; }
 	void setShowState(bool shouldShowState);
+	void updateAnimation();
+
 private:
 	bool hasState;
 	virtual void timerCallback() override;

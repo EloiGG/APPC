@@ -17,6 +17,7 @@
 #include "JSON.h"
 #include "Sequence.h"
 #include "GPIO.h"
+#include "SpecialLabel.h"
 
 struct ErrModule
 {
@@ -104,7 +105,7 @@ public:
     std::function<void()> sendSequence;
     std::function<void()> openSettings;
     std::function<void()> closeSettings;
-    std::function<void(juce::Rectangle<int>, unsigned int)> showKeyboard;
+    std::function<void(SpecialLabel*, const String&, unsigned int)> showKeyboard;
 
     void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
     bool getPlaySequence() { return playSequence; }

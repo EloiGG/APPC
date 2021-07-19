@@ -36,7 +36,7 @@ void Sequence::createSequence(const unsigned int& numPrices, const unsigned int&
 	Price* prices, const unsigned int& delay_in_milliseconds, const bool& lineControl)
 {
 	v.resize(0);
-	unsigned char c = lineControl ? 0x46 : 0x41;
+	unsigned char c = lineControl ? 0x46 : 0x43;
 	for (int prix = 0; prix < numPrices; prix++) {
 		for (int chiffre = 0; chiffre < numDigits; chiffre++) {
 			v.push_back({ unsigned char(0x30 + prix * numDigits + chiffre) , c, prices[prix].getUARTchar(chiffre)});

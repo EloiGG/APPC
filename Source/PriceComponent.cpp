@@ -207,11 +207,11 @@ void PriceEditor::editorAboutToBeHidden(TextEditor* te)
 	toBack();
 }
 
-void PriceEditor::editorShown(TextEditor*)
-{
-	setAlwaysOnTop(true);
-	isTextEditing = true;
-}
+//void PriceEditor::editorShown(TextEditor*)
+//{
+//	setAlwaysOnTop(true);
+//	isTextEditing = true;
+//}
 
 void PriceEditor::mouseDown(const MouseEvent&)
 {

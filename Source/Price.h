@@ -15,7 +15,7 @@ class Price
 {
 public:
     static constexpr size_t MAX_LENGH = 10; // pas plus de 10 chiffres par prix
-
+    
     Price(const String& price = "");
     void operator=(const String& newPrice);
     String operator[](int index) const;

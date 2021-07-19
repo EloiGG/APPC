@@ -29,46 +29,7 @@ protected:
 		}
 	}
 	String lastText;
-};
 
-class DigitEditorLabel : public SpecialLabel
-{
-public:
-	DigitEditorLabel() {
-		setEditable(true, true, true);
-	}
-protected:
-	virtual void editorShown(TextEditor*) override
-	{
-		Core::get().showKeyboard(getBounds(), 1);
-	}
-	virtual void editorAboutToBeHidden(TextEditor*) override
-	{
-		if (lastText != getText()) {
-			const auto& digit = getText().substring(0, 1);
-			if (digit.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
-				lastText = digit;
-			setText(lastText, NotificationType::sendNotification);
-			textManuallyUpdated();
-		}
-	}
-};
-
-class PriceEditorLabel : public SpecialLabel
-{
-public:
-	PriceEditorLabel() {}
-protected:
-
-	virtual void editorAboutToBeHidden(TextEditor*) override
-	{
-		if (lastText != getText()) {
-			const auto& str = getText();
-			if (str.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
-				lastText = str;
-			setText(lastText, NotificationType::sendNotification);
-			if (textManuallyUpdated)
-				textManuallyUpdated();
-		}
-	}
+private:
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SpecialLabel)
 };

@@ -34,7 +34,7 @@ public:
 
 private:
     GridTool grid;
-    InputComponent nPrices, nDigits, delay, id;
+    InputComponent nPrices, nDigits, COM;
     CheckBox lineControl, resetLine;
     Disabled disabled;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GeneralTab)

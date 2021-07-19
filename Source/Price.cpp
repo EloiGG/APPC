@@ -77,27 +77,21 @@ bool Price::isValid(const String& s)
 {
 	if (s.length() == 0)
 		return false;	
-	bool r = true;
-	for (char c : s)
+	for (int i = 0; i < s.length(); i++)
 	{
-		if (c >= 0x30 && c <= 0x39);
+		auto c = s[i];
+		if (i == 1 && c == '.') continue;
+		if (c >= 0x30 && c <= 0x39) continue;
 		else if (c >= 0x41 && c <= 0x5a) {
-			if (c == 0x57 || c == 0x56)
-				return false;
+			if (c == 0x57 || c == 0x56) return false;
+			continue;
 		}
 		else if (c >= 0x61 && c <= 0x7a) {
-			if (c == 0x77)
-				return false;
+			if (c == 0x77) return false;
+			continue;
 		}
-		else if (c == '-')
-			return true;
-		else if (c == '.')
-			return true;
-		else if (c == ' ')
-			return true;
-		else
-			return false;
-
+		else if (c == '-' || c == ' ') continue;
+		else return false;
 	}
 	return true;
 }

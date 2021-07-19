@@ -13,15 +13,13 @@
 
 //==============================================================================
 GeneralTab::GeneralTab() : grid(4, 12), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
-lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si erreur"), delay(String(CharPointer_UTF8("Délai d'affichage (ms)"), 50)), id("id", 1)
+lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si erreur"), COM("Port COM", 3)
 {
 	addAndMakeVisible(nPrices);
 	addAndMakeVisible(nDigits);
-	addAndMakeVisible(delay);
 	addChildComponent(grid);
 	addAndMakeVisible(lineControl);
 	addAndMakeVisible(resetLine);
-	addAndMakeVisible(id);
 	addAndMakeVisible(disabled);
 	disabled.setDisabled(true);
 
@@ -43,22 +41,6 @@ lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si e
 	nDigits.min = 1;
 	nDigits.max = Core::MAX_DIGITS;
 
-	delay.onUpdate = [](const String& input)
-	{
-		Core::get().setDelay_ms(input.getIntValue());
-	};
-	delay.min = 0;
-	delay.max = 20000;
-	delay.increment = 50;
-	delay.decrement = 50;
-
-	id.onUpdate = [](const String& input)
-	{
-		Core::get().setID(input.getIntValue());
-	};
-	id.min = 0;
-	id.max = 1000;
-
 	lineControl.onClick = [this]() {Core::get().setLineControl(lineControl.getToggleState()); };
 	resetLine.onClick = [this]() {Core::get().setResetLine(resetLine.getState()); };
 }
@@ -75,12 +57,10 @@ void GeneralTab::paint(juce::Graphics& g)
 void GeneralTab::resized()
 {
 	grid.setBounds(grid.getLocalBounds().withWidth(getWidth()));
-	id.setBounds(grid.getRectangle(0, 0, 4, 1));
 	nPrices.setBounds(grid.getRectangle(0, 1, 4, 2));
 	nDigits.setBounds(grid.getRectangle(0, 2, 4, 3));
 	lineControl.setBounds(grid.getRectangle(0, 3, 4, 4));
 	resetLine.setBounds(grid.getRectangle(0, 4, 4, 5));
-	delay.setBounds(grid.getRectangle(0, 5, 4, 6));
 	disabled.setBounds(getLocalBounds());
 }
 
@@ -99,10 +79,8 @@ void GeneralTab::updateAllParameters()
 	auto& c = Core::get();
 	setNumPrices(c.getNumPrices());
 	setNumDigits(c.getNumDigits());
-	id.setInput(String(c.getID()));
 	resetLine.setToggleState(c.getResetLine(), NotificationType::sendNotification);
 	lineControl.setToggleState(c.getLineControl(), NotificationType::sendNotification);
-	delay.setInput(String(c.getDelay()));
 	if (c.getIsInTransmission())
 		disabled.setDisabled(true);
 	else

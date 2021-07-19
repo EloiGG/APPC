@@ -20,7 +20,30 @@
 /*
 */
 
-class PriceEditor : public SpecialLabel
+class PriceEditorLabel : public SpecialLabel
+{
+public:
+	PriceEditorLabel() {}
+protected:
+	virtual void editorShown(TextEditor* te) override
+	{
+		Core::get().showKeyboard((SpecialLabel*)this, te->getText().substring(0, Core::get().getNumDigits() + 1), Core::MAX_DIGITS);
+	}
+	virtual void editorAboutToBeHidden(TextEditor*) override
+	{
+		if (lastText != getText()) {
+			const auto& str = getText();
+			if (str.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
+				lastText = str;
+			setText(lastText, NotificationType::sendNotification);
+			if (textManuallyUpdated)
+				textManuallyUpdated();
+		}
+	}
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PriceEditorLabel)
+};
+
+class PriceEditor : public PriceEditorLabel
 {
 public:
 	PriceEditor();
@@ -31,7 +54,7 @@ public:
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
-	virtual void editorShown(TextEditor*) override;
+	//virtual void editorShown(TextEditor*) override;
 	virtual void mouseDown(const MouseEvent&) override;
 
 private:

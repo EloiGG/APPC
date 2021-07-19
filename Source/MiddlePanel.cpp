@@ -19,14 +19,15 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	addAndMakeVisible(cornerDigit);
 	addAndMakeVisible(name);
 	addAndMakeVisible(openConfig);
-	addAndMakeVisible(kb);
 	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
+	/*getTopLevelComponent()->addKeyListener(commandManager.getKeyMappings());
+	commandManager.registerAllCommandsForTarget(&kb);*/
 
-	Core::get().showKeyboard = [this](juce::Rectangle<int> componentBounds, unsigned int maxChar = Core::MAX_DIGITS)
+	Core::get().showKeyboard = [this](SpecialLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{
-		// à faire
-		kb.resetAndShow(maxChar);
+		kb.resetAndShow(caller, startingText, maxChar);
+		Timer::callAfterDelay(15, [this]() {kb.grabKeyboardFocus(); });;
 	};
 	Path p;
 	int i;
@@ -103,6 +104,9 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 		else
 			Core::get().closeSettings();
 	};
+
+	kb.setAlwaysOnTop(true);
+	addChildComponent(kb);
 }
 
 MiddlePanel::~MiddlePanel()
@@ -179,6 +183,8 @@ void MiddlePanel::paint(juce::Graphics& g)
 
 void MiddlePanel::resized()
 {
+	kb.setBounds(getLocalBounds());
+
 	auto digitsSpace = getLocalBounds();
 	auto buttonSpace = digitsSpace.removeFromBottom(digitsSpace.getHeight() * 0.1);
 	nameArea = digitsSpace.removeFromTop(digitsSpace.getHeight() * 0.1);
@@ -268,6 +274,7 @@ void MiddlePanel::updateVisualization()
 			topDigits[i].setVisible(false);
 		cornerDigit.setVisible(false);
 	}
+	buttons.updateVizualisation();
 	highlights.resize(ndigits, nprices);
 	topGrid.resize(ndigits, 1);
 	leftGrid.resize(1, nprices);
