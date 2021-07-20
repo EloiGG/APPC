@@ -24,13 +24,13 @@
 class Progression : public Component, private Timer
 {
 public:
-	Progression(const SerialThread& t) : thread(t) { setInterceptsMouseClicks(false, false); }
+	Progression(const ProgressionThread& t) : thread(t) { setInterceptsMouseClicks(false, false); }
 	void start();
 	void paint(juce::Graphics&) override;
 
 private:
 	virtual void timerCallback() override;
-	const SerialThread& thread;
+	const ProgressionThread& thread;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Progression)
 };
 
@@ -46,7 +46,7 @@ public:
 private:
 	void networkWindows(const Network& net, bool retry = true);
 	FileChooser filechooser;
-	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow, configSuccessWindow;
+	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow, configSuccessWindow, COMErrorWindow;
 	SerialThread sendThread;
 	TextButton connectButton, loadConfigButton;
 	TextButton send, stop;

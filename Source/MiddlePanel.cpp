@@ -14,6 +14,7 @@
 MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de la station"),
 openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
 {
+	//addAndMakeVisible(disable);
 	addAndMakeVisible(buttons);
 	addAndMakeVisible(prices);
 	addAndMakeVisible(cornerDigit);
@@ -23,7 +24,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	cornerDigit.setShowState(false);
 	/*getTopLevelComponent()->addKeyListener(commandManager.getKeyMappings());
 	commandManager.registerAllCommandsForTarget(&kb);*/
-
+	disable.setDisabled(false);
 	Core::get().showKeyboard = [this](SpecialLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{
 		kb.resetAndShow(caller, startingText, maxChar);
@@ -106,6 +107,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	};
 
 	kb.setAlwaysOnTop(true);
+	disable.setAlwaysOnTop(true);
 	addChildComponent(kb);
 }
 
@@ -188,6 +190,8 @@ void MiddlePanel::resized()
 	auto digitsSpace = getLocalBounds();
 	auto buttonSpace = digitsSpace.removeFromBottom(digitsSpace.getHeight() * 0.1);
 	nameArea = digitsSpace.removeFromTop(digitsSpace.getHeight() * 0.1);
+
+	disable.setBounds(digitsSpace);
 
 	int configButtonSize = nameArea.getHeight();
 	auto r = nameArea;
@@ -280,6 +284,10 @@ void MiddlePanel::updateVisualization()
 	leftGrid.resize(1, nprices);
 	prices.setNumPrices(nprices);
 	prices.setNumDigits(ndigits);
+	if (Core::get().isInit())
+		disable.setDisabled(false);
+	else
+		disable.setDisabled(true);
 	repaint();
 }
 

@@ -133,7 +133,7 @@ void Core::saveConfigJSON(const File& f)
 {
 	f.deleteFile();
 	f.create();
-	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), "", lineControl, resetLine, configjson->getDelay(), numDigits, numPrices));
+	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), "", lineControl, resetLine, configjson->getDelay(), numDigits, numPrices, COM));
 }
 
 void Core::savePriceSave(const File& f)
@@ -180,6 +180,7 @@ void Core::loadInformationsFromJSON()
 	auto delay = configjson->getDelay();
 	auto numLines = configjson->getNumLines();
 	auto numColumns = configjson->getNumColumns();
+	auto portCOM = configjson->getCOMPort();
 	bool hasNetwork = false;
 	if (pwrd != "error") {
 		Log::write("Mot de passe\n", 2);
@@ -213,6 +214,10 @@ void Core::loadInformationsFromJSON()
 		Log::write("Nombre de colonnes\n", 2);
 		numDigits = numColumns;
 	}
+	if (COM != -1) {
+		Log::write("Port COM\n", 2);
+		COM = portCOM;
+	}
 
 	Log::ln(2, 1);
 
@@ -245,7 +250,7 @@ bool Core::getBatteryAlarm()
 }
 
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
-networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false)
+networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false), inTesting(false), initBool(false)
 {
 	gpio.setPinType(ALARM_PIN, GPIO::PinType::Input);
 	gpio.setPinType(DOOR_PIN, GPIO::PinType::Input);

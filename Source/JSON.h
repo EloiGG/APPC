@@ -23,7 +23,7 @@ public:
 
 	void setPrice(const String& newPrice);
 	String getPrice() const;
-	int getId() const; 
+	int getId() const;
 	String getGasStation() const;
 	String getFuel() const;
 	String getCreated() const;
@@ -78,8 +78,10 @@ public:
 	int getDelay();
 	int getNumLines();
 	int getNumColumns();
+	int getCOMPort();
 
-	String makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay, int numColumns, int numLines);
+	String makeConfigJSON(int id, const String& base_api, const String& api_key,
+		bool line_control, bool reset_line, int delay, int numColumns, int numLines, int COMPort);
 	String toString();
 
 private:

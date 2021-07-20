@@ -38,6 +38,7 @@ void PriceComponent::init()
 	{
 		currentPrice.changeOneDigit(i, digits[i].getText());
 		updatePriceEditor(currentPrice);
+		digits[i].setState(ErrModule::white());
 		Core::get().setPrice(ID, currentPrice);
 		Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 	};
@@ -127,6 +128,9 @@ void PriceComponent::timerCallback()
 	for (int i = 0; i < numDigits; i++) {
 		if (digits[i].getDigit() != currentPrice[i]) {
 			digits[i].setDigit(currentPrice[i]);
+			ErrModule em;
+			em.work_in_progress = true;
+			digits[i].setState(em);
 			return;
 		}
 	}

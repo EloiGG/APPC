@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    UART.cpp
-    Created: 16 Jun 2021 10:59:35am
-    Author:  admin
+	UART.cpp
+	Created: 16 Jun 2021 10:59:35am
+	Author:  admin
 
   ==============================================================================
 */
@@ -98,4 +98,14 @@ bool UART::close()
 		return false;
 	}
 	return true;
+}
+
+bool UART::checkCOMPort(int comPort)
+{
+	UART uart;
+	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, comPort)) {
+		uart.close();
+		return true;
+	}
+	return false;
 }

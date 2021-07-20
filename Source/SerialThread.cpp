@@ -10,7 +10,7 @@
 
 #include "SerialThread.h"
 
-SerialThread::SerialThread() : Thread("SerialThread"), progression(0.0f), exitAsked(false), timeout_ms(3000), waitForResponse(true)
+SerialThread::SerialThread() : timeout_ms(3000), waitForResponse(true)
 {
 	setPriority(9);
 }
@@ -23,12 +23,7 @@ SerialThread::SerialThread(const Sequence& s) : SerialThread()
 void SerialThread::setSequence(const Sequence& s)
 {
 	sequence = s;
-	progression = 0.0f;
-}
-
-float SerialThread::getProgression() const
-{
-	return progression;
+	setProgression(0.0f);
 }
 
 void SerialThread::run()
@@ -36,9 +31,11 @@ void SerialThread::run()
 	auto& c = Core::get();
 	Log::title("Transmission");
 	auto delay = sequence.getDelay();
-	Log::write("\nOuverture du port COM20...");
+	Log::write("\nOuverture du port COM");
+	Log::write(String(c.getCOMPort()));
+	Log::write(" ");
 	Log::write("avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...", 2);
-	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, 20))
+	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, c.getCOMPort()))
 		Log::write("port ouvert !\n");
 	else {
 		Log::write("erreur lors de l'ouverture\n");
@@ -106,10 +103,11 @@ void SerialThread::run()
 			}
 		}
 		wait(delay);
-		progression = (float)i / (sequence.getSize() - 1);
+		setProgression((float)i / (sequence.getSize() - 1));
 		if (threadShouldExit() || exitAsked)
-			break;
+			goto fin;
 	}
+	Core::get().init();
 fin:
 	exitAsked = false;
 	MessageManagerLock mml(this);

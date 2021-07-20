@@ -83,6 +83,8 @@
         <FILE id="oDOYkD" name="SerialThread.h" compile="0" resource="0" file="Source/SerialThread.h"/>
       </GROUP>
       <GROUP id="{73A15917-F864-3E7D-E609-8A53AC2C1BB4}" name="Communication">
+        <FILE id="iO8yU9" name="COMThread.cpp" compile="1" resource="0" file="Source/COMThread.cpp"/>
+        <FILE id="u2Fm3u" name="COMThread.h" compile="0" resource="0" file="Source/COMThread.h"/>
         <FILE id="Za1ODM" name="GPIO.cpp" compile="1" resource="0" file="Source/GPIO.cpp"/>
         <FILE id="Kc3wHO" name="GPIO.h" compile="0" resource="0" file="Source/GPIO.h"/>
         <FILE id="kgmNAY" name="UART.cpp" compile="1" resource="0" file="Source/UART.cpp"/>

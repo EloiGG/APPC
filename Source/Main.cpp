@@ -26,20 +26,19 @@ public:
 	//==============================================================================
 	void initialise(const juce::String& commandLine) override
 	{
-		Core::get().setNumDigits(4);
-		Core::get().setNumPrices(4);
-		Core::get().setDelay_ms(50);
-		Core::get().setID(17);
-		if (File::getCurrentWorkingDirectory().getChildFile("lastprices.prices").existsAsFile()) {
+		/*Core::get().setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
+		Core::get().loadInformationsFromJSON();*/
+		//================================ SI ON VEUT CHARGER LE DERNIER PRIX ============================
+		/*if (File::getCurrentWorkingDirectory().getChildFile("lastprices.prices").existsAsFile()) {
 			PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 			for (int i = 0; i < lastPrices.getNumPrices(); ++i)
 				Core::get().setPrice(i, lastPrices.getPrice(i));
 			for (int i = lastPrices.getNumPrices(); i < Core::MAX_PRICES; ++i)
 				Core::get().setPrice(i, Price("0"));
 		}
-		else
+		else*/
 			for (int i = 0; i < Core::MAX_PRICES; ++i)
-				Core::get().setPrice(i, Price("0"));
+				Core::get().setPrice(i, Price("888888"));
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 	}

@@ -70,7 +70,7 @@ void APPCLookAndFeel::drawToggleButton(Graphics& g, ToggleButton& button,
 	auto r = button.getLocalBounds();
 	float inputwidth = 1;
 
-	g.drawFittedText(button.getButtonText(), r.removeFromLeft(jmin(jmax<int>(titleWidth, r.getWidth() * 0.6), int(r.getWidth() * 0.8)))
+	g.drawFittedText(button.getButtonText(), r.removeFromLeft(jmin(jmax<int>(titleWidth, r.getWidth() * 0.5), int(r.getWidth() * 0.8)))
 		.withTrimmedTop(1).withTrimmedLeft(5).withTrimmedBottom(2).withTrimmedRight(5), Justification::left, 10);
 
 	g.setColour(Colours::white);

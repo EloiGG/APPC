@@ -45,6 +45,7 @@ public:
 	void addBytes(const char* s);
 	bool send();
 	bool close();
+	static bool checkCOMPort(int comPort);
 private:
 	HANDLE hSerial;
 	DCB dcbSerialParams;

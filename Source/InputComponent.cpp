@@ -89,7 +89,7 @@ input([this]()
 	{
 		float inputwidth = 0.75;
 		auto r = getLocalBounds();
-		title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.6)));
+		title.setBounds(r.removeFromLeft(jmax<int>(titleWidth, getWidth() * 0.5)));
 		auto s = r.removeFromRight(30);
 		p.setBounds(s.removeFromTop(getHeight() * 0.5));
 		m.setBounds(s);

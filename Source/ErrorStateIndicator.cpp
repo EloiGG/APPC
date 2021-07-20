@@ -3,7 +3,7 @@
 
 	ErrorStateIndicator.cpp
 	Created: 29 Jun 2021 12:03:05pm
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */

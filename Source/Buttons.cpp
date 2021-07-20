@@ -11,14 +11,15 @@
 #include "Buttons.h"
 
 //==============================================================================
-Buttons::Buttons() : send("Envoyer"), stop("Stop"), grid(4, 1), progression(sendThread),
+Buttons::Buttons() : send("Initialiser"), stop("Stop"), grid(4, 1), progression(sendThread),
 loadConfigButton("Charger une configuration"), connectButton(CharPointer_UTF8("Se connecter au réseau")),
 connectWindow(CharPointer_UTF8("Se connecter à CentoFuel"), "Veuillez entrer votre identifiant", AlertWindow::AlertIconType::QuestionIcon),
 networkErrorWindow(CharPointer_UTF8("Erreur réseau"), "", AlertWindow::AlertIconType::WarningIcon),
 networkSuccessWindow(CharPointer_UTF8("Connexion à CentoFuel réussie"), "Charger les informations sur le panneau ?", AlertWindow::AlertIconType::QuestionIcon),
 configSuccessWindow(CharPointer_UTF8("Chargement de la configuration réussie"), "", AlertWindow::AlertIconType::InfoIcon),
 filechooser(CharPointer_UTF8("Sélectionner un fichier de config"), File::getCurrentWorkingDirectory().getChildFile("init.config"), String("*.config")),
-verif(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"))
+verif(CharPointer_UTF8("Vérifier tous les segments \n(OFF)")),
+COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertIconType::WarningIcon)
 {
 	addAndMakeVisible(grid);
 	addAndMakeVisible(verif);
@@ -52,6 +53,8 @@ verif(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"))
 	networkErrorWindow.addButton("Fermer", 0);
 
 	configSuccessWindow.addButton("Ok", 1, KeyPress(KeyPress::returnKey, 0, 0));
+
+	COMErrorWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey, 0, 0));
 
 
 	if (File::getCurrentWorkingDirectory().getChildFile("lastconfig.config").existsAsFile()) {
@@ -101,6 +104,35 @@ verif(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"))
 
 	send.onClick = [this]()
 	{
+		/*if (!Core::get().isInit()) {
+			Sequence s;
+			auto& c = Core::get();
+			if (UART::checkCOMPort(Core::get().getCOMPort())) {
+				for (int i = 0; i < Core::MAX_PRICES; i++)
+					Core::get().setPrice(i, Price("8.88888"));
+				Price prices[Core::MAX_PRICES];
+				for (int i = 0; i < Core::MAX_PRICES; i++)
+					prices[i] = c.getPrice(i);
+				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, 50, true);
+				sendThread.setSequence(s);
+				Core::get().updateVisualization();
+				for (int i = 0; i < c.getNumPrices(); i++)
+					Core::get().updatePrices(TextUpdateOrigin::Omni, i);
+				progression.start();
+				sendThread.startThread();
+				stop.setEnabled(true);
+				return;
+			}
+			else {
+				COMErrorWindow.setAlwaysOnTop(true);
+				COMErrorWindow.enterModalState(true, ModalCallbackFunction::create([this](int r)
+					{
+						COMErrorWindow.setVisible(false);
+					}
+				), false);
+			}
+		}*/
+
 		if (sendThread.isThreadRunning())
 			return;
 
@@ -177,6 +209,16 @@ void Buttons::resized()
 
 void Buttons::updateVizualisation()
 {
+	if (!Core::get().isInit()) {
+		stop.setEnabled(false);
+		verif.setEnabled(false);
+		send.setButtonText("Initaliser");
+	}
+	else {
+		stop.setEnabled(true);
+		verif.setEnabled(true);
+		send.setButtonText("Envoyer");
+	}
 	if (Core::get().getIsInTransmission())
 		stop.setEnabled(true);
 	else
@@ -237,6 +279,7 @@ void Buttons::networkWindows(const Network& net, bool retry)
 
 void Progression::start()
 {
+	setVisible(true);
 	startTimerHz(60);
 }
 
@@ -258,5 +301,6 @@ void Progression::timerCallback()
 	repaint();
 	if (thread.getProgression() >= 0.999f) {
 		stopTimer();
+		setVisible(false);
 	}
 }

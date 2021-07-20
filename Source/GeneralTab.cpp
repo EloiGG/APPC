@@ -12,15 +12,19 @@
 #include "GeneralTab.h"
 
 //==============================================================================
-GeneralTab::GeneralTab() : grid(4, 12), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
-lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si erreur"), COM("Port COM", 3)
+
+GeneralTab::GeneralTab() : grid(4, 10), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
+resetLine("Effacer si erreur"), COM("Port COM", 3), test("Test"), testProgression(testThread), stop("Stop")
 {
+	addChildComponent(grid);
 	addAndMakeVisible(nPrices);
 	addAndMakeVisible(nDigits);
-	addChildComponent(grid);
-	addAndMakeVisible(lineControl);
+	addAndMakeVisible(COM);
 	addAndMakeVisible(resetLine);
 	addAndMakeVisible(disabled);
+	addAndMakeVisible(test);
+	addAndMakeVisible(stop);
+	addAndMakeVisible(testProgression);
 	disabled.setDisabled(true);
 
 	grid.setBounds(0, 0, getWidth(), 300);
@@ -28,6 +32,8 @@ lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si e
 	nPrices.onUpdate = [](const String& input)
 	{
 		Core::get().setNumPrices(input.getIntValue());
+		Core::get().resetInit();
+
 		Core::get().updateVisualization();
 	};
 	nPrices.min = 1;
@@ -36,17 +42,63 @@ lineControl(CharPointer_UTF8("Contrôle des segments")), resetLine("Effacer si e
 	nDigits.onUpdate = [](const String& input)
 	{
 		Core::get().setNumDigits(input.getIntValue());
+		Core::get().resetInit();
 		Core::get().updateVisualization();
 	};
 	nDigits.min = 1;
 	nDigits.max = Core::MAX_DIGITS;
 
-	lineControl.onClick = [this]() {Core::get().setLineControl(lineControl.getToggleState()); };
-	resetLine.onClick = [this]() {Core::get().setResetLine(resetLine.getState()); };
+	COM.onUpdate = [](const String& input)
+	{
+		Core::get().setCOMPort(input.getIntValue());
+		Core::get().resetInit();
+		Core::get().updateVisualization();
+	};
+	COM.min = 1;
+	COM.max = 256;
+
+	test.setLookAndFeel(Core::get().getLookAndFeel().get());
+	test.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	test.onClick = [this]()
+	{
+		if (testThread.isThreadRunning())
+			return;
+
+		if (Core::get().getPlaySequence() == false)
+		{
+			Sequence s;
+			auto& c = Core::get();
+			Price prices[Core::MAX_PRICES];
+			for (int i = 0; i < Core::MAX_PRICES; i++)
+				prices[i] = c.getPrice(i);
+			s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
+			testThread.setSequence(s);
+		}
+		else
+			testThread.setSequence(Core::get().getSequence());
+		stop.setEnabled(true);
+		Core::get().setInTransmission(true);
+		Core::get().updateVisualization();
+		testProgression.start();
+		testThread.startThread();
+	};
+
+	stop.setEnabled(false);
+	stop.setLookAndFeel(Core::get().getLookAndFeel().get());
+	stop.setColour(TextButton::ColourIds::buttonColourId, lfColours::stopButton);
+	stop.onClick = [this]()
+	{
+		testThread.askToExit();
+		Core::get().setInTesting(false);
+		Core::get().updateVisualization();
+		stop.setEnabled(false);
+	};
 }
 
 GeneralTab::~GeneralTab()
 {
+	testThread.askToExit();
+	testThread.waitForThreadToExit(3000);
 }
 
 void GeneralTab::paint(juce::Graphics& g)
@@ -57,10 +109,13 @@ void GeneralTab::paint(juce::Graphics& g)
 void GeneralTab::resized()
 {
 	grid.setBounds(grid.getLocalBounds().withWidth(getWidth()));
+	COM.setBounds(grid.getRectangle(0, 0, 4, 1));
 	nPrices.setBounds(grid.getRectangle(0, 1, 4, 2));
 	nDigits.setBounds(grid.getRectangle(0, 2, 4, 3));
-	lineControl.setBounds(grid.getRectangle(0, 3, 4, 4));
-	resetLine.setBounds(grid.getRectangle(0, 4, 4, 5));
+	resetLine.setBounds(grid.getRectangle(0, 3, 4, 4));
+	stop.setBounds(grid.getRectangle(0, 5.3, 1, 6.7));
+	test.setBounds(grid.getRectangle(1, 5.3, 4, 6.7));
+	testProgression.setBounds(test.getBounds());
 	disabled.setBounds(getLocalBounds());
 }
 
@@ -79,11 +134,15 @@ void GeneralTab::updateAllParameters()
 	auto& c = Core::get();
 	setNumPrices(c.getNumPrices());
 	setNumDigits(c.getNumDigits());
+	setCOMPort(c.getCOMPort());
 	resetLine.setToggleState(c.getResetLine(), NotificationType::sendNotification);
-	lineControl.setToggleState(c.getLineControl(), NotificationType::sendNotification);
 	if (c.getIsInTransmission())
 		disabled.setDisabled(true);
 	else
 		disabled.setDisabled(false);
+	if (c.getInTesting())
+		stop.setEnabled(true);
+	else
+		stop.setEnabled(false);
 	repaint();
 }

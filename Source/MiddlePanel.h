@@ -72,6 +72,7 @@ private:
     juce::Rectangle<int> nameArea, openConfigArea, keyboardArea;
     Keyboard kb;
     ShapeButton openConfig;
+    Disabled disable;
 
     ApplicationCommandManager commandManager;
 

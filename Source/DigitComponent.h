@@ -33,7 +33,7 @@ protected:
 	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
-		if (lastText != getText()) {
+		if (lastText.length() && lastText != getText()) {
 			const auto& digit = getText().substring(0, 1);
 			if (digit.containsOnly(Core::get().getDigitEditorAcceptedCharacters()))
 				lastText = digit;

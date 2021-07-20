@@ -291,8 +291,8 @@
     <ClCompile Include="..\..\Source\Sequence.cpp">
       <Filter>APPC\Source\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\SerialThread.cpp">
-      <Filter>APPC\Source\Core</Filter>
+    <ClCompile Include="..\..\Source\COMThread.cpp">
+      <Filter>APPC\Source\Communication</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GPIO.cpp">
       <Filter>APPC\Source\Communication</Filter>
@@ -1422,6 +1422,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SerialThread.cpp">
+      <Filter>APPC\Source\Communication</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Disabled.h">
@@ -1496,8 +1499,8 @@
     <ClInclude Include="..\..\Source\Sequence.h">
       <Filter>APPC\Source\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SerialThread.h">
-      <Filter>APPC\Source\Core</Filter>
+    <ClInclude Include="..\..\Source\COMThread.h">
+      <Filter>APPC\Source\Communication</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GPIO.h">
       <Filter>APPC\Source\Communication</Filter>
@@ -2638,6 +2641,9 @@
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SerialThread.h">
+      <Filter>APPC\Source\Communication</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

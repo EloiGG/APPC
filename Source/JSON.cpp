@@ -187,7 +187,12 @@ int ConfigJSON::getNumColumns()
 	return parsedJSON.getProperty("number_of_columns", -1);
 }
 
-String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay, int numColumns, int numLines)
+int ConfigJSON::getCOMPort()
+{
+	return parsedJSON.getProperty("COM_port", -1);
+}
+
+String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay, int numColumns, int numLines, int COMPort)
 {
 	DynamicObject* obj = new DynamicObject();
 	obj->setProperty("id", id);
@@ -197,6 +202,7 @@ String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& 
 	obj->setProperty("reset_line", reset_line);
 	obj->setProperty("number_of_columns", numColumns);
 	obj->setProperty("number_of_lines", numLines);
+	obj->setProperty("COM_port", COMPort);
 
 	var json(obj);
 
@@ -205,7 +211,7 @@ String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& 
 
 String ConfigJSON::toString()
 {
-	return makeConfigJSON(getID(), getBaseAPI(), getBaseAPI(), getLineControl(), getResetLine(), getDelay(), getNumColumns(), getNumLines());
+	return makeConfigJSON(getID(), getBaseAPI(), getBaseAPI(), getLineControl(), getResetLine(), getDelay(), getNumColumns(), getNumLines(), getCOMPort());
 }
 
 SequenceJSON::SequenceJSON(const File& json)
