@@ -26,7 +26,7 @@ PricesJSON::PricesJSON(const File& json)
 	if (parsedJSON == var())
 		Log::write("Impossible de lire le fichier");
 	else
-		Log::write(L"Lecture réussie");
+		Log::write(L"Lecture rÃ©ussie");
 	Log::ln(1, 2);
 	Log::update();
 }
@@ -132,7 +132,7 @@ ConfigJSON::ConfigJSON(const File& json)
 	if (parsedJSON == var())
 		Log::write("Impossible de lire le fichier");
 	else
-		Log::write(L"Lecture réussie");
+		Log::write(L"Lecture rÃ©ussie");
 	Log::ln(1, 2);
 	Log::update();
 }

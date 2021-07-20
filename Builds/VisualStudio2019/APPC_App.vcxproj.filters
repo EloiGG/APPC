@@ -11,9 +11,6 @@
     <Filter Include="APPC\Source\UI\Components\Middle">
       <UniqueIdentifier>{E1C0D322-DF74-5F17-DEBA-A0E32006AF61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="APPC\Source\UI\Components\Bottom">
-      <UniqueIdentifier>{DE5904CD-A89E-1C35-D716-1B987AF11852}</UniqueIdentifier>
-    </Filter>
     <Filter Include="APPC\Source\UI\Components">
       <UniqueIdentifier>{5B29275B-A099-DCDC-BA3C-B199D3A5657B}</UniqueIdentifier>
     </Filter>
@@ -259,9 +256,6 @@
     <ClCompile Include="..\..\Source\DigitComponent.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\ErrorStateIndicator.cpp">
-      <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\MiddlePanel.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClCompile>
@@ -270,9 +264,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\PriceDisplayComponent.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BottomPanel.cpp">
-      <Filter>APPC\Source\UI\Components\Bottom</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>APPC\Source\UI\Components</Filter>
@@ -294,12 +285,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\SerialThread.cpp">
       <Filter>APPC\Source\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\COMThread.cpp">
-      <Filter>APPC\Source\Communication</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GPIO.cpp">
-      <Filter>APPC\Source\Communication</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UART.cpp">
       <Filter>APPC\Source\Communication</Filter>
@@ -1536,9 +1521,6 @@
     <ClInclude Include="..\..\Source\DigitComponent.h">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\ErrorStateIndicator.h">
-      <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\MiddlePanel.h">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClInclude>
@@ -1547,9 +1529,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\PriceDisplayComponent.h">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BottomPanel.h">
-      <Filter>APPC\Source\UI\Components\Bottom</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>APPC\Source\UI\Components</Filter>
@@ -1568,12 +1547,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\SerialThread.h">
       <Filter>APPC\Source\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\COMThread.h">
-      <Filter>APPC\Source\Communication</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GPIO.h">
-      <Filter>APPC\Source\Communication</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UART.h">
       <Filter>APPC\Source\Communication</Filter>
