@@ -7,6 +7,9 @@
   <MAINGROUP id="ouGN8x" name="APPC">
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
+        <GROUP id="{4A16F1B1-AAC6-9E2D-C709-B77AA0106647}" name="Windows">
+          <FILE id="QD6Zc8" name="ErrorWindow.h" compile="0" resource="0" file="Source/ErrorWindow.h"/>
+        </GROUP>
         <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
           <FILE id="FIUJoA" name="Disabled.h" compile="0" resource="0" file="Source/Disabled.h"/>
           <FILE id="evCd8l" name="GridTool.h" compile="0" resource="0" file="Source/GridTool.h"/>

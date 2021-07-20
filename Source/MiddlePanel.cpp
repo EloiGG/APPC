@@ -94,8 +94,6 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 		updateVisualization();
 	};
 	addAndMakeVisible(highlights);
-	//addAndMakeVisible(topGrid);
-	//addAndMakeVisible(leftGrid);
 	highlights.resize(Core::get().getNumDigits(), Core::get().getNumPrices());
 
 	openConfig.onClick = [this]()

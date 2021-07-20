@@ -1279,6 +1279,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ErrorWindow.h"/>
     <ClInclude Include="..\..\Source\Disabled.h"/>
     <ClInclude Include="..\..\Source\GridTool.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>

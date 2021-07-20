@@ -3,7 +3,7 @@
 
     PriceTab.h
     Created: 19 Jun 2021 10:42:31am
-    Author:  Eloi
+    Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */

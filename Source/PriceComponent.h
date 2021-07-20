@@ -3,7 +3,7 @@
 
 	PriceComponent.h
 	Created: 17 Jun 2021 9:16:21am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -54,7 +54,6 @@ public:
 
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
-	//virtual void editorShown(TextEditor*) override;
 	virtual void mouseDown(const MouseEvent&) override;
 
 private:

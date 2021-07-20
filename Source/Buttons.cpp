@@ -34,11 +34,11 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	COMErrorWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey, 0, 0));
 
 
-	if (File::getCurrentWorkingDirectory().getChildFile("lastconfig.config").existsAsFile()) {
-		Log::write("Chargement du fichier lastconfig.config");
+	if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
+		Log::write("Chargement du fichier init.config");
 		Log::ln();
 		auto& c = Core::get();
-		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
+		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
 		c.loadInformationsFromJSON();
 	}
 

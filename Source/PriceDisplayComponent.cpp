@@ -64,7 +64,6 @@ void PriceDisplayComponent::setNumPrices(unsigned int num_of_prices)
 	if (num_of_prices <= MAX_PRICES && num_of_prices != numPrices) {
 		grid.resize(grid.getNumColumns(), num_of_prices);
 		numPrices = num_of_prices;
-		//Core::get().setNumPrices(numPrices);
 		init();
 	}
 }
