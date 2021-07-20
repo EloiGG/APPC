@@ -62,7 +62,6 @@ private:
 	bool hasState;
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
-	ErrorStateIndicator stateIndicator;
 	ErrModule state;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 };

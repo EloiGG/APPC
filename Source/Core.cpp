@@ -243,17 +243,13 @@ std::shared_ptr<APPCLookAndFeel> Core::getLookAndFeel()
 bool Core::getBatteryAlarm()
 {
 	bool b = false;
-	bool res = gpio.getPinLevel(ALARM_PIN, b) == GPIO::Level::High;
 	if (b == false)
 		Log::write("erreur lecture pin");
-	return res;
+	return false;
 }
 
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
 networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false), inTesting(false), initBool(false)
 {
-	gpio.setPinType(ALARM_PIN, GPIO::PinType::Input);
-	gpio.setPinType(DOOR_PIN, GPIO::PinType::Input);
-	gpio.setPinLevel(GPIO::PinNumber::GPIO_1, GPIO::Level::High);
 	digitEditorAcceptedCharacters = " abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ0123456789-.,";
 }

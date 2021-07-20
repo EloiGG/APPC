@@ -61,13 +61,9 @@ void MainComponent::resized()
 	int w = getWidth(), h = getHeight();
 	float topHeight = 0.08f * h, middleWidth = 0.6f * w, leftWidth = 0.15f * w, bottomHeight = 0.3f * h;
 	auto bounds = getLocalBounds();
-	//tPanel.setBounds(bounds.removeFromTop(topHeight));
-	//bPanel.setBounds(bounds.removeFromBottom(bottomHeight));
-	//lPanel.setBounds(bounds.removeFromLeft(leftWidth));
 	if(settingsOppened) rPanel.setBounds(bounds.removeFromRight(w * 0.4));
 	mPanel.setBounds(bounds);
 	tooltip.setBounds(getLocalBounds());
-	//mPanel.setBounds(getLocalBounds());
 }
 
 void MainComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int index)

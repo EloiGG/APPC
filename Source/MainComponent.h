@@ -26,7 +26,6 @@ public:
 private:
 	MiddlePanel mPanel;
 	RightPanel rPanel;
-	BottomPanel bPanel;
 	TooltipWindow tooltip;
 	bool settingsOppened;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)

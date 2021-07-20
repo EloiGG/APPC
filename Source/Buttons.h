@@ -44,11 +44,8 @@ public:
 	void resized() override;
 	void updateVizualisation();
 private:
-	void networkWindows(const Network& net, bool retry = true);
-	FileChooser filechooser;
-	AlertWindow connectWindow, networkErrorWindow, networkSuccessWindow, configSuccessWindow, COMErrorWindow;
+	AlertWindow COMErrorWindow;
 	SerialThread sendThread;
-	TextButton connectButton, loadConfigButton;
 	TextButton send, stop;
 	TextButton verif;
 	GridTool grid;

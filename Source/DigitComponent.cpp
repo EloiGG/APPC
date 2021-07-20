@@ -70,7 +70,6 @@ void DigitEditor::resized()
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);
-	stateIndicator.setBounds(getLocalBounds());
 }
 
 void DigitEditor::setState(const ErrModule& newState)

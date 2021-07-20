@@ -16,7 +16,6 @@
 #include "Networking.h"
 #include "JSON.h"
 #include "Sequence.h"
-#include "GPIO.h"
 #include "SpecialLabel.h"
 
 struct ErrModule
@@ -133,9 +132,6 @@ public:
 private:
 	Core();
 
-	static constexpr GPIO::PinNumber ALARM_PIN = GPIO::PinNumber::GPIO_6;
-	static constexpr GPIO::PinNumber DOOR_PIN = GPIO::PinNumber::GPIO_3;
-
 	unsigned int numDigits, numPrices, delay_ms, id, COM;
 	bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected, inTesting, initBool;
 	std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
@@ -145,7 +141,6 @@ private:
 	Price prices[MAX_PRICES];
 	std::shared_ptr<APPCLookAndFeel> lfptr;
 	Sequence sequence;
-	GPIO gpio;
 	String digitEditorAcceptedCharacters;
 	JUCE_LEAK_DETECTOR(Core)
 };
