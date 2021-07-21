@@ -9,7 +9,8 @@
 #include "Disabled.h"
 #include "Log.h"
 #include "Keyboard.h"
-
+#include "GasStationSelection.h"
+#include "PanelSelection.h"
 class MainComponent : public juce::Component
 {
 public:
@@ -28,5 +29,7 @@ private:
 	RightPanel rPanel;
 	TooltipWindow tooltip;
 	bool settingsOppened;
+	GasStationSelectionDialogBox gasSelection;
+	PanelSelectionDialogBox panelSelection;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

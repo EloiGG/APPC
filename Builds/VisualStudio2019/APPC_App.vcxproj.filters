@@ -2,11 +2,11 @@
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="APPC\Source\UI\Windows">
-      <UniqueIdentifier>{4C4E8F5D-35CC-43D8-2E22-FD4FA4B3C4D4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="APPC\Source\UI\Util">
       <UniqueIdentifier>{786A86AE-67DE-04EE-0793-C3B856D3B110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="APPC\Source\UI\Components\Dialog">
+      <UniqueIdentifier>{DC0A35D4-EF81-D850-0CD5-7B59D72BBC7C}</UniqueIdentifier>
     </Filter>
     <Filter Include="APPC\Source\UI\Components\Right">
       <UniqueIdentifier>{92AC60A1-A6AB-3607-3825-D3FBAC11D8E8}</UniqueIdentifier>
@@ -234,6 +234,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp">
       <Filter>APPC\Source\UI\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GasStationSelection.cpp">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PanelSelection.cpp">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DebugTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
@@ -1482,9 +1488,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ErrorWindow.h">
-      <Filter>APPC\Source\UI\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Disabled.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>
@@ -1502,6 +1505,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\SpecialLabel.h">
       <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DialogBox.h">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GasStationSelection.h">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PanelSelection.h">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DebugTab.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>

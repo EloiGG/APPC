@@ -43,7 +43,33 @@ url("https://centofuel2.centaure-systems.fr/api")
 
 String Network::getFuelPrice(int timeout_ms) const
 {
-	URL realURL(url + String("/fuel_prices"));
+	return request("/fuel_prices");
+}
+
+void Network::setAuthentication(const String& token, const String& password)
+{
+	authToken = token;
+	authPassword = password;
+}
+
+String Network::getOilCompany(int id) const
+{
+	return request(String("/motorway_companies/") + String(id));
+}
+
+String Network::getAllGasStations(int timeout_ms) const
+{
+	return request("/gas_stations");
+}
+
+String Network::getPanels(int id) const
+{
+	return request(String("/maintenance/gas_stations/") + String(id));
+}
+
+String Network::request(const String& requestString, int timeout_ms) const
+{
+	URL realURL(url + requestString);
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	jassert(authPassword != ""); // Il n'y a pas eu d'authentification. utiliser setAuthentication
@@ -58,14 +84,6 @@ String Network::getFuelPrice(int timeout_ms) const
 		return "Failed to connect, status code = " + String(statusCode);
 
 	return "Failed to connect!";
-}
-
-
-
-void Network::setAuthentication(const String& token, const String& password)
-{
-	authToken = token;
-	authPassword = password;
 }
 
 String Network::makeHeader() const

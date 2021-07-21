@@ -52,7 +52,7 @@ public:
 	Core(const Core&) = delete;
 	static Core& get();
 	~Core() {  }
-	void kill() { delete configjson; delete pricesjson; }
+	void kill() { delete configjson; delete pricesjson; delete gsjson; }
 
 	unsigned int getNumDigits();
 	void setNumDigits(unsigned int newNumDigits);
@@ -72,6 +72,9 @@ public:
 	bool getResetLine() { return resetLine; }
 	void setResetLine(bool newResetLine) { resetLine = newResetLine; }
 
+	int getCurrentStationID() { return stationID; }
+	void setCurrentStationID(int newStationID) { stationID = newStationID; }
+
 	bool getIsInTransmission();
 	void setInTransmission(bool shouldBeInTransmission);
 
@@ -81,7 +84,7 @@ public:
 	void setCOMPort(unsigned int newComPort) { COM = newComPort; }
 	unsigned int getCOMPort() { return COM; }
 
-	Network getNetwork();
+	Network getNetwork() const;
 	void setNetwork(const Network& net);
 
 	bool hasNetwork();
@@ -109,13 +112,16 @@ public:
 	std::function<void()> openSettings;
 	std::function<void()> closeSettings;
 	std::function<void(SpecialLabel*, const String&, unsigned int)> showKeyboard;
+	std::function<void()> selectGasStation;
+	std::function<void()> selectPanel;
 
 	void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
 	bool getPlaySequence() { return playSequence; }
 
 	Price* getPrices() { return prices; }
-
 	PricesJSON* getpricesjson() { return pricesjson; }
+	GasStationsJSON* getGasStationsjson() { return gsjson; }
+	PanelJSON getPanelsjson(int index) { return network.getPanels(index); }
 
 	bool isConnected() { return connected; }
 	void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
@@ -132,11 +138,12 @@ public:
 private:
 	Core();
 
-	unsigned int numDigits, numPrices, delay_ms, id, COM;
+	unsigned int numDigits, numPrices, delay_ms, id, COM, stationID;
 	bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected, inTesting, initBool;
 	std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
 	ConfigJSON* configjson;
 	PricesJSON* pricesjson;
+	GasStationsJSON* gsjson;
 	Network network;
 	Price prices[MAX_PRICES];
 	std::shared_ptr<APPCLookAndFeel> lfptr;

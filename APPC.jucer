@@ -7,9 +7,6 @@
   <MAINGROUP id="ouGN8x" name="APPC">
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
-        <GROUP id="{4A16F1B1-AAC6-9E2D-C709-B77AA0106647}" name="Windows">
-          <FILE id="QD6Zc8" name="ErrorWindow.h" compile="0" resource="0" file="Source/ErrorWindow.h"/>
-        </GROUP>
         <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
           <FILE id="FIUJoA" name="Disabled.h" compile="0" resource="0" file="Source/Disabled.h"/>
           <FILE id="evCd8l" name="GridTool.h" compile="0" resource="0" file="Source/GridTool.h"/>
@@ -24,6 +21,17 @@
           <FILE id="IZDb1S" name="SpecialLabel.h" compile="0" resource="0" file="Source/SpecialLabel.h"/>
         </GROUP>
         <GROUP id="{5AD9353C-FE09-A6EF-E348-973D7477333A}" name="Components">
+          <GROUP id="{AF5BEE48-4F14-267C-D666-FE9A5C65C397}" name="Dialog">
+            <FILE id="U0NnAs" name="DialogBox.h" compile="0" resource="0" file="Source/DialogBox.h"/>
+            <FILE id="VXxGaG" name="GasStationSelection.cpp" compile="1" resource="0"
+                  file="Source/GasStationSelection.cpp"/>
+            <FILE id="c2V7Uv" name="GasStationSelection.h" compile="0" resource="0"
+                  file="Source/GasStationSelection.h"/>
+            <FILE id="u0UE1x" name="PanelSelection.cpp" compile="1" resource="0"
+                  file="Source/PanelSelection.cpp"/>
+            <FILE id="nuo49z" name="PanelSelection.h" compile="0" resource="0"
+                  file="Source/PanelSelection.h"/>
+          </GROUP>
           <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
             <FILE id="fpO3xU" name="DebugTab.cpp" compile="1" resource="0" file="Source/DebugTab.cpp"/>
             <FILE id="Kn13wz" name="DebugTab.h" compile="0" resource="0" file="Source/DebugTab.h"/>

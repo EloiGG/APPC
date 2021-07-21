@@ -83,7 +83,7 @@ void Core::setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, uns
 	pricesUpdateFunction = f;
 }
 
-Network Core::getNetwork()
+Network Core::getNetwork() const
 {
 	return network;
 }
@@ -149,7 +149,16 @@ void Core::savePriceSave(const File& f)
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit || !connected) return;
-	Log::write(CharPointer_UTF16(L"Chargement des informations depuis le r\u00E9seau...\n\n"));
+
+	if (gsjson)
+		delete gsjson;
+	gsjson = new GasStationsJSON(network.getAllGasStations());
+	gsjson->updatePropreties(network);
+
+	//PanelJSON p(s);
+	//panelsjson = new PanelsJSON(network.getPanel(0));
+	
+	/*Log::write(CharPointer_UTF16(L"Chargement des informations depuis le r\u00E9seau...\n\n"));
 	auto s = network.getFuelPrice();
 	PricesJSON p(s);
 	if (pricesjson != nullptr)
@@ -164,7 +173,7 @@ void Core::loadInformationsFromNetwork()
 	}
 	setNumDigits(nd - 1);
 	for (int i = 0; i < numPrices; i++)
-		updatePrices(TextUpdateOrigin::Omni, i);
+		updatePrices(TextUpdateOrigin::Omni, i);*/
 	if (updateVisualization)
 		updateVisualization();
 }

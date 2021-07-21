@@ -1,5 +1,4 @@
 #pragma once
-#include "Susi4.h"
 #include "Log.h"
 
 class GPIO

@@ -37,8 +37,18 @@ public:
 				Core::get().setPrice(i, Price("0"));
 		}
 		else*/
-			for (int i = 0; i < Core::MAX_PRICES; ++i)
-				Core::get().setPrice(i, Price("888888"));
+
+		if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
+			Log::write("Chargement du fichier init.config");
+			Log::ln();
+			auto& c = Core::get();
+			c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
+			c.loadInformationsFromJSON();
+			c.loadInformationsFromNetwork();
+		}
+
+		for (int i = 0; i < Core::MAX_PRICES; ++i)
+			Core::get().setPrice(i, Price("888888"));
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 	}
@@ -86,7 +96,7 @@ public:
 #endif
 
 			setVisible(true);
-	}
+		}
 
 		void closeButtonPressed() override
 		{
@@ -105,7 +115,7 @@ public:
 
 	private:
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
-};
+	};
 
 private:
 	std::unique_ptr<MainWindow> mainWindow;

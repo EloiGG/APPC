@@ -11,6 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "Log.h"
+#include "Networking.h"
 
 /// <summary>
 /// Contient toutes les informations autour d'un prix. Informations récupérables via les accesseurs
@@ -19,21 +20,22 @@
 class PriceJSON
 {
 public:
-	PriceJSON(DynamicObject* d);
+	PriceJSON(DynamicObject* d) : dynObj(d) {}
 
 	void setPrice(const String& newPrice);
-	String getPrice() const;
-	int getId() const;
-	String getGasStation() const;
-	String getFuel() const;
-	String getCreated() const;
-	String getUpdated() const;
-	int getPosition() const;
-	bool getEmptied() const;
-	String getModifyAt() const; // TYPE A VERIFIER
-	bool getModifyDone() const;
-	bool getStatus() const;
-	String getOldPrice() const;
+
+	String getPrice() const { return dynObj->getProperty("price").toString(); }
+	int getId() const { return dynObj->getProperty("id"); }
+	String getGasStation() const { return dynObj->getProperty("GasStation"); }
+	String getFuel() const { return dynObj->getProperty("Fuel"); }
+	String getCreated() const { return dynObj->getProperty("created"); }
+	String getUpdated() const { return dynObj->getProperty("updated"); }
+	int getPosition() const { return dynObj->getProperty("position"); }
+	bool getEmptied() const { return dynObj->getProperty("emptied"); }
+	String getModifyAt() const { return dynObj->getProperty("modifyAt"); } // TYPE A VERIFIER
+	bool getModifyDone() const { return dynObj->getProperty("modifyDone"); }
+	bool getStatus() const { return dynObj->getProperty("status"); }
+	String getOldPrice() const { return dynObj->getProperty("oldPrice"); }
 
 private:
 	DynamicObject* dynObj;
@@ -67,18 +69,18 @@ public:
 
 public:
 	ConfigJSON(const File& json = File());
-	//~ConfigJSON();
-	void setFile(const File& json);
-	String getAuthPassword();
-	int getID();
-	String getBaseAPI();
-	int getLineControl();
-	int getResetLine();
-	String getAPIKey();
-	int getDelay();
-	int getNumLines();
-	int getNumColumns();
-	int getCOMPort();
+
+	void setFile(const File& json) { parsedJSON = JSON::parse(json); }
+	String getAuthPassword() { return parsedJSON.getProperty("api_key", "error"); }
+	int getID() { return (int)parsedJSON.getProperty("id", -1); }
+	String getBaseAPI() { return parsedJSON.getProperty("base_api", "error"); }
+	int getLineControl() { return (bool)parsedJSON.getProperty("line_control", -1); }
+	int getResetLine() { return (bool)parsedJSON.getProperty("reset_line", -1); }
+	String getAPIKey() { return parsedJSON.getProperty("api_key", "error"); }
+	int getDelay() { return parsedJSON.getProperty("delay", -1); }
+	int getNumLines() { return parsedJSON.getProperty("number_of_lines", -1); }
+	int getNumColumns() { return parsedJSON.getProperty("number_of_columns", -1); }
+	int getCOMPort() { return parsedJSON.getProperty("COM_port", -1); }
 
 	String makeConfigJSON(int id, const String& base_api, const String& api_key,
 		bool line_control, bool reset_line, int delay, int numColumns, int numLines, int COMPort);
@@ -112,3 +114,47 @@ public:
 private:
 	var parsedPriceSave;
 };
+
+class GasStationJSON
+{
+public:
+	GasStationJSON(DynamicObject* d) : dynObj(d) {}
+	int getId() const { return dynObj->getProperty("id"); }
+	String getName()const { return dynObj->getProperty("name"); }
+	String getHighway()const { return dynObj->getProperty("highway"); }
+	String getDirection()const { return dynObj->getProperty("direction"); }
+	String getOilCompany()const { return dynObj->getProperty("OilCompany"); }
+	void setOilCompany(const String& newOilCompany) { dynObj->setProperty("OilCompany", newOilCompany); }
+	String getMotorwayCompany()const { return dynObj->getProperty("MotorwayCompany"); }
+	void setMotorwayCompany(const String& newMotorwayCompany) { dynObj->setProperty("MotorwayCompany", newMotorwayCompany); }
+private:
+	DynamicObject* dynObj;
+};
+
+class GasStationsJSON
+{
+public:
+	GasStationsJSON(const String& json) : parsedJSON(JSON::parse(json)) {}
+	void updatePropreties(const Network& net);
+	GasStationJSON operator[](size_t index) const;
+	size_t getNumGasStations() const;
+private:
+	var parsedJSON;
+};
+
+class PanelJSON
+{
+public:
+	PanelJSON(){}
+	PanelJSON(const String& json) : parsedJSON(JSON::parse(json)), var((*parsedJSON.getArray())[0]) {}
+	
+	int getId() { return var.getProperty("id", "error"); }
+	String getName() { return var.getProperty("name", "error"); }
+	String getType() { return var.getProperty("type", "error"); }
+	int getBox() {return var.getProperty("box", "error");}
+	size_t getNumPanels() const { return parsedJSON.getArray()->size(); }
+private:
+	var parsedJSON;
+	var var;
+};
+

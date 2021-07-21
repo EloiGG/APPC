@@ -150,6 +150,8 @@
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\Keyboard.cpp"/>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\GasStationSelection.cpp"/>
+    <ClCompile Include="..\..\Source\PanelSelection.cpp"/>
     <ClCompile Include="..\..\Source\DebugTab.cpp"/>
     <ClCompile Include="..\..\Source\PriceTab.cpp"/>
     <ClCompile Include="..\..\Source\RightPanel.cpp"/>
@@ -1279,13 +1281,15 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ErrorWindow.h"/>
     <ClInclude Include="..\..\Source\Disabled.h"/>
     <ClInclude Include="..\..\Source\GridTool.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\Keyboard.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel.h"/>
     <ClInclude Include="..\..\Source\SpecialLabel.h"/>
+    <ClInclude Include="..\..\Source\DialogBox.h"/>
+    <ClInclude Include="..\..\Source\GasStationSelection.h"/>
+    <ClInclude Include="..\..\Source\PanelSelection.h"/>
     <ClInclude Include="..\..\Source\DebugTab.h"/>
     <ClInclude Include="..\..\Source\PriceTab.h"/>
     <ClInclude Include="..\..\Source\RightPanel.h"/>

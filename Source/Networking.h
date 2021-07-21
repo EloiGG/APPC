@@ -25,6 +25,11 @@ public:
     String getFuelPrice(int timeout_ms = 10000) const;
     void setAuthentication(const String& token, const String& password);
     String getPassword() const { return authPassword; }
+    String getOilCompany(int id) const;
+    String getAllGasStations(int timeout_ms = 10000) const;
+    String getPanels(int id) const;
+    String request(const String& requestString, int timeout_ms = 10000) const;
+
 private:
     String makeHeader() const;
     String authToken, authPassword;

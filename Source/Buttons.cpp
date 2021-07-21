@@ -34,13 +34,6 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	COMErrorWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey, 0, 0));
 
 
-	if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
-		Log::write("Chargement du fichier init.config");
-		Log::ln();
-		auto& c = Core::get();
-		c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
-		c.loadInformationsFromJSON();
-	}
 
 	send.onClick = [this]()
 	{
@@ -74,7 +67,6 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 				), false);
 			}
 		}*/
-
 		if (sendThread.isThreadRunning())
 			return;
 

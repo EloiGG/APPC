@@ -3,6 +3,22 @@
 //==============================================================================
 MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 {
+	addAndMakeVisible(gasSelection);
+	addAndMakeVisible(panelSelection);
+
+	panelSelection.close();
+
+	Core::get().setCurrentStationID(2);
+	Core::get().selectGasStation = [this]()
+	{
+		gasSelection.open();
+	};
+	Core::get().selectPanel = [this]()
+	{
+		gasSelection.close();
+		panelSelection.open();
+	};
+
 	Core::get().setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)
 		{
@@ -40,10 +56,13 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	addAndMakeVisible(mPanel);
 	addAndMakeVisible(rPanel);
 	addAndMakeVisible(tooltip);
-
+	addAndMakeVisible(gasSelection);
 	Core::get().updateVisualization();
 
 	setSize(600, 600);
+
+	if (Core::get().isConnected())
+		gasSelection.open();
 }
 
 MainComponent::~MainComponent()
@@ -61,9 +80,11 @@ void MainComponent::resized()
 	int w = getWidth(), h = getHeight();
 	float topHeight = 0.08f * h, middleWidth = 0.6f * w, leftWidth = 0.15f * w, bottomHeight = 0.3f * h;
 	auto bounds = getLocalBounds();
-	if(settingsOppened) rPanel.setBounds(bounds.removeFromRight(w * 0.4));
+	if (settingsOppened) rPanel.setBounds(bounds.removeFromRight(w * 0.4));
 	mPanel.setBounds(bounds);
 	tooltip.setBounds(getLocalBounds());
+	gasSelection.setBounds(getLocalBounds());
+	panelSelection.setBounds(getLocalBounds());
 }
 
 void MainComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int index)

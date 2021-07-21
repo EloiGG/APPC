@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include <JuceHeader.h>
 #include "LookAndFeel.h"
 #include "GridTool.h"
 #include "Core.h"
