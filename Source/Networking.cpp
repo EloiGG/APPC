@@ -67,6 +67,11 @@ String Network::getPanels(int id) const
 	return request(String("/maintenance/gas_stations/") + String(id));
 }
 
+String Network::getUC(int id) const
+{
+	return request(String("/maintenance/panels/") + String(id));
+}
+
 String Network::request(const String& requestString, int timeout_ms) const
 {
 	URL realURL(url + requestString);

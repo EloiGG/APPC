@@ -75,6 +75,9 @@ public:
 	int getCurrentStationID() { return stationID; }
 	void setCurrentStationID(int newStationID) { stationID = newStationID; }
 
+	int getCurrentPanelID() { return panelID; }
+	void setCurrentPanelID(int newPanelID) { panelID = newPanelID; }
+
 	bool getIsInTransmission();
 	void setInTransmission(bool shouldBeInTransmission);
 
@@ -114,6 +117,7 @@ public:
 	std::function<void(SpecialLabel*, const String&, unsigned int)> showKeyboard;
 	std::function<void()> selectGasStation;
 	std::function<void()> selectPanel;
+	std::function<void()> selectUC;
 
 	void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
 	bool getPlaySequence() { return playSequence; }
@@ -138,7 +142,7 @@ public:
 private:
 	Core();
 
-	unsigned int numDigits, numPrices, delay_ms, id, COM, stationID;
+	unsigned int numDigits, numPrices, delay_ms, id, COM, stationID, panelID;
 	bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected, inTesting, initBool;
 	std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
 	ConfigJSON* configjson;

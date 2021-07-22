@@ -31,6 +31,8 @@
                   file="Source/PanelSelection.cpp"/>
             <FILE id="nuo49z" name="PanelSelection.h" compile="0" resource="0"
                   file="Source/PanelSelection.h"/>
+            <FILE id="iLB3qB" name="UCSelection.cpp" compile="1" resource="0" file="Source/UCSelection.cpp"/>
+            <FILE id="wmSstK" name="UCSelection.h" compile="0" resource="0" file="Source/UCSelection.h"/>
           </GROUP>
           <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
             <FILE id="fpO3xU" name="DebugTab.cpp" compile="1" resource="0" file="Source/DebugTab.cpp"/>

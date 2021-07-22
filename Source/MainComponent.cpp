@@ -18,6 +18,11 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 		gasSelection.close();
 		panelSelection.open();
 	};
+	Core::get().selectUC = [this]()
+	{
+		panelSelection.close();
+		Core::get().updateVisualization();
+	};
 
 	Core::get().setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)

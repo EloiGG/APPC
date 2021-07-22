@@ -158,3 +158,45 @@ private:
 	var var;
 };
 
+class UCLinePrice
+{
+public:
+	UCLinePrice(DynamicObject* d) : dynObj(d) {}
+	String getId() const { return dynObj->getProperty("id"); }
+	String getPrice() { return dynObj->getProperty("price"); }
+	int getPosition() { return dynObj->getProperty("position"); }
+	String getState() { return dynObj->getProperty("state"); }
+
+private:
+	DynamicObject* dynObj;
+};
+
+class StationLinePrice
+{
+public:
+	StationLinePrice(var v) : parsedJSON(v) {}
+	int getId() { return parsedJSON.getProperty("id", "error"); }
+	String getFuel() { return parsedJSON.getProperty("fuel", "error"); }
+	float getPrice() { return parsedJSON.getProperty("price", "error"); }
+
+
+
+private:
+	var parsedJSON;
+};
+
+class UCJSON
+{
+public:
+	UCJSON(const String& json) : parsedJSON((*JSON::parse(json).getArray())[0]) {}
+
+	int getId() { return parsedJSON.getProperty("id", "error"); }
+	String getName() { return parsedJSON.getProperty("name", "error"); }
+	int getCountLinePrice() { return parsedJSON.getProperty("countLinePrice", "error"); }
+	bool getWithControl() { return parsedJSON.getProperty("withControl", "error"); }
+	UCLinePrice getUCLinePrice(unsigned int index);
+	StationLinePrice getStationLinePrice(unsigned int index);
+
+private:
+	var parsedJSON;
+};

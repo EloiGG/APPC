@@ -67,7 +67,7 @@ private:
 class CustomTableListBox : public TableListBoxModel, public Component
 {
 public:
-	CustomTableListBox() : table{ {},this }, font(14.0f), size(0) 
+	CustomTableListBox(size_t numRows = 0) : table{ {},this }, font(14.0f), size(numRows)
 	{
 		addAndMakeVisible(table); 
 		table.setColour(TableListBox::ColourIds::backgroundColourId, Colours::black);
@@ -80,7 +80,6 @@ public:
 		Colour c(lfColours::panelBackground);
 		if (rowNumber % 2)
 			c = c.darker();
-		
 		g.fillAll(c);
 	}
 	void paintCell(Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected) override
@@ -99,7 +98,6 @@ public:
 			m = jmax(m, font.getStringWidth(text));
 		}
 		m = jmax(m, font.getStringWidth(table.getHeader().getColumnName(columnId)));
-		DBG(m);
 		return m + 10;
 	}
 	virtual String getPropriety(int row, int column) = 0;
@@ -114,9 +112,15 @@ public:
 		table.setBoundsInset(juce::BorderSize<int>(8));
 	}
 
+	
+	void setMousePosition(const Point<int> newPosition) { mousePosition = newPosition; }
 protected:
 	juce::TableListBox table;
 	size_t size;
 private:
+
 	Font font;
+	Point<int> mousePosition;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomTableListBox)
 };

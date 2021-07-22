@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\GasStationSelection.cpp"/>
     <ClCompile Include="..\..\Source\PanelSelection.cpp"/>
+    <ClCompile Include="..\..\Source\UCSelection.cpp"/>
     <ClCompile Include="..\..\Source\DebugTab.cpp"/>
     <ClCompile Include="..\..\Source\PriceTab.cpp"/>
     <ClCompile Include="..\..\Source\RightPanel.cpp"/>
@@ -1290,6 +1291,7 @@
     <ClInclude Include="..\..\Source\DialogBox.h"/>
     <ClInclude Include="..\..\Source\GasStationSelection.h"/>
     <ClInclude Include="..\..\Source\PanelSelection.h"/>
+    <ClInclude Include="..\..\Source\UCSelection.h"/>
     <ClInclude Include="..\..\Source\DebugTab.h"/>
     <ClInclude Include="..\..\Source\PriceTab.h"/>
     <ClInclude Include="..\..\Source\RightPanel.h"/>

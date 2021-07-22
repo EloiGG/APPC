@@ -30,6 +30,7 @@ PanelSelectionDialogBox::PanelSelection::PanelSelection()
 
 void PanelSelectionDialogBox::PanelSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
+	Core::get().selectUC();
 }
 
 String PanelSelectionDialogBox::PanelSelection::getPropriety(int row, int column)

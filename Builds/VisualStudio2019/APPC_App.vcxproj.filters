@@ -241,6 +241,9 @@
     <ClCompile Include="..\..\Source\PanelSelection.cpp">
       <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\UCSelection.cpp">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DebugTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
@@ -1513,6 +1516,9 @@
       <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PanelSelection.h">
+      <Filter>APPC\Source\UI\Components\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UCSelection.h">
       <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DebugTab.h">

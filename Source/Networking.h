@@ -28,6 +28,7 @@ public:
     String getOilCompany(int id) const;
     String getAllGasStations(int timeout_ms = 10000) const;
     String getPanels(int id) const;
+    String getUC(int id) const;
     String request(const String& requestString, int timeout_ms = 10000) const;
 
 private:

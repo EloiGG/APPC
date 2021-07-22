@@ -164,3 +164,21 @@ size_t GasStationsJSON::getNumGasStations() const
 {
 	return parsedJSON.getArray()->size();
 }
+
+UCLinePrice UCJSON::getUCLinePrice(unsigned int index)
+{
+	auto v = parsedJSON.getDynamicObject();
+	auto& w = *v->getProperty("linesPrices").getArray();
+	auto x = w[index - 1].getDynamicObject();
+	return UCLinePrice(x);
+}
+
+StationLinePrice UCJSON::getStationLinePrice(unsigned int index)
+{
+	auto v = parsedJSON.getDynamicObject();
+	auto& w = *v->getProperty("linesPrices").getArray();
+	auto x = w[index - 1].getDynamicObject();
+	auto y = x->getProperty("linePrices");
+
+	return StationLinePrice(x);
+}

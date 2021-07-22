@@ -22,9 +22,11 @@ GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
 	table.getHeader().addColumn("Nom", 1, w);
 	table.getHeader().addColumn("Autoroute", 2, w);
 	table.getHeader().addColumn("Direction", 3, w);
-	table.getHeader().addColumn(L"Companie Pétrolière", 4, w);
-	table.getHeader().addColumn(L"Companie Autoroutière", 5, w);   
+	table.getHeader().addColumn(L"Compagnie Pétrolière", 4, w);
+	table.getHeader().addColumn(L"Compagnie Autoroutière", 5, w);   
 	table.setOutlineThickness(1);
+
+	table.autoSizeAllColumns();
 }
 
 GasStationSelectionDialogBox::GasStationSelection::~GasStationSelection()
