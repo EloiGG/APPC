@@ -8,6 +8,9 @@
     <GROUP id="{D5983854-8BDD-01C9-2505-59BB68187B27}" name="Source">
       <GROUP id="{AEF4331E-E3A4-873D-4C5B-F4EA94EC192C}" name="UI">
         <GROUP id="{B8FCAB54-C47D-2BCF-B0F5-00D1D4951D67}" name="Util">
+          <FILE id="g2NPIG" name="AlertWindows.cpp" compile="1" resource="0"
+                file="Source/AlertWindows.cpp"/>
+          <FILE id="pV5pMr" name="AlertWindows.h" compile="0" resource="0" file="Source/AlertWindows.h"/>
           <FILE id="FIUJoA" name="Disabled.h" compile="0" resource="0" file="Source/Disabled.h"/>
           <FILE id="evCd8l" name="GridTool.h" compile="0" resource="0" file="Source/GridTool.h"/>
           <FILE id="NJwFJD" name="InputComponent.cpp" compile="1" resource="0"

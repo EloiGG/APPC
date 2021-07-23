@@ -154,19 +154,6 @@ void Core::loadInformationsFromNetwork()
 		delete gsjson;
 	gsjson = new GasStationsJSON(network.getAllGasStations());
 	gsjson->updatePropreties(network);
-	UCJSON uc = network.getUC(1);
-
-	auto a = uc.getCountLinePrice();
-	auto b = uc.getId();
-	auto c = uc.getName();
-	auto e = uc.getUCLinePrice(2);
-	auto e1 = e.getId();
-	auto e2 = e.getPosition();
-	auto e3 = e.getPrice();
-	auto e4 = e.getState();
-	auto d = uc.getStationLinePrice(1);
-	auto f = uc.getWithControl();
-	int i = 1;
 
 	//PanelJSON p(s);
 	//panelsjson = new PanelsJSON(network.getPanel(0));

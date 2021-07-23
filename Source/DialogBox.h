@@ -16,72 +16,28 @@
 //==============================================================================
 /*
 */
-class DialogBoxComponent : public juce::Component
-{
-public:
-	DialogBoxComponent(Component* componentToPlaceInside) : insideComponent(componentToPlaceInside), w(0), h(0)
-	{
-		setInterceptsMouseClicks(false, false);
-		setAlwaysOnTop(true);
-		addAndMakeVisible(background);
-		addAndMakeVisible(*insideComponent);
-	}
-
-	~DialogBoxComponent() override {}
-
-	void resized() override
-	{
-		background.setBounds(getLocalBounds());
-		insideComponent->centreWithSize(w * getWidth(), h * getHeight());
-	}
-
-	void open()
-	{
-		setInterceptsMouseClicks(true, true);
-		background.setDisabled(true);
-		insideComponent->setVisible(true);
-		onOpenning();
-	}
-
-	void close()
-	{
-		setInterceptsMouseClicks(false, false);
-		background.setDisabled(false);
-		insideComponent->setVisible(false);
-	}
-
-protected:
-	virtual void onOpenning() {}
-	void setInteriorProportions(float widthProportion, float heightProportion)
-	{
-		w = widthProportion; h = heightProportion;
-	}
-	std::unique_ptr<Component> insideComponent;
-
-private:
-	float w, h;
-	Disabled background;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DialogBoxComponent)
-};
 
 class CustomTableListBox : public TableListBoxModel, public Component
 {
 public:
-	CustomTableListBox(size_t numRows = 0) : table{ {},this }, font(14.0f), size(numRows)
+	CustomTableListBox(size_t numRows = 0) : table{ {},this }, font(14.0f), size(numRows), desiredWidth(0)
 	{
-		addAndMakeVisible(table); 
+		addAndMakeVisible(table);
 		table.setColour(TableListBox::ColourIds::backgroundColourId, Colours::black);
 		table.setColour(juce::ListBox::outlineColourId, juce::Colours::grey);
 		table.autoSizeAllColumns();
 	}
+
 	int getNumRows() override { return size; }
-	void paintRowBackground(Graphics& g, int rowNumber, int width, int height, bool rowIsSelected) override 
+
+	void paintRowBackground(Graphics& g, int rowNumber, int width, int height, bool rowIsSelected) override
 	{
 		Colour c(lfColours::panelBackground);
 		if (rowNumber % 2)
 			c = c.darker();
 		g.fillAll(c);
 	}
+
 	void paintCell(Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected) override
 	{
 		g.setFont(font);
@@ -89,7 +45,9 @@ public:
 		String text = getPropriety(rowNumber, columnId);
 		g.drawText(text, 2, 0, width, height, Justification::centredLeft);
 	}
+
 	virtual void cellClicked(int rowNumber, int columnId, const MouseEvent&) = 0;
+
 	int getColumnAutoSizeWidth(int columnId) override
 	{
 		int m = 0;
@@ -112,15 +70,93 @@ public:
 		table.setBoundsInset(juce::BorderSize<int>(8));
 	}
 
-	
-	void setMousePosition(const Point<int> newPosition) { mousePosition = newPosition; }
+	int getVerticalScrollbarWidth()
+	{
+		return (!table.getVerticalScrollBar().isVisible()) * 8;
+	}
+
+	int getHorizontalScrollbarHeight()
+	{
+		DBG((!table.getHorizontalScrollBar().isVisible()) * 8);
+		return (!table.getHorizontalScrollBar().isVisible()) * 8;
+	}
+
+	void computeDesiredProportions()
+	{
+		unsigned int width = 0;
+		for (int i = 1; i <= table.getHeader().getNumColumns(true); i++)
+			width += getColumnAutoSizeWidth(i);
+		desiredWidth = width + 32;
+		desiredHeight = size * table.getRowHeight() + table.getHeaderHeight() + 26;
+	}
+
+	unsigned int getDesiredWidth() { return desiredWidth; }
+	unsigned int getDesiredHeight() { return desiredHeight; }
+
 protected:
 	juce::TableListBox table;
 	size_t size;
-private:
 
+private:
+	unsigned int desiredWidth, desiredHeight;
 	Font font;
-	Point<int> mousePosition;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomTableListBox)
+};
+
+
+class DialogBoxComponent : public juce::Component
+{
+public:
+	DialogBoxComponent(CustomTableListBox* componentToPlaceInside) : insideComponent(componentToPlaceInside), w(0), h(0)
+	{
+		setInterceptsMouseClicks(false, false);
+		setAlwaysOnTop(true);
+		addAndMakeVisible(background);
+		addAndMakeVisible(*insideComponent);
+
+		close();
+	}
+
+	~DialogBoxComponent() override {}
+
+	void resized() override
+	{
+		background.setBounds(getLocalBounds());
+		int dw = insideComponent->getDesiredWidth() != 0 ? insideComponent->getDesiredWidth() : w * getWidth(),
+			dh = insideComponent->getDesiredHeight() != 0 ? insideComponent->getDesiredHeight() : h * getHeight();
+		insideComponent->centreWithSize(jmin<int>(w * getWidth(), dw), jmin<int>(h * getHeight(), dh));
+	}
+
+	void open()
+	{
+		setVisible(true);
+		setInterceptsMouseClicks(true, true);
+		background.setDisabled(true);
+		insideComponent->setVisible(true);
+		repaint();
+	}
+
+	void close()
+	{
+		setVisible(false);
+		setInterceptsMouseClicks(false, false);
+		background.setDisabled(false);
+		insideComponent->setVisible(false);
+		repaint();
+
+	}
+
+protected:
+	virtual void onOpenning() {}
+	void setInteriorProportions(float widthProportion, float heightProportion)
+	{
+		w = widthProportion; h = heightProportion;
+	}
+	std::unique_ptr<CustomTableListBox> insideComponent;
+
+private:
+	float w, h;
+	Disabled background;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DialogBoxComponent)
 };

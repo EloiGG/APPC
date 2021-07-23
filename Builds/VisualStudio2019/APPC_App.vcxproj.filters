@@ -226,6 +226,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\AlertWindows.cpp">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\InputComponent.cpp">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClCompile>
@@ -1491,6 +1494,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\AlertWindows.h">
+      <Filter>APPC\Source\UI\Util</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Disabled.h">
       <Filter>APPC\Source\UI\Util</Filter>
     </ClInclude>

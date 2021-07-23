@@ -11,25 +11,29 @@
 
 #include "PanelSelection.h"
 
-PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(static_cast<Component*>(new PanelSelection))
+PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(new PanelSelection)
 {
 	setInteriorProportions(0.7f, 0.7f);
 }
 
-PanelSelectionDialogBox::PanelSelection::PanelSelection()
+PanelSelectionDialogBox::PanelSelection::PanelSelection() : currentStationID(1)
 {
 	int w = 110;
 	table.getHeader().addColumn("ID", 1, w);
 	table.getHeader().addColumn("Nom", 2, w);
 	table.getHeader().addColumn("Type", 3, w);
 	table.getHeader().addColumn("Box", 4, w);
-	table.autoSizeAllColumns();
 	table.setColour(juce::ListBox::outlineColourId, juce::Colours::grey);
 	table.setOutlineThickness(1);
+
+	table.autoSizeAllColumns();
+
+	computeDesiredProportions();
 }
 
 void PanelSelectionDialogBox::PanelSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
+	Core::get().setCurrentPanelID(getPropriety(rowNumber, 1).getIntValue());
 	Core::get().selectUC();
 }
 
@@ -63,5 +67,8 @@ void PanelSelectionDialogBox::PanelSelection::paint(Graphics& g)
 		panelsJSON = Core::get().getPanelsjson(currentStationID);
 		size = panelsJSON.getNumPanels();
 		table.autoSizeAllColumns();
+
+		computeDesiredProportions();
+		getParentComponent()->resized();
 	}
 }

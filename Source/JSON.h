@@ -163,9 +163,9 @@ class UCLinePrice
 public:
 	UCLinePrice(DynamicObject* d) : dynObj(d) {}
 	String getId() const { return dynObj->getProperty("id"); }
-	String getPrice() { return dynObj->getProperty("price"); }
-	int getPosition() { return dynObj->getProperty("position"); }
-	String getState() { return dynObj->getProperty("state"); }
+	float getPrice() const { return dynObj->getProperty("price"); }
+	int getPosition() const { return dynObj->getProperty("position"); }
+	String getState()const { return dynObj->getProperty("state"); }
 
 private:
 	DynamicObject* dynObj;
@@ -179,24 +179,41 @@ public:
 	String getFuel() { return parsedJSON.getProperty("fuel", "error"); }
 	float getPrice() { return parsedJSON.getProperty("price", "error"); }
 
+private:
+	var parsedJSON;
+};
 
+
+
+class UCJSON
+{
+public:
+	UCJSON() {}
+	UCJSON(const var& v) : parsedJSON(v) {}
+
+	int getId() const { return parsedJSON.getProperty("id", -1); }
+	String getName() const { return parsedJSON.getProperty("name", "error"); }
+	int getCountLinePrice()const { return parsedJSON.getProperty("countLinePrice", -1); }
+	int getNumberOfDigits() const { return parsedJSON.getProperty("numberOfDigits", -1); }
+	bool getWithControl() const { return parsedJSON.getProperty("withControl", "error"); }
+	// Commence à l'indice 0 : décalé de 1 par rapport aux ID
+	UCLinePrice getUCLinePrice(unsigned int index) const;
+	// Commence à l'indice 0 : décalé de 1 par rapport aux ID
+	StationLinePrice getStationLinePrice(unsigned int index) const;
 
 private:
 	var parsedJSON;
 };
 
-class UCJSON
+class UCsJSON
 {
 public:
-	UCJSON(const String& json) : parsedJSON((*JSON::parse(json).getArray())[0]) {}
-
-	int getId() { return parsedJSON.getProperty("id", "error"); }
-	String getName() { return parsedJSON.getProperty("name", "error"); }
-	int getCountLinePrice() { return parsedJSON.getProperty("countLinePrice", "error"); }
-	bool getWithControl() { return parsedJSON.getProperty("withControl", "error"); }
-	UCLinePrice getUCLinePrice(unsigned int index);
-	StationLinePrice getStationLinePrice(unsigned int index);
+	UCsJSON() : size(0) {}
+	UCsJSON(const String& json) : parsedJSON(*JSON::parse(json).getArray()), size(JSON::parse(json).getArray()->size()) {}
+	int getNumUCJSON() const { return size; }
+	UCJSON operator[](size_t index) const { return UCJSON(parsedJSON[index]); }
 
 private:
+	size_t size;
 	var parsedJSON;
 };

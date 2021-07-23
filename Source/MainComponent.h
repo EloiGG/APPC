@@ -11,6 +11,8 @@
 #include "Keyboard.h"
 #include "GasStationSelection.h"
 #include "PanelSelection.h"
+#include "UCSelection.h"
+
 class MainComponent : public juce::Component
 {
 public:
@@ -31,5 +33,6 @@ private:
 	bool settingsOppened;
 	GasStationSelectionDialogBox gasSelection;
 	PanelSelectionDialogBox panelSelection;
+	UCSelectionDialogBox UCSelection;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

@@ -31,7 +31,7 @@ public:
 	{
 		if (!isDisabled)
 			return;
-		g.fillAll(Colours::grey.withAlpha(0.3f));
+		g.fillAll(Colours::grey.withAlpha(0.45f));
 		g.setColour(Colours::black);
 		int spacing = 7, w = 0, h = 0;
 		/*for (w = 0; w + getHeight() <= getWidth(); w += spacing)

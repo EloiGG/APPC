@@ -37,7 +37,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 
 	send.onClick = [this]()
 	{
-		/*if (!Core::get().isInit()) {
+		if (!Core::get().isInit()) {
 			Sequence s;
 			auto& c = Core::get();
 			if (UART::checkCOMPort(Core::get().getCOMPort())) {
@@ -66,7 +66,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 					}
 				), false);
 			}
-		}*/
+		}
 		if (sendThread.isThreadRunning())
 			return;
 
@@ -133,8 +133,6 @@ void Buttons::paint(juce::Graphics& g)
 void Buttons::resized()
 {
 	grid.setBounds(getLocalBounds());
-	//connectButton.setBounds(grid.getRectangle(0, 0, 2, 1));
-	//loadConfigButton.setBounds(grid.getRectangle(2, 0, 4, 1));
 	send.setBounds(grid.getRectangle(1, 0, 3, 1));
 	verif.setBounds(grid.getRectangle(3, 0, 4, 1));
 	stop.setBounds(grid.getRectangle(0, 0, 1, 1));

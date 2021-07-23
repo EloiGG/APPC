@@ -12,22 +12,25 @@
 
 #include <JuceHeader.h>
 #include "DialogBox.h"
-
+#include "Core.h"
 //==============================================================================
 /*
 */
 class UCSelectionDialogBox : public DialogBoxComponent
 {
-	class UCSelection : public juce::Component
+	class UCSelection : public CustomTableListBox
 	{
 	public:
 		UCSelection();
 		~UCSelection() override;
 
-		void paint(juce::Graphics&) override;
-		void resized() override;
+		virtual void cellClicked(int rowNumber, int columnId, const MouseEvent&) override;
+		virtual String getPropriety(int row, int column) override;
+		void paint(Graphics&) override;
 
 	private:
+		UCsJSON UCsjson;
+		int currentUCID;
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UCSelection)
 	};
 

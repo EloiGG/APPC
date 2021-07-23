@@ -17,7 +17,7 @@
 #include "JSON.h"
 #include "Sequence.h"
 #include "SpecialLabel.h"
-
+#include "AlertWindows.h"
 struct ErrModule
 {
 	static ErrModule white() { ErrModule r; r.work_in_progress = true; return r; }
@@ -81,6 +81,9 @@ public:
 	bool getIsInTransmission();
 	void setInTransmission(bool shouldBeInTransmission);
 
+	String getUCName(){ return UCName; }
+	void setUCName(const String& newName) { UCName = newName; }
+
 	void setID(int newID) { id = newID; }
 	int getID() { return id; }
 
@@ -118,6 +121,7 @@ public:
 	std::function<void()> selectGasStation;
 	std::function<void()> selectPanel;
 	std::function<void()> selectUC;
+	std::function<void()> closeUCSelection;
 
 	void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
 	bool getPlaySequence() { return playSequence; }
@@ -126,6 +130,7 @@ public:
 	PricesJSON* getpricesjson() { return pricesjson; }
 	GasStationsJSON* getGasStationsjson() { return gsjson; }
 	PanelJSON getPanelsjson(int index) { return network.getPanels(index); }
+	UCsJSON getUCsjson(int index) { return network.getUCs(index); }
 
 	bool isConnected() { return connected; }
 	void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
@@ -139,6 +144,9 @@ public:
 	void init() { initBool = true; }
 	void resetInit() { initBool = false; }
 	bool isInit() { return initBool; }
+
+	void openAlertWindow(APPCAlertWindows::WindowType window, const std::function<void(int)>& callbackfunction = std::function<void(int)>())
+	{ alertWindows.open(window, callbackfunction); }
 private:
 	Core();
 
@@ -152,6 +160,7 @@ private:
 	Price prices[MAX_PRICES];
 	std::shared_ptr<APPCLookAndFeel> lfptr;
 	Sequence sequence;
-	String digitEditorAcceptedCharacters;
+	String digitEditorAcceptedCharacters, UCName;
+	APPCAlertWindows alertWindows;
 	JUCE_LEAK_DETECTOR(Core)
 };

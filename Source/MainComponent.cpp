@@ -3,28 +3,33 @@
 //==============================================================================
 MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 {
-	addAndMakeVisible(gasSelection);
-	addAndMakeVisible(panelSelection);
-
+	gasSelection.close();
 	panelSelection.close();
 
-	Core::get().setCurrentStationID(2);
-	Core::get().selectGasStation = [this]()
+	auto& c = Core::get();
+
+	c.setCurrentStationID(2);
+	c.selectGasStation = [this]()
 	{
 		gasSelection.open();
 	};
-	Core::get().selectPanel = [this]()
+	c.selectPanel = [this]()
 	{
 		gasSelection.close();
 		panelSelection.open();
 	};
-	Core::get().selectUC = [this]()
+	c.selectUC = [this]()
 	{
 		panelSelection.close();
-		Core::get().updateVisualization();
+		UCSelection.open();
+	};
+	c.closeUCSelection = [this]()
+	{
+		UCSelection.close();
 	};
 
-	Core::get().setUpdatePriceFunction(
+
+	c.setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)
 		{
 			mPanel.updatePrices(o, index);
@@ -37,21 +42,21 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 		}
 	);
 
-	Core::get().updateVisualization = [this]()
+	c.updateVisualization = [this]()
 	{
 		mPanel.updateVisualization();
 		rPanel.updateParameters();
 		Log::update();
 	};
 
-	Core::get().openSettings = [this]()
+	c.openSettings = [this]()
 	{
 		settingsOppened = true;
 		rPanel.setVisible(true);
 		setSize(getWidth() * 1.0 / 0.6, getHeight());
 	};
 
-	Core::get().closeSettings = [this]()
+	c.closeSettings = [this]()
 	{
 		settingsOppened = false;
 		rPanel.setVisible(false);
@@ -62,12 +67,21 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	addAndMakeVisible(rPanel);
 	addAndMakeVisible(tooltip);
 	addAndMakeVisible(gasSelection);
-	Core::get().updateVisualization();
+	addAndMakeVisible(panelSelection);
+	addAndMakeVisible(UCSelection);
+
+	c.setCurrentPanelID(1);
+	c.updateVisualization();
 
 	setSize(600, 600);
 
 	if (Core::get().isConnected())
-		gasSelection.open();
+		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel, [this](int r)
+			{
+				if (r == 1)
+					gasSelection.open();
+			}
+	);
 }
 
 MainComponent::~MainComponent()
@@ -90,6 +104,7 @@ void MainComponent::resized()
 	tooltip.setBounds(getLocalBounds());
 	gasSelection.setBounds(getLocalBounds());
 	panelSelection.setBounds(getLocalBounds());
+	UCSelection.setBounds(getLocalBounds());
 }
 
 void MainComponent::updatePrices(TextUpdateOrigin whoCalled, unsigned int index)

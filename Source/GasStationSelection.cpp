@@ -27,6 +27,8 @@ GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
 	table.setOutlineThickness(1);
 
 	table.autoSizeAllColumns();
+
+	computeDesiredProportions();
 }
 
 GasStationSelectionDialogBox::GasStationSelection::~GasStationSelection()
@@ -36,8 +38,7 @@ GasStationSelectionDialogBox::GasStationSelection::~GasStationSelection()
 
 void GasStationSelectionDialogBox::GasStationSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
-
-	Core::get().setCurrentStationID(rowNumber + 1);
+	Core::get().setCurrentStationID(getPropriety(rowNumber, 6).getIntValue());
 	Core::get().selectPanel();
 }
 
@@ -70,7 +71,7 @@ String GasStationSelectionDialogBox::GasStationSelection::getPropriety(int rowNu
 	return text;
 }
 
-GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(static_cast<Component*>(new GasStationSelection))
+GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(new GasStationSelection)
 {
 	setInteriorProportions(0.8f, 0.7f);
 }

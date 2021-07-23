@@ -67,7 +67,7 @@ String Network::getPanels(int id) const
 	return request(String("/maintenance/gas_stations/") + String(id));
 }
 
-String Network::getUC(int id) const
+String Network::getUCs(int id) const
 {
 	return request(String("/maintenance/panels/") + String(id));
 }

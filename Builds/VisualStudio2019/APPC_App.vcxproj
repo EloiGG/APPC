@@ -147,6 +147,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\AlertWindows.cpp"/>
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\Keyboard.cpp"/>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
@@ -1282,6 +1283,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\AlertWindows.h"/>
     <ClInclude Include="..\..\Source\Disabled.h"/>
     <ClInclude Include="..\..\Source\GridTool.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>

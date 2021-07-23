@@ -11,10 +11,10 @@
 #include "MiddlePanel.h"
 
 //==============================================================================
-MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de la station"),
+MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de l'UC"),
 openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
 {
-	addAndMakeVisible(disable);
+	//addAndMakeVisible(disable);
 	addAndMakeVisible(buttons);
 	addAndMakeVisible(prices);
 	addAndMakeVisible(cornerDigit);
@@ -22,8 +22,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	addAndMakeVisible(openConfig);
 	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
-	/*getTopLevelComponent()->addKeyListener(commandManager.getKeyMappings());
-	commandManager.registerAllCommandsForTarget(&kb);*/
+
 	disable.setDisabled(false);
 	Core::get().showKeyboard = [this](SpecialLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{
@@ -276,6 +275,7 @@ void MiddlePanel::updateVisualization()
 			topDigits[i].setVisible(false);
 		cornerDigit.setVisible(false);
 	}
+	name.setText(Core::get().getUCName(), NotificationType::sendNotification);
 	buttons.updateVizualisation();
 	highlights.resize(ndigits, nprices);
 	topGrid.resize(ndigits, 1);
