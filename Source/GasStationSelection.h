@@ -29,6 +29,7 @@ class GasStationSelectionDialogBox : public DialogBoxComponent
 
 		virtual void cellClicked(int rowNumber, int columnId, const MouseEvent&);
 		virtual String getPropriety(int row, int column) override;
+
 	private:
 		const GasStationsJSON& stationsJSON;
 
@@ -37,7 +38,7 @@ class GasStationSelectionDialogBox : public DialogBoxComponent
 
 public:
 	GasStationSelectionDialogBox();
+
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GasStationSelectionDialogBox)
-
 };

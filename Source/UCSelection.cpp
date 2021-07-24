@@ -44,7 +44,7 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 			auto& c = Core::get();
 
 			String name(uc.getName());
-			float prices[Core::MAX_PRICES];
+			float prices[Core::MAX_PRICES] = { 0 };
 			for (int i = 0; i < numPrices; i++) {
 				if (r == 1) // prix UC 
 					prices[uc.getUCLinePrice(i).getPosition()] = uc.getUCLinePrice(i).getPrice();
@@ -56,6 +56,9 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 			if (numPrices != -1) c.setNumPrices(numPrices);
 			if (numDigits != -1) c.setNumDigits(numDigits);
 			if (id != -1) c.setID(id);
+			for (int i = 0; i < numPrices; i++)
+				c.setPrice(i, String(prices[i]));
+
 
 			c.closeUCSelection();
 			c.updateVisualization();
@@ -94,5 +97,4 @@ void UCSelectionDialogBox::UCSelection::paint(Graphics& g)
 
 UCSelectionDialogBox::UCSelectionDialogBox() : DialogBoxComponent(new UCSelection)
 {
-	setInteriorProportions(0.5f, 0.4f);
 }

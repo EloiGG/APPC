@@ -54,6 +54,11 @@ void Network::setAuthentication(const String& token, const String& password)
 
 String Network::getOilCompany(int id) const
 {
+	return request(String("/oil_companies/") + String(id));
+}
+
+String Network::getMotorwayCompany(int id) const
+{
 	return request(String("/motorway_companies/") + String(id));
 }
 

@@ -149,8 +149,18 @@ int PriceSave::getNumPrices()
 
 void GasStationsJSON::updatePropreties(const Network& net)
 {
-	//for (int i = 0; i < getNumGasStations(); i++)
-	//	operator[](i).setOilCompany(net.request(operator[](i).getOilCompany().substring(4)));
+	auto v = *parsedJSON.getArray();
+	for (int i = 0; i < getNumGasStations(); i++) {
+		auto w = v[i].getDynamicObject();
+
+		int oilCompanyNumber = w->getProperty("OilCompany").toString().fromLastOccurrenceOf("/", false, true).getIntValue();
+		String oilCompanyName((JSON::parse(net.getOilCompany(oilCompanyNumber)).getProperty("name", "error")).toString());
+		w->setProperty("OilCompany", oilCompanyName);
+
+		int motorwayCompanyNumber = w->getProperty("MotorwayCompany").toString().fromLastOccurrenceOf("/", false, true).getIntValue();
+		String motorwayCompanyName((JSON::parse(net.getMotorwayCompany(motorwayCompanyNumber)).getProperty("name", "error")).toString());
+		w->setProperty("MotorwayCompany", motorwayCompanyName);
+	}
 }
 
 GasStationJSON GasStationsJSON::operator[](size_t index) const

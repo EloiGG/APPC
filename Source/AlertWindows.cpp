@@ -32,7 +32,7 @@ void APPCAlertWindows::open(WindowType window, const std::function<void(int)>& c
 	default:
 		break;
 	}
-
+	aw->setAlwaysOnTop(true);
 	aw->enterModalState(true, ModalCallbackFunction::create(
 		[this, callbackfunction](int r) {callbackfunction(r); aw->setVisible(false); }), true);
 }

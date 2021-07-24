@@ -13,7 +13,6 @@
 
 PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(new PanelSelection)
 {
-	setInteriorProportions(0.7f, 0.7f);
 }
 
 PanelSelectionDialogBox::PanelSelection::PanelSelection() : currentStationID(1)

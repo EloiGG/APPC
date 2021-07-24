@@ -42,7 +42,8 @@ public:
 	{
 		g.setFont(font);
 		g.setColour(Colours::white);
-		String text = getPropriety(rowNumber, columnId);
+		String text;
+		if(rowNumber < size) text = getPropriety(rowNumber, columnId);
 		g.drawText(text, 2, 0, width, height, Justification::centredLeft);
 	}
 
@@ -77,7 +78,6 @@ public:
 
 	int getHorizontalScrollbarHeight()
 	{
-		DBG((!table.getHorizontalScrollBar().isVisible()) * 8);
 		return (!table.getHorizontalScrollBar().isVisible()) * 8;
 	}
 
@@ -114,7 +114,7 @@ public:
 		setAlwaysOnTop(true);
 		addAndMakeVisible(background);
 		addAndMakeVisible(*insideComponent);
-
+		setInteriorProportions(0.9f, 0.9f);
 		close();
 	}
 

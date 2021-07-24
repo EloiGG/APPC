@@ -15,7 +15,7 @@
 GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
 	stationsJSON(*Core::get().getGasStationsjson())
 {
-	size = stationsJSON.getNumGasStations();
+	size = Core::get().getGasStationsjson() ? stationsJSON.getNumGasStations() : 0;
 	addAndMakeVisible(table);
 	int w = 110;
 	table.getHeader().addColumn("ID", 6, w);
@@ -73,5 +73,4 @@ String GasStationSelectionDialogBox::GasStationSelection::getPropriety(int rowNu
 
 GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(new GasStationSelection)
 {
-	setInteriorProportions(0.8f, 0.7f);
 }

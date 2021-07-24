@@ -5,7 +5,6 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 {
 	gasSelection.close();
 	panelSelection.close();
-
 	auto& c = Core::get();
 
 	c.setCurrentStationID(2);
@@ -27,8 +26,6 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	{
 		UCSelection.close();
 	};
-
-
 	c.setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)
 		{
