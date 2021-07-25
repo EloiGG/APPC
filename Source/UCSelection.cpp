@@ -61,6 +61,7 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 
 
 			c.closeUCSelection();
+			c.resetInit();
 			c.updateVisualization();
 		});
 }

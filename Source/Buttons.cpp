@@ -33,29 +33,35 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 
 	COMErrorWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey, 0, 0));
 
-
-
 	send.onClick = [this]()
 	{
 		if (!Core::get().isInit()) {
 			Sequence s;
 			auto& c = Core::get();
 			if (UART::checkCOMPort(Core::get().getCOMPort())) {
-				for (int i = 0; i < Core::MAX_PRICES; i++)
-					Core::get().setPrice(i, Price("8.88888"));
+		//		for (int i = 0; i < Core::MAX_PRICES; i++)
+		//			Core::get().setPrice(i, Price("8.88888"));
+		//		Price prices[Core::MAX_PRICES];
+		//		for (int i = 0; i < Core::MAX_PRICES; i++)
+		//			prices[i] = c.getPrice(i);
+		//		s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, 50, true);
+		//		sendThread.setSequence(s);
+		//		Core::get().updateVisualization();
+		//		for (int i = 0; i < c.getNumPrices(); i++)
+		//			Core::get().updatePrices(TextUpdateOrigin::Omni, i);
+		//Core::get().setInTransmission(true);
+		//Core::get().updateVisualization();
+		//		progression.start();
+		//		sendThread.startThread();
+		//		stop.setEnabled(true);
+		//		return;
+				Sequence s;
+				auto& c = Core::get();
 				Price prices[Core::MAX_PRICES];
 				for (int i = 0; i < Core::MAX_PRICES; i++)
 					prices[i] = c.getPrice(i);
-				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, 50, true);
+				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
 				sendThread.setSequence(s);
-				Core::get().updateVisualization();
-				for (int i = 0; i < c.getNumPrices(); i++)
-					Core::get().updatePrices(TextUpdateOrigin::Omni, i);
-		Core::get().setInTransmission(true);
-		Core::get().updateVisualization();
-				progression.start();
-				sendThread.startThread();
-				stop.setEnabled(true);
 				return;
 			}
 			else {

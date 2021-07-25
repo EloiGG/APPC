@@ -14,7 +14,7 @@
 MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de l'UC"),
 openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
 {
-	//addAndMakeVisible(disable);
+	addAndMakeVisible(disable);
 	addAndMakeVisible(buttons);
 	addAndMakeVisible(prices);
 	addAndMakeVisible(cornerDigit);

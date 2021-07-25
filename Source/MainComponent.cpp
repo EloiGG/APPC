@@ -75,8 +75,15 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	if (Core::get().isConnected())
 		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel, [this](int r)
 			{
-				if (r == 1)
+				if (r == 1) {
 					gasSelection.open();
+					Core::get().init();
+					Core::get().updateVisualization();
+				}
+				else if (r == 2) {
+					Core::get().resetInit();
+					Core::get().updateVisualization();
+				}
 			}
 	);
 }
