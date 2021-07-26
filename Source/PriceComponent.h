@@ -20,14 +20,14 @@
 /*
 */
 
-class PriceEditorLabel : public SpecialLabel
+class PriceEditorLabel : public KeyboardLabel
 {
 public:
 	PriceEditorLabel() {}
 protected:
 	virtual void editorShown(TextEditor* te) override
 	{
-		Core::get().showKeyboard((SpecialLabel*)this, te->getText().substring(0, Core::get().getNumDigits() + 1), Core::MAX_DIGITS);
+		Core::get().showKeyboard(this, te->getText().substring(0, Core::get().getNumDigits() + 1), Core::MAX_DIGITS);
 	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
@@ -55,6 +55,7 @@ public:
 protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override;
 	virtual void mouseDown(const MouseEvent&) override;
+	virtual void textKeyboardUpdated() override;
 
 private:
 	bool isTextEditing;
@@ -80,7 +81,7 @@ public:
 	void updatePrices(TextUpdateOrigin whoCalled, unsigned int priceIndex);
 
 	void setModuleState(int digitNumber, const ErrModule& newState);
-
+	ErrModule getModuleState(int digitNumber);
 private:
 	void updateDigits();
 	void updatePriceEditor(const Price& newPrice);

@@ -60,6 +60,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 				for (int i = 0; i < Core::MAX_PRICES; i++)
 					prices[i] = c.getPrice(i);
 				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
+				s = Core::get().createOptimizedSequence();
 				sendThread.setSequence(s);
 			}
 			else {
@@ -81,7 +82,10 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 			Price prices[Core::MAX_PRICES];
 			for (int i = 0; i < Core::MAX_PRICES; i++)
 				prices[i] = c.getPrice(i);
+
 			s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
+			s = Core::get().createOptimizedSequence();
+
 			sendThread.setSequence(s);
 		}
 		else
@@ -116,10 +120,14 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	verif.setClickingTogglesState(true);
 	verif.onClick = [this]()
 	{
-		if (verif.getToggleState() == true)
+		if (verif.getToggleState() == true) {
 			verif.setButtonText(CharPointer_UTF8("Vérifier tous les segments \n(ON)"));
-		else
+			Core::get().setLineControl(true);
+		}
+		else {
 			verif.setButtonText(CharPointer_UTF8("Vérifier tous les segments \n(OFF)"));
+			Core::get().setLineControl(false);
+		}
 	};
 }
 

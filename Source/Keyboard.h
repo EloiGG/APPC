@@ -36,7 +36,7 @@ public:
 public:
 	Keyboard();
 	~Keyboard() override;
-	void resetAndShow(SpecialLabel * caller, const String& startingText = "", unsigned int maxNumberOfCharacters = Core::MAX_DIGITS);
+	void resetAndShow(KeyboardLabel* caller, const String& startingText = "", unsigned int maxNumberOfCharacters = Core::MAX_DIGITS);
 	void paint(juce::Graphics&) override;
 	void resized() override;
 	String getOutput() { return output; }
@@ -54,7 +54,7 @@ private:
 	Key key[NUM_KEYS];
 	GridTool grid;
 	PriceEditorLabel label;
-	SpecialLabel* caller;
+	KeyboardLabel* caller;
 	virtual bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
 	Disabled disable;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Keyboard)

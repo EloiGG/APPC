@@ -257,9 +257,25 @@ bool Core::getBatteryAlarm()
 	return false;
 }
 
+Sequence Core::createOptimizedSequence()
+{
+	Sequence s;
+
+	for (int p = 0; p < numPrices; ++p) {
+		for (int d = 0; d < numDigits; ++d) {
+			int moduleNumber = d + p * numPrices;
+			if (!getModuleState(moduleNumber).upToDate)
+				s.addStep(Sequence::SequenceStep(moduleNumber + 0x30, lineControl ? 0x46 : 0x42,
+					prices[p][d][0]));
+		}
+	}
+
+	return s;
+}
+
 Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
 networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false), inTesting(false), initBool(false),
-inSelection(false)
+inSelection(false), resetLine(false)
 {
 	digitEditorAcceptedCharacters = " abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ0123456789-.,";
 }

@@ -62,6 +62,9 @@ Keyboard::Keyboard() : grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::
 	key[15].setButtonText("OK");
 	key[15].onClick = [this]()
 	{
+		bool diff = false;
+		if (output != label.getText())
+			diff = true;
 		output = label.getText();
 		if (output.length() == 0) output = "        ";
 
@@ -77,7 +80,7 @@ Keyboard::Keyboard() : grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::
 		}
 
 		caller->setText(output, NotificationType::sendNotification);
-		caller->textManuallyUpdated();
+		if(diff) caller->callForUpdate();
 		setVisible(false);
 	};
 	key[15].setColour(TextButton::ColourIds::buttonColourId, confirmer);
@@ -92,7 +95,7 @@ Keyboard::~Keyboard()
 	removeKeyListener(this);
 }
 
-void Keyboard::resetAndShow(SpecialLabel* c, const String& startingText, unsigned int maxNumberOfCharacters)
+void Keyboard::resetAndShow(KeyboardLabel* c, const String& startingText, unsigned int maxNumberOfCharacters)
 {
 	caller = c;
 	label.setText(startingText, NotificationType::sendNotification);

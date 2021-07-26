@@ -57,7 +57,10 @@ void SerialThread::run()
 		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
 		Log::write(CharPointer_UTF8(" à l'adresse "));
 		Log::write(String(step.adress));
-		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en hexadécimal) : 02 ")) +
+		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en décimal) : 02 ")) +
+			String(step.order) + String(" ") + String(step.adress) + String(" ") +
+			String(step.character) + String(" ") + String("03"), 2);
+		DBG(String(CharPointer_UTF8(" : Octets envoyés (en décimal) : 02 ")) +
 			String(step.order) + String(" ") + String(step.adress) + String(" ") +
 			String(step.character) + String(" ") + String("03"), 2);
 		Log::ln();

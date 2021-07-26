@@ -22,7 +22,7 @@ currentPrice(Core::get().getPrice(ID))
 
 void PriceComponent::init()
 {
-	priceEditor.textManuallyUpdated = [this]()
+	priceEditor.onTextKeyboardUpdate = [this]()
 	{
 		Price p(priceEditor.getText());
 		if (!p.isEmpty()) {
@@ -31,14 +31,13 @@ void PriceComponent::init()
 			Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 		}
 		priceEditor.setText(currentPrice.toString(Core::MAX_DIGITS), NotificationType::sendNotification);
-
 	};
 
-	for (int i = 0; i < numDigits; i++) digits[i].textManuallyUpdated = [this, i]()
+	for (int i = 0; i < numDigits; i++) digits[i].onTextKeyboardUpdate = [this, i]()
 	{
 		currentPrice.changeOneDigit(i, digits[i].getText());
 		updatePriceEditor(currentPrice);
-		digits[i].setState(ErrModule::white());
+		digits[i].setState(ErrModule::notUpToDate());
 		Core::get().setPrice(ID, currentPrice);
 		Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 	};
@@ -46,6 +45,7 @@ void PriceComponent::init()
 	addAndMakeVisible(priceEditor);
 	for (int i = 0; i < numDigits; i++)
 		addAndMakeVisible(digits[i]);
+
 	for (int i = numDigits; i < Core::MAX_DIGITS; i++)
 		digits[i].setVisible(false);
 
@@ -111,8 +111,18 @@ void PriceComponent::setModuleState(int digitNumber, const ErrModule& newState)
 	digits[digitNumber].setState(newState);
 }
 
+ErrModule PriceComponent::getModuleState(int digitNumber)
+{
+	return digits[digitNumber].getState();
+}
+
 void PriceComponent::updateDigits()
 {
+	for (int i = 0; i < numDigits; i++)
+		if (!Core::get().isInit())
+			digits[i].setState(ErrModule::white());
+		else if (digits[i].getDigit() != currentPrice[i])
+			digits[i].setState(ErrModule::notUpToDate());
 	startTimerHz(4);
 	timerCallback();
 }
@@ -128,7 +138,6 @@ void PriceComponent::timerCallback()
 	for (int i = 0; i < numDigits; i++) {
 		if (digits[i].getDigit() != currentPrice[i]) {
 			digits[i].setDigit(currentPrice[i]);
-			digits[i].setState(ErrModule::notUpToDate());
 			return;
 		}
 	}
@@ -218,4 +227,9 @@ void PriceEditor::editorAboutToBeHidden(TextEditor* te)
 void PriceEditor::mouseDown(const MouseEvent&)
 {
 	showEditor();
+}
+
+void PriceEditor::textKeyboardUpdated()
+{
+	setPrice(getText());
 }

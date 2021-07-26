@@ -24,7 +24,8 @@ protected:
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
 		if (lastText != getText()) {
-			textManuallyUpdated();
+			if (textManuallyUpdated)
+				textManuallyUpdated();
 			lastText = getText();
 		}
 	}
@@ -32,4 +33,17 @@ protected:
 
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SpecialLabel)
+};
+
+class KeyboardLabel : public SpecialLabel
+{
+public:
+	KeyboardLabel() = default;
+	void callForUpdate() { textKeyboardUpdated(); if (onTextKeyboardUpdate) onTextKeyboardUpdate(); }
+	std::function<void()> onTextKeyboardUpdate;
+protected:
+	virtual void textKeyboardUpdated() {}
+	virtual void editorAboutToBeHidden(TextEditor*) override {}
+private:
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KeyboardLabel)
 };

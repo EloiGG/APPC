@@ -89,7 +89,8 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 			{
 				if (r == 1)
 					Core::get().selectGasStation();
-
+				else
+					Core::get().init();
 				Core::get().updateVisualization();
 			}
 	);

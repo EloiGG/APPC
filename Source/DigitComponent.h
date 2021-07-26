@@ -20,7 +20,7 @@
 /*
 */
 
-class DigitEditorLabel : public SpecialLabel
+class DigitEditorLabel : public KeyboardLabel
 {
 public:
 	DigitEditorLabel() {
@@ -29,7 +29,7 @@ public:
 protected:
 	virtual void editorShown(TextEditor* te) override
 	{
-		Core::get().showKeyboard((SpecialLabel*)this, te->getText(), 1);
+		Core::get().showKeyboard(this, te->getText(), 1);
 	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
@@ -41,6 +41,7 @@ protected:
 			textManuallyUpdated();
 		}
 	}
+private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditorLabel)
 };
 
@@ -57,11 +58,13 @@ public:
 	ErrModule getState() { return state; }
 	void setShowState(bool shouldShowState);
 	void updateAnimation();
-
+	virtual void textKeyboardUpdated() override;
 private:
+	
 	bool hasState;
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
 	ErrModule state;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 };
+

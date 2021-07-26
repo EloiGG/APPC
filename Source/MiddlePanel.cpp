@@ -13,7 +13,8 @@
 //==============================================================================
 
 MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de l'UC"),
-openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
+openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter()),
+nDigits(0), nPrices(0)
 {
 	addAndMakeVisible(disable);
 	addAndMakeVisible(buttons);
@@ -25,7 +26,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	cornerDigit.setShowState(false);
 
 	disable.setDisabled(false);
-	Core::get().showKeyboard = [this](SpecialLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
+	Core::get().showKeyboard = [this](KeyboardLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{
 		kb.resetAndShow(caller, startingText, maxChar);
 		Timer::callAfterDelay(15, [this]() {kb.grabKeyboardFocus(); });;
@@ -49,7 +50,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	// colonnes
 	for (int i = 0; i < Core::MAX_DIGITS; i++) {
 		topDigits[i].setShowState(false);
-		topDigits[i].textManuallyUpdated = [this, i]()
+		topDigits[i].onTextKeyboardUpdate = [this, i]()
 		{
 			for (int j = 0; j < Core::get().getNumPrices(); ++j) {
 				auto p = Core::get().getPrice(j);
@@ -67,7 +68,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	// lignes
 	for (int i = 0; i < Core::MAX_PRICES; i++) {
 		leftDigits[i].setShowState(false);
-		leftDigits[i].textManuallyUpdated = [this, i]()
+		leftDigits[i].onTextKeyboardUpdate = [this, i]()
 		{
 			char s[Core::MAX_DIGITS];
 			for (int j = 0; j < Core::MAX_DIGITS; ++j)
@@ -81,7 +82,7 @@ openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.
 	for (int i = 0; i < Core::get().getNumPrices(); i++)
 		addAndMakeVisible(leftDigits[i]);
 	// tout
-	cornerDigit.textManuallyUpdated = [this]()
+	cornerDigit.onTextKeyboardUpdate = [this]()
 	{
 		char s[Core::MAX_DIGITS];
 		for (int j = 0; j < Core::MAX_DIGITS; ++j)
@@ -277,13 +278,15 @@ void MiddlePanel::updateVisualization()
 			topDigits[i].setVisible(false);
 		cornerDigit.setVisible(false);
 	}
-	name.setText(c.getUCName(), NotificationType::sendNotification);
-	buttons.updateVizualisation();
 	highlights.resize(ndigits, nprices);
 	topGrid.resize(ndigits, 1);
+	prices.setNumDigits(ndigits);
+
 	leftGrid.resize(1, nprices);
 	prices.setNumPrices(nprices);
-	prices.setNumDigits(ndigits);
+
+	name.setText(c.getUCName(), NotificationType::sendNotification);
+	buttons.updateVizualisation();
 	if (c.isInSelection())
 		disable.setDisabled(false);
 	else if (!c.isInit())

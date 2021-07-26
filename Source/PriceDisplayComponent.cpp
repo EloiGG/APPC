@@ -18,6 +18,11 @@ PriceDisplayComponent::PriceDisplayComponent() : numPrices(0), grid(1, 0), price
 	{
 		prices[moduleNumber / Core::get().getNumDigits()].setModuleState(moduleNumber % Core::get().getNumDigits(), newState);
 	};
+	Core::get().getModuleState = [this](int moduleNumber)
+	{
+		auto r = prices[moduleNumber / Core::get().getNumDigits()].getModuleState(moduleNumber % Core::get().getNumDigits());
+		return r;
+	};
 	addChildComponent(grid);
 	init();
 }

@@ -21,12 +21,12 @@
 
 struct ErrModule
 {
-	static ErrModule white() { ErrModule r; r.work_in_progress = true; return r; }
+	static ErrModule white() { ErrModule r; r.work_in_progress = true; r.upToDate = true; return r; }
 	static ErrModule notUpToDate() { ErrModule r; r.upToDate = false; return r; }
 	bool err_ok = 0;
 	bool work_in_progress = 0;
 	bool stopping = 0;
-	bool upToDate = 0;
+	bool upToDate = 1;
 	bool erreurs[9] = { 0 };
 	enum {
 		err_A = 0,
@@ -117,10 +117,11 @@ public:
 	void setUpdatePriceFunction(const std::function<void(TextUpdateOrigin, unsigned int)>& f);
 	std::function<void()> updateVisualization;
 	std::function<void(int, const ErrModule&)> setModuleState;
+	std::function<ErrModule(int)> getModuleState;
 	std::function<void()> sendSequence;
 	std::function<void()> openSettings;
 	std::function<void()> closeSettings;
-	std::function<void(SpecialLabel*, const String&, unsigned int)> showKeyboard;
+	std::function<void(KeyboardLabel*, const String&, unsigned int)> showKeyboard;
 	std::function<void()> selectGasStation;
 	std::function<void()> selectPanel;
 	std::function<void()> selectUC;
@@ -151,11 +152,9 @@ public:
 	void init() { initBool = true; }
 	void resetInit() {
 		initBool = false;
-		for (int i = 0; i < numPrices * numDigits; i++){
-				setModuleState(i, ErrModule::white());
-				DBG(int(i));
-			}
-		updateVisualization();
+		for (int i = 0; i < numPrices * numDigits; i++)
+			setModuleState(i, ErrModule::white());
+		//updateVisualization();
 	}
 	bool isInit() { return initBool; }
 
@@ -164,6 +163,8 @@ public:
 	{
 		alertWindows.open(window, callbackfunction);
 	}
+
+	Sequence createOptimizedSequence();
 private:
 	Core();
 

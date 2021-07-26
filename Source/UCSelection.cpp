@@ -60,10 +60,10 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 				c.setPrice(i, String(prices[i]));
 
 			c.closeUCSelection();
-			c.resetInit();
 			for (int i = 0; i < Core::MAX_PRICES; i++)
 				c.updatePrices(TextUpdateOrigin::Omni, i);
 			c.updateVisualization();
+			c.resetInit();
 		});
 }
 

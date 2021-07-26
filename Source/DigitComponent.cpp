@@ -16,6 +16,7 @@
 DigitEditor::DigitEditor() : frameCounter(0), hasState(true)
 {
 	state.err_ok = true;
+	state.work_in_progress = true;
 	setEditable(true);
 	setRepaintsOnMouseActivity(true);
 	setOpaque(true);
@@ -56,7 +57,6 @@ void DigitEditor::setDigit(const String& newDigit)
 {
 	setText(newDigit.substring(0, 1), NotificationType::sendNotification);
 	frameCounter = 0;
-	state.upToDate = false;
 	startTimerHz(60);
 	timerCallback();
 }
@@ -77,9 +77,11 @@ void DigitEditor::resized()
 void DigitEditor::setState(const ErrModule& newState)
 {
 	state = newState;
+	//DBG("changement : uptodate = " << (int)newState.upToDate);
 	String tip;
 	if (state.err_ok) tip = (L"Pas d'erreurs détectées sur ce module");
-	else if (state.work_in_progress) tip = (L"Module en attente");
+	else if (state.work_in_progress || state.stopping) tip = (L"Pas d'informations sur l'état du module");
+	else if (!state.upToDate) tip = (L"Le prix n'a pas encore été envoyé vers le panneau");
 	else if (state.erreurs[state.err_illisible]) tip = (L"La réponse du module n'a pas pu être comprise");
 	else if (state.erreurs[state.err_reponse]) tip = (L"Le module n'a pas fourni de réponse");
 	else {
@@ -105,6 +107,14 @@ void DigitEditor::updateAnimation()
 {
 	startTimerHz(60);
 	timerCallback();
+}
+
+void DigitEditor::textKeyboardUpdated()
+{
+	state.upToDate = false;
+	state.work_in_progress = false;
+	setState(state);
+	setDigit(getText());
 }
 
 void DigitEditor::timerCallback()
