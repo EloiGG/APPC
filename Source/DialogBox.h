@@ -13,6 +13,8 @@
 #include <JuceHeader.h>
 #include "Disabled.h"
 #include "LookAndFeel.h"
+#include "Core.h"
+
 //==============================================================================
 /*
 */
@@ -43,7 +45,7 @@ public:
 		g.setFont(font);
 		g.setColour(Colours::white);
 		String text;
-		if(rowNumber < size) text = getPropriety(rowNumber, columnId);
+		if (rowNumber < size) text = getPropriety(rowNumber, columnId);
 		g.drawText(text, 2, 0, width, height, Justification::centredLeft);
 	}
 
@@ -108,12 +110,27 @@ private:
 class DialogBoxComponent : public juce::Component
 {
 public:
-	DialogBoxComponent(CustomTableListBox* componentToPlaceInside) : insideComponent(componentToPlaceInside), w(0), h(0)
+	DialogBoxComponent(CustomTableListBox* componentToPlaceInside) : insideComponent(componentToPlaceInside), w(0), h(0),
+		back("Retour"), cancel("Annuler")
 	{
 		setInterceptsMouseClicks(false, false);
 		setAlwaysOnTop(true);
 		addAndMakeVisible(background);
+		addAndMakeVisible(back);
+		addAndMakeVisible(cancel);
 		addAndMakeVisible(*insideComponent);
+
+		cancel.setLookAndFeel(Core::get().getLookAndFeel().get());
+		back.setLookAndFeel(Core::get().getLookAndFeel().get());
+		cancel.setColour(TextButton::ColourIds::buttonColourId, lfColours::keyboardCancel);
+		back.setColour(TextButton::ColourIds::buttonColourId, lfColours::keyboardBack);
+
+		cancel.onClick = []()
+		{
+			Core::get().closeAllSelections();
+			Core::get().updateVisualization();
+		};
+
 		setInteriorProportions(0.9f, 0.9f);
 		close();
 	}
@@ -126,12 +143,24 @@ public:
 		int dw = insideComponent->getDesiredWidth() != 0 ? insideComponent->getDesiredWidth() : w * getWidth(),
 			dh = insideComponent->getDesiredHeight() != 0 ? insideComponent->getDesiredHeight() : h * getHeight();
 		insideComponent->centreWithSize(jmin<int>(w * getWidth(), dw), jmin<int>(h * getHeight(), dh));
+
+		float marginfactor = 0.070f;
+		int bwidth = getWidth() * 0.14f, bheight = getHeight() * 0.05f, marginX = bwidth * marginfactor, marginY = bheight * marginfactor;
+		cancel.setTopLeftPosition(insideComponent->getPosition().x, insideComponent->getPosition().y - bheight);
+		cancel.setSize(bwidth, bheight);
+		
+		back.setTopLeftPosition(cancel.getPosition().x + bwidth, cancel.getPosition().y);
+		back.setSize(bwidth, bheight);
+		cancel.setBounds(cancel.getBounds().reduced(marginX, marginY));
+		back.setBounds(back.getBounds().reduced(marginX, marginY));
 	}
 
 	void open()
 	{
 		setVisible(true);
 		setInterceptsMouseClicks(true, true);
+		cancel.setVisible(true);
+		back.setVisible(true);
 		background.setDisabled(true);
 		insideComponent->setVisible(true);
 		repaint();
@@ -140,11 +169,12 @@ public:
 	void close()
 	{
 		setVisible(false);
+		back.setVisible(false);
+		cancel.setVisible(false);
 		setInterceptsMouseClicks(false, false);
 		background.setDisabled(false);
 		insideComponent->setVisible(false);
 		repaint();
-
 	}
 
 protected:
@@ -154,6 +184,7 @@ protected:
 		w = widthProportion; h = heightProportion;
 	}
 	std::unique_ptr<CustomTableListBox> insideComponent;
+	TextButton back, cancel;
 
 private:
 	float w, h;

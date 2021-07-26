@@ -43,6 +43,7 @@ void DigitEditor::paint(juce::Graphics& g)
 	Colour clr;
 	if (state.err_ok) clr = lfColours::errModuleOK;
 	else if (state.work_in_progress || state.stopping) clr = lfColours::errModuleWIP;
+	else if (!state.upToDate) clr = lfColours::upToDate;
 	else if (state.erreurs[state.err_illisible] || state.erreurs[state.err_reponse]) clr = lfColours::errModuleTimeout;
 	else clr = lfColours::errModuleSegment;
 	g.setColour(clr);
@@ -55,6 +56,7 @@ void DigitEditor::setDigit(const String& newDigit)
 {
 	setText(newDigit.substring(0, 1), NotificationType::sendNotification);
 	frameCounter = 0;
+	state.upToDate = false;
 	startTimerHz(60);
 	timerCallback();
 }

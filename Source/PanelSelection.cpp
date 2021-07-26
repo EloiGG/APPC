@@ -13,6 +13,12 @@
 
 PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(new PanelSelection)
 {
+	back.onClick = []() 
+	{
+		Core::get().closeAllSelections();
+		Core::get().selectGasStation();
+		Core::get().updateVisualization();
+	};
 }
 
 PanelSelectionDialogBox::PanelSelection::PanelSelection() : currentStationID(1)

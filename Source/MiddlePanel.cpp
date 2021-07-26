@@ -11,6 +11,7 @@
 #include "MiddlePanel.h"
 
 //==============================================================================
+
 MiddlePanel::MiddlePanel() : topGrid(5, 1), leftGrid(1, 5), name("", L"Nom de l'UC"),
 openConfig("openconfig", Colours::grey, Colours::grey.brighter(), Colours::grey.brighter())
 {
@@ -257,7 +258,8 @@ void MiddlePanel::updatePrices(TextUpdateOrigin whocalled, unsigned int index)
 
 void MiddlePanel::updateVisualization()
 {
-	auto ndigits = Core::get().getNumDigits(), nprices = Core::get().getNumPrices();
+	auto& c = Core::get();
+	auto ndigits = c.getNumDigits(), nprices = c.getNumPrices();
 	int i;
 	cornerDigit.setVisible(true);
 	for (i = 0; i < ndigits; i++)
@@ -269,23 +271,26 @@ void MiddlePanel::updateVisualization()
 	for (; i < Core::MAX_PRICES; ++i)
 		leftDigits[i].setVisible(false);
 	if (ndigits == 1 || nprices == 1) {
-		for (int i = 0; i < Core::get().getNumPrices(); i++)
+		for (int i = 0; i < c.getNumPrices(); i++)
 			leftDigits[i].setVisible(false);
-		for (int i = 0; i < Core::get().getNumDigits(); i++)
+		for (int i = 0; i < c.getNumDigits(); i++)
 			topDigits[i].setVisible(false);
 		cornerDigit.setVisible(false);
 	}
-	name.setText(Core::get().getUCName(), NotificationType::sendNotification);
+	name.setText(c.getUCName(), NotificationType::sendNotification);
 	buttons.updateVizualisation();
 	highlights.resize(ndigits, nprices);
 	topGrid.resize(ndigits, 1);
 	leftGrid.resize(1, nprices);
 	prices.setNumPrices(nprices);
 	prices.setNumDigits(ndigits);
-	if (Core::get().isInit())
+	if (c.isInSelection())
 		disable.setDisabled(false);
-	else
+	else if (!c.isInit())
 		disable.setDisabled(true);
+	else
+		disable.setDisabled(false);
+
 	repaint();
 }
 

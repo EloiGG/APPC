@@ -29,6 +29,7 @@ GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
 	table.autoSizeAllColumns();
 
 	computeDesiredProportions();
+
 }
 
 GasStationSelectionDialogBox::GasStationSelection::~GasStationSelection()
@@ -73,4 +74,5 @@ String GasStationSelectionDialogBox::GasStationSelection::getPropriety(int rowNu
 
 GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(new GasStationSelection)
 {
+	back.setEnabled(false);
 }

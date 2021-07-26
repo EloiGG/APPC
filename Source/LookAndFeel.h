@@ -29,6 +29,10 @@ namespace lfColours
     const Colour errModuleWIP(255, 255, 255 );
     const Colour errModuleSegment(227, 121, 39);
     const Colour errModuleTimeout(255, 0, 0);
+    const Colour keyboardBack(204, 164, 71);
+    const Colour keyboardCancel(166, 30, 30);
+    const Colour keyboardConfirm(66, 171, 56);
+    const Colour upToDate(186, 117, 255);
 }
 
 class APPCLookAndFeel : public LookAndFeel_V4

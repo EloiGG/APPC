@@ -40,7 +40,7 @@ private:
 	InputComponent nPrices, nDigits, COM;
 	CheckBox resetLine;
 	Disabled disabled;
-	TextButton test, stop;
+	TextButton centoFuelOpen, stop;
 	Progression testProgression;
 	SerialThread testThread;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GeneralTab)

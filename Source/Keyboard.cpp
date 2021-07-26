@@ -18,7 +18,7 @@ Keyboard::Keyboard() : grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::
 	disable.setDisabled(true);
 	setOpaque(false);
 	auto p = &lf;
-	auto c = lfColours::buttonBackground, annuler = Colour(166, 30, 30), confirmer = Colour(66, 171, 56), retour = Colour(204, 164, 71);
+	auto c = lfColours::buttonBackground, annuler = lfColours::keyboardCancel, confirmer = lfColours::keyboardConfirm, retour = lfColours::keyboardBack;
 	label.setEditable(false);
 	addKeyListener(this);
 	for (int y = 0; y < NUM_ROWS; y++)

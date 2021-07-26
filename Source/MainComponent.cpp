@@ -11,20 +11,31 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	c.selectGasStation = [this]()
 	{
 		gasSelection.open();
+		Core::get().setInSelection(true);
 	};
 	c.selectPanel = [this]()
 	{
 		gasSelection.close();
 		panelSelection.open();
+		Core::get().setInSelection(true);
 	};
 	c.selectUC = [this]()
 	{
 		panelSelection.close();
 		UCSelection.open();
+		Core::get().setInSelection(true);
 	};
 	c.closeUCSelection = [this]()
 	{
 		UCSelection.close();
+		Core::get().setInSelection(false);
+	};
+	c.closeAllSelections = [this]()
+	{
+		panelSelection.close();
+		gasSelection.close();
+		UCSelection.close();
+		Core::get().setInSelection(false);
 	};
 	c.setUpdatePriceFunction(
 		[this](TextUpdateOrigin o, unsigned int index)
@@ -50,14 +61,16 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	{
 		settingsOppened = true;
 		rPanel.setVisible(true);
-		setSize(getWidth() * 1.0 / 0.6, getHeight());
+		resized();
+		//setSize(getWidth() * 1.0 / 0.6, getHeight());
 	};
 
 	c.closeSettings = [this]()
 	{
 		settingsOppened = false;
 		rPanel.setVisible(false);
-		setSize(getWidth() * 0.6, getHeight());
+		resized();
+		//setSize(getWidth() * 0.6, getHeight());
 	};
 
 	addAndMakeVisible(mPanel);
@@ -69,21 +82,15 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 
 	c.setCurrentPanelID(1);
 	c.updateVisualization();
-
 	setSize(600, 600);
-
-	if (Core::get().isConnected())
+	c.resetInit();
+	if (c.isConnected())
 		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel, [this](int r)
 			{
-				if (r == 1) {
-					gasSelection.open();
-					Core::get().init();
-					Core::get().updateVisualization();
-				}
-				else if (r == 2) {
-					Core::get().resetInit();
-					Core::get().updateVisualization();
-				}
+				if (r == 1)
+					Core::get().selectGasStation();
+
+				Core::get().updateVisualization();
 			}
 	);
 }
@@ -103,8 +110,8 @@ void MainComponent::resized()
 	int w = getWidth(), h = getHeight();
 	float topHeight = 0.08f * h, middleWidth = 0.6f * w, leftWidth = 0.15f * w, bottomHeight = 0.3f * h;
 	auto bounds = getLocalBounds();
-	if (settingsOppened) rPanel.setBounds(bounds.removeFromRight(w * 0.4));
-	mPanel.setBounds(bounds);
+	if (settingsOppened) rPanel.setBounds(bounds.removeFromLeft(w * 0.5));
+	mPanel.setBounds(getLocalBounds());
 	tooltip.setBounds(getLocalBounds());
 	gasSelection.setBounds(getLocalBounds());
 	panelSelection.setBounds(getLocalBounds());

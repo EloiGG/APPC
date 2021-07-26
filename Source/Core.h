@@ -18,12 +18,15 @@
 #include "Sequence.h"
 #include "SpecialLabel.h"
 #include "AlertWindows.h"
+
 struct ErrModule
 {
 	static ErrModule white() { ErrModule r; r.work_in_progress = true; return r; }
+	static ErrModule notUpToDate() { ErrModule r; r.upToDate = false; return r; }
 	bool err_ok = 0;
 	bool work_in_progress = 0;
 	bool stopping = 0;
+	bool upToDate = 0;
 	bool erreurs[9] = { 0 };
 	enum {
 		err_A = 0,
@@ -81,7 +84,7 @@ public:
 	bool getIsInTransmission();
 	void setInTransmission(bool shouldBeInTransmission);
 
-	String getUCName(){ return UCName; }
+	String getUCName() { return UCName; }
 	void setUCName(const String& newName) { UCName = newName; }
 
 	void setID(int newID) { id = newID; }
@@ -122,6 +125,7 @@ public:
 	std::function<void()> selectPanel;
 	std::function<void()> selectUC;
 	std::function<void()> closeUCSelection;
+	std::function<void()> closeAllSelections;
 
 	void setPlaySequence(bool shouldPlaySequence) { playSequence = shouldPlaySequence; }
 	bool getPlaySequence() { return playSequence; }
@@ -135,6 +139,9 @@ public:
 	bool isConnected() { return connected; }
 	void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
 
+	bool isInSelection() { return inSelection; }
+	void setInSelection(bool shouldBeInSelection) { inSelection = shouldBeInSelection; }
+
 	bool getBatteryAlarm();
 	StringRef getDigitEditorAcceptedCharacters() { return digitEditorAcceptedCharacters; }
 
@@ -142,16 +149,26 @@ public:
 	bool getInTesting() { return inTesting; }
 
 	void init() { initBool = true; }
-	void resetInit() { initBool = false; }
+	void resetInit() {
+		initBool = false;
+		for (int i = 0; i < numPrices * numDigits; i++){
+				setModuleState(i, ErrModule::white());
+				DBG(int(i));
+			}
+		updateVisualization();
+	}
 	bool isInit() { return initBool; }
 
+
 	void openAlertWindow(APPCAlertWindows::WindowType window, const std::function<void(int)>& callbackfunction = std::function<void(int)>())
-	{ alertWindows.open(window, callbackfunction); }
+	{
+		alertWindows.open(window, callbackfunction);
+	}
 private:
 	Core();
 
 	unsigned int numDigits, numPrices, delay_ms, id, COM, stationID, panelID;
-	bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected, inTesting, initBool;
+	bool networkInit, lineControl, resetLine, isInTransmission, playSequence, connected, inTesting, initBool, inSelection;
 	std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
 	ConfigJSON* configjson;
 	PricesJSON* pricesjson;

@@ -59,9 +59,10 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 			for (int i = 0; i < numPrices; i++)
 				c.setPrice(i, String(prices[i]));
 
-
 			c.closeUCSelection();
 			c.resetInit();
+			for (int i = 0; i < Core::MAX_PRICES; i++)
+				c.updatePrices(TextUpdateOrigin::Omni, i);
 			c.updateVisualization();
 		});
 }
@@ -98,4 +99,10 @@ void UCSelectionDialogBox::UCSelection::paint(Graphics& g)
 
 UCSelectionDialogBox::UCSelectionDialogBox() : DialogBoxComponent(new UCSelection)
 {
+	back.onClick = []()
+	{
+		Core::get().closeAllSelections();
+		Core::get().selectPanel();
+		Core::get().updateVisualization();
+	};
 }

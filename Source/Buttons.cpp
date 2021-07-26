@@ -36,7 +36,6 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	send.onClick = [this]()
 	{
 		if (!Core::get().isInit()) {
-			Sequence s;
 			auto& c = Core::get();
 			if (UART::checkCOMPort(Core::get().getCOMPort())) {
 		//		for (int i = 0; i < Core::MAX_PRICES; i++)
@@ -62,7 +61,6 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 					prices[i] = c.getPrice(i);
 				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
 				sendThread.setSequence(s);
-				return;
 			}
 			else {
 				COMErrorWindow.setAlwaysOnTop(true);

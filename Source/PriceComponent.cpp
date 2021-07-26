@@ -128,9 +128,7 @@ void PriceComponent::timerCallback()
 	for (int i = 0; i < numDigits; i++) {
 		if (digits[i].getDigit() != currentPrice[i]) {
 			digits[i].setDigit(currentPrice[i]);
-			ErrModule em;
-			em.work_in_progress = true;
-			digits[i].setState(em);
+			digits[i].setState(ErrModule::notUpToDate());
 			return;
 		}
 	}

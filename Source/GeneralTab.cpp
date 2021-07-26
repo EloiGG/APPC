@@ -14,7 +14,7 @@
 //==============================================================================
 
 GeneralTab::GeneralTab() : grid(4, 10), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
-resetLine("Effacer si erreur"), COM("Port COM", 3), test("Test"), testProgression(testThread), stop("Stop")
+resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un panneau"), testProgression(testThread), stop("Stop")
 {
 	addChildComponent(grid);
 	addAndMakeVisible(nPrices);
@@ -22,7 +22,7 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), test("Test"), testProgressio
 	addAndMakeVisible(COM);
 	addAndMakeVisible(resetLine);
 	addAndMakeVisible(disabled);
-	addAndMakeVisible(test);
+	addAndMakeVisible(centoFuelOpen);
 	addAndMakeVisible(stop);
 	addAndMakeVisible(testProgression);
 	disabled.setDisabled(true);
@@ -57,11 +57,11 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), test("Test"), testProgressio
 	COM.min = 1;
 	COM.max = 256;
 
-	test.setLookAndFeel(Core::get().getLookAndFeel().get());
-	test.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
-	test.onClick = [this]()
+	centoFuelOpen.setLookAndFeel(Core::get().getLookAndFeel().get());
+	centoFuelOpen.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	centoFuelOpen.onClick = [this]()
 	{
-		if (testThread.isThreadRunning())
+		/*if (testThread.isThreadRunning())
 			return;
 
 		if (Core::get().getPlaySequence() == false)
@@ -80,7 +80,8 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), test("Test"), testProgressio
 		Core::get().setInTransmission(true);
 		Core::get().updateVisualization();
 		testProgression.start();
-		testThread.startThread();
+		testThread.startThread();*/
+		Core::get().selectGasStation();
 	};
 
 	stop.setEnabled(false);
@@ -113,9 +114,8 @@ void GeneralTab::resized()
 	nPrices.setBounds(grid.getRectangle(0, 1, 4, 2));
 	nDigits.setBounds(grid.getRectangle(0, 2, 4, 3));
 	resetLine.setBounds(grid.getRectangle(0, 3, 4, 4));
-	stop.setBounds(grid.getRectangle(0, 5.3, 1, 6.7));
-	test.setBounds(grid.getRectangle(1, 5.3, 4, 6.7));
-	testProgression.setBounds(test.getBounds());
+	centoFuelOpen.setBounds(grid.getRectangle(0, 5.3, 4, 6.7));
+	testProgression.setBounds(centoFuelOpen.getBounds());
 	disabled.setBounds(getLocalBounds());
 }
 
