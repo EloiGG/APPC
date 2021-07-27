@@ -66,8 +66,10 @@ void SerialThread::run()
 		Log::ln();
 		{
 			MessageManagerLock m(this);
-			if (m.lockWasGained())
+			if (m.lockWasGained()) {
 				Log::update();
+				c.setModuleState(step.adress - 0x30, ErrModule::white());
+			}
 		}
 		if (waitForResponse)
 		{
@@ -97,10 +99,6 @@ void SerialThread::run()
 				MessageManagerLock m(this);
 				if (m.lockWasGained()) {
 					c.setModuleState(step.adress - 0x30, response);
-					ErrModule r;
-					r.work_in_progress = true;
-					if (!(threadShouldExit() || exitAsked))
-						c.setModuleState(step.adress - 0x30 + 1, r);
 					Log::update();
 				}
 			}

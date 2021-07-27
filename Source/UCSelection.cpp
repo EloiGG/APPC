@@ -62,8 +62,9 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 			c.closeUCSelection();
 			for (int i = 0; i < Core::MAX_PRICES; i++)
 				c.updatePrices(TextUpdateOrigin::Omni, i);
-			c.updateVisualization();
 			c.resetInit();
+			c.resetAllStates();
+			c.updateVisualization();
 		});
 }
 

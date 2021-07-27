@@ -96,6 +96,7 @@ public:
 	Network getNetwork() const;
 	void setNetwork(const Network& net);
 
+	void tryToConnect() { if (networkInit) setNetwork(network); }
 	bool hasNetwork();
 
 	void setConfigJSON(const File& f) { if (configjson != nullptr) delete configjson; configjson = new ConfigJSON(f); }
@@ -150,11 +151,11 @@ public:
 	bool getInTesting() { return inTesting; }
 
 	void init() { initBool = true; }
-	void resetInit() {
-		initBool = false;
+	void resetInit() { initBool = false; }
+	void resetAllStates()
+	{
 		for (int i = 0; i < numPrices * numDigits; i++)
 			setModuleState(i, ErrModule::white());
-		//updateVisualization();
 	}
 	bool isInit() { return initBool; }
 

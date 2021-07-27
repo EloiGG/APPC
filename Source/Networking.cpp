@@ -22,7 +22,7 @@ std::tuple<bool, int> Network::connected() const
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	if (auto stream = std::unique_ptr<InputStream>(realURL.createInputStream(false, nullptr, nullptr, makeHeader(),
-		5000, // timeout in millisecs
+		3000, // timeout in millisecs
 		&responseHeaders, &statusCode)))
 	{
 		if (statusCode == 200)

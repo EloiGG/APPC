@@ -26,6 +26,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	verif.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 
 	stop.setEnabled(false);
+	verif.setEnabled(false);
 
 	addAndMakeVisible(send);
 	addAndMakeVisible(stop);
@@ -35,32 +36,18 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 
 	send.onClick = [this]()
 	{
+		if (sendThread.isThreadRunning())
+			return;
+
 		if (!Core::get().isInit()) {
 			auto& c = Core::get();
 			if (UART::checkCOMPort(Core::get().getCOMPort())) {
-		//		for (int i = 0; i < Core::MAX_PRICES; i++)
-		//			Core::get().setPrice(i, Price("8.88888"));
-		//		Price prices[Core::MAX_PRICES];
-		//		for (int i = 0; i < Core::MAX_PRICES; i++)
-		//			prices[i] = c.getPrice(i);
-		//		s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, 50, true);
-		//		sendThread.setSequence(s);
-		//		Core::get().updateVisualization();
-		//		for (int i = 0; i < c.getNumPrices(); i++)
-		//			Core::get().updatePrices(TextUpdateOrigin::Omni, i);
-		//Core::get().setInTransmission(true);
-		//Core::get().updateVisualization();
-		//		progression.start();
-		//		sendThread.startThread();
-		//		stop.setEnabled(true);
-		//		return;
 				Sequence s;
 				auto& c = Core::get();
 				Price prices[Core::MAX_PRICES];
 				for (int i = 0; i < Core::MAX_PRICES; i++)
 					prices[i] = c.getPrice(i);
-				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
-				s = Core::get().createOptimizedSequence();
+				s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, 50, true);
 				sendThread.setSequence(s);
 			}
 			else {
@@ -72,25 +59,15 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 				), false);
 			}
 		}
-		if (sendThread.isThreadRunning())
-			return;
-
-		if (Core::get().getPlaySequence() == false)
+		else
 		{
 			Sequence s;
 			auto& c = Core::get();
-			Price prices[Core::MAX_PRICES];
-			for (int i = 0; i < Core::MAX_PRICES; i++)
-				prices[i] = c.getPrice(i);
-
-			s.createSequence(c.getNumPrices(), c.getNumDigits(), prices, c.getDelay(), c.getLineControl());
 			s = Core::get().createOptimizedSequence();
-
 			sendThread.setSequence(s);
 		}
-		else
-			sendThread.setSequence(Core::get().getSequence());
 		stop.setEnabled(true);
+		verif.setEnabled(false);
 		Core::get().setInTransmission(true);
 		Core::get().updateVisualization();
 		progression.start();
@@ -108,6 +85,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 			return;
 
 		stop.setEnabled(true);
+		verif.setEnabled(false);
 		Core::get().setInTransmission(true);
 		Core::get().updateVisualization();
 		sendThread.setSequence(Core::get().getSequence());
@@ -118,6 +96,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 	verif.setColour(TextButton::ColourIds::buttonOnColourId, lfColours::sendButton);
 
 	verif.setClickingTogglesState(true);
+	verif.setToggleState(Core::get().getLineControl(), NotificationType::sendNotification);
 	verif.onClick = [this]()
 	{
 		if (verif.getToggleState() == true) {
@@ -129,6 +108,7 @@ COMErrorWindow("Erreur lors de l'ouverture du port COM", "", AlertWindow::AlertI
 			Core::get().setLineControl(false);
 		}
 	};
+	verif.onClick();
 }
 
 Buttons::~Buttons()
@@ -154,14 +134,15 @@ void Buttons::resized()
 void Buttons::updateVizualisation()
 {
 	if (!Core::get().isInit()) {
-		stop.setEnabled(false);
 		verif.setEnabled(false);
 		send.setButtonText("Initaliser");
 	}
 	else {
-		stop.setEnabled(true);
-		verif.setEnabled(true);
 		send.setButtonText("Envoyer");
+		if (Core::get().getIsInTransmission())
+			verif.setEnabled(false);
+		else
+			verif.setEnabled(true);
 	}
 	if (Core::get().getIsInTransmission())
 		stop.setEnabled(true);

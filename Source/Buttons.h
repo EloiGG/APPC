@@ -45,8 +45,7 @@ public:
 private:
 	AlertWindow COMErrorWindow;
 	SerialThread sendThread;
-	TextButton send, stop;
-	TextButton verif;
+	TextButton send, stop, verif;
 	GridTool grid;
 	Progression progression;
 

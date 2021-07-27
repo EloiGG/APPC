@@ -16,7 +16,7 @@ class APPCAlertWindows
 {
 public:
     enum class WindowType{
-        PriceChoice, LoadFromCentoFuel
+        PriceChoice, LoadFromCentoFuel, NoConnection
     };
 
 public:

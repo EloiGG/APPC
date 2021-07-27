@@ -106,5 +106,5 @@ void APPCLookAndFeel::drawTickBox(Graphics& g, Component& component,
 
 Font KeyboardLookAndFeel::getTextButtonFont(TextButton&, int buttonHeight)
 {
-	return Font("Seven Segment", jmin(buttonHeight, 38), 0);
+	return Font("Seven Segment", jmin<int>(buttonHeight*0.45f, 60), 0);
 }

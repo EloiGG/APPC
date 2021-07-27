@@ -38,6 +38,8 @@ namespace lfColours
 class APPCLookAndFeel : public LookAndFeel_V4
 {
 public:
+    APPCLookAndFeel() : font("Agency BF", "Bold", 14) {}
+
     virtual void drawButtonBackground(Graphics&, Button&, const Colour& backgroundColour,
         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
@@ -52,6 +54,9 @@ public:
 
     void drawToggleButton(Graphics& g, ToggleButton& button,
         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
+private:
+    Font font;
 };
 
 class KeyboardLookAndFeel : public APPCLookAndFeel

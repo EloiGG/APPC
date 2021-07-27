@@ -247,25 +247,10 @@
     <ClCompile Include="..\..\Source\UCSelection.cpp">
       <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DebugTab.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PriceTab.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\RightPanel.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\TabbedComponent.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Buttons.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GeneralTab.cpp">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PricesTab.cpp">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DigitComponent.cpp">
@@ -1527,25 +1512,10 @@
     <ClInclude Include="..\..\Source\UCSelection.h">
       <Filter>APPC\Source\UI\Components\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\DebugTab.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PriceTab.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\RightPanel.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\TabbedComponent.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Buttons.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GeneralTab.h">
-      <Filter>APPC\Source\UI\Components\Right</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PricesTab.h">
       <Filter>APPC\Source\UI\Components\Right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DigitComponent.h">

@@ -154,13 +154,8 @@
     <ClCompile Include="..\..\Source\GasStationSelection.cpp"/>
     <ClCompile Include="..\..\Source\PanelSelection.cpp"/>
     <ClCompile Include="..\..\Source\UCSelection.cpp"/>
-    <ClCompile Include="..\..\Source\DebugTab.cpp"/>
-    <ClCompile Include="..\..\Source\PriceTab.cpp"/>
     <ClCompile Include="..\..\Source\RightPanel.cpp"/>
-    <ClCompile Include="..\..\Source\TabbedComponent.cpp"/>
     <ClCompile Include="..\..\Source\Buttons.cpp"/>
-    <ClCompile Include="..\..\Source\GeneralTab.cpp"/>
-    <ClCompile Include="..\..\Source\PricesTab.cpp"/>
     <ClCompile Include="..\..\Source\DigitComponent.cpp"/>
     <ClCompile Include="..\..\Source\MiddlePanel.cpp"/>
     <ClCompile Include="..\..\Source\PriceComponent.cpp"/>
@@ -1294,13 +1289,8 @@
     <ClInclude Include="..\..\Source\GasStationSelection.h"/>
     <ClInclude Include="..\..\Source\PanelSelection.h"/>
     <ClInclude Include="..\..\Source\UCSelection.h"/>
-    <ClInclude Include="..\..\Source\DebugTab.h"/>
-    <ClInclude Include="..\..\Source\PriceTab.h"/>
     <ClInclude Include="..\..\Source\RightPanel.h"/>
-    <ClInclude Include="..\..\Source\TabbedComponent.h"/>
     <ClInclude Include="..\..\Source\Buttons.h"/>
-    <ClInclude Include="..\..\Source\GeneralTab.h"/>
-    <ClInclude Include="..\..\Source\PricesTab.h"/>
     <ClInclude Include="..\..\Source\DigitComponent.h"/>
     <ClInclude Include="..\..\Source\MiddlePanel.h"/>
     <ClInclude Include="..\..\Source\PriceComponent.h"/>

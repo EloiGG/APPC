@@ -30,6 +30,7 @@ input([this]()
 	m.setLookAndFeel(Core::get().getLookAndFeel().get());
 	p.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
 	m.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+
 	titleWidth = title.getFont().getStringWidth(title.getText());
 	input.setEditable(true);
 

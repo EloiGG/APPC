@@ -29,6 +29,12 @@ void APPCAlertWindows::open(WindowType window, const std::function<void(int)>& c
 		aw->addButton("Charger depuis CentoFuel", 1);
 		aw->addButton("Continuer en local", 2);
 		break;
+	case APPCAlertWindows::WindowType::NoConnection:
+		aw = new AlertWindow(L"Pas de connexion détectée ?",
+			L"Connexion à CentoFuel impossible, réessayer ?", AlertWindow::AlertIconType::QuestionIcon);
+		aw->addButton("Annuler", 1);
+		aw->addButton("Réessayer", 2);
+		break;
 	default:
 		break;
 	}

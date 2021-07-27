@@ -59,7 +59,7 @@ public:
 	{
 		return { getPoint(x1,y1, absolute), getPoint(x2,y2,absolute) };
 	}
-	juce::Rectangle<int> getLine(int lineIndex, bool absolute = false, int lineHeight = 1)
+	juce::Rectangle<int> getLine(float lineIndex, bool absolute = false, float lineHeight = 1)
 	{
 		return getRectangle(0, lineIndex, numcolumns, lineIndex + lineHeight, absolute);
 	}

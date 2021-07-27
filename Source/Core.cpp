@@ -191,7 +191,7 @@ void Core::loadInformationsFromJSON()
 	auto numColumns = configjson->getNumColumns();
 	auto portCOM = configjson->getCOMPort();
 	bool hasNetwork = false;
-	if (pwrd != "error") {
+	if (pwrd != "error" && pwrd.length()) {
 		Log::write("Mot de passe\n", 2);
 		hasNetwork = true;
 	}
@@ -223,7 +223,7 @@ void Core::loadInformationsFromJSON()
 		Log::write("Nombre de colonnes\n", 2);
 		numDigits = numColumns;
 	}
-	if (COM != -1) {
+	if (portCOM != -1) {
 		Log::write("Port COM\n", 2);
 		COM = portCOM;
 	}
@@ -263,13 +263,14 @@ Sequence Core::createOptimizedSequence()
 
 	for (int p = 0; p < numPrices; ++p) {
 		for (int d = 0; d < numDigits; ++d) {
-			int moduleNumber = d + p * numPrices;
-			if (!getModuleState(moduleNumber).upToDate)
-				s.addStep(Sequence::SequenceStep(moduleNumber + 0x30, lineControl ? 0x46 : 0x42,
-					prices[p][d][0]));
+			int moduleNumber = d + p * numDigits;
+			DBG("prix : " << p << " digit : " << d << " adresse : " << moduleNumber);
+			auto state = getModuleState(moduleNumber);
+			if (!state.upToDate || state.work_in_progress || state.stopping)
+				s.addStep(Sequence::SequenceStep(moduleNumber + 0x30, lineControl ? 0x46 : 0x43,
+					prices[p].getUARTchar(d)));
 		}
 	}
-
 	return s;
 }
 

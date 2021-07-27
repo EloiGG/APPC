@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    RightPanel.h
-    Created: 21 Jun 2021 12:36:05pm
-    Author:  admin
+	GeneralTab.h
+	Created: 19 Jun 2021 10:42:19am
+	Author:  Eloi
 
   ==============================================================================
 */
@@ -20,12 +20,11 @@
 //==============================================================================
 /*
 */
-
-class RightPanel : public juce::Component
+class GeneralTab : public juce::Component
 {
 public:
-	RightPanel();
-	~RightPanel() override;
+	GeneralTab();
+	~GeneralTab() override;
 
 	void paint(juce::Graphics&) override;
 	void resized() override;
@@ -34,14 +33,15 @@ public:
 	void setNumDigits(int newNumDigits);
 	void setCOMPort(int newCOMPort) { COM.setInput(String(newCOMPort)); }
 
-	void updateParameters();
+	void updateAllParameters();
 
 private:
-	Label title;
 	GridTool grid;
 	InputComponent nPrices, nDigits, COM;
 	CheckBox resetLine;
 	Disabled disabled;
-	TextButton centoFuelOpen;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RightPanel)
+	TextButton centoFuelOpen, stop;
+	Progression testProgression;
+	SerialThread testThread;
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GeneralTab)
 };
