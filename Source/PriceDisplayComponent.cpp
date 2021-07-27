@@ -33,9 +33,9 @@ PriceDisplayComponent::~PriceDisplayComponent()
 
 void PriceDisplayComponent::init()
 {
-
 	for (int i = 0; i < numPrices; i++) {
 		prices[i].setID(i);
+		prices[i].setNumberOfDigits(Core::get().getNumDigits());
 		addAndMakeVisible(prices[i]);
 	}
 	for (int i = numPrices; i < Core::MAX_PRICES; i++) {

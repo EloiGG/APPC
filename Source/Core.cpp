@@ -277,5 +277,5 @@ Core::Core() : numDigits(4), numPrices(4), lfptr(new APPCLookAndFeel),
 networkInit(false), delay_ms(0), configjson(nullptr), pricesjson(nullptr), connected(false), inTesting(false), initBool(false),
 inSelection(false), resetLine(false)
 {
-	digitEditorAcceptedCharacters = " abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ0123456789-.,";
+	digitEditorAcceptedCharacters = " abcdefghijklnopqrstuvwxyzABCDEFGHIJKLNOPQRSTUVWXYZ0123456789-.";
 }

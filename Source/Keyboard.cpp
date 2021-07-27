@@ -149,6 +149,8 @@ bool Keyboard::keyPressed(const KeyPress& k, Component* originatingComponent)
 		key[11].onClick();
 	else if (k == KeyPress::returnKey)
 		key[15].onClick();
+	else if (k == ',')
+		key[12].onClick();
 
 	return false;
 }

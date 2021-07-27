@@ -41,7 +41,7 @@ void PriceComponent::init()
 		Core::get().setPrice(ID, currentPrice);
 		Core::get().updatePrices(TextUpdateOrigin::PriceEditor, ID);
 	};
-
+	numDigits = Core::get().getNumDigits();
 	addAndMakeVisible(priceEditor);
 	for (int i = 0; i < numDigits; i++)
 		addAndMakeVisible(digits[i]);
