@@ -22,7 +22,7 @@
 class CustomTableListBox : public TableListBoxModel, public Component
 {
 public:
-	CustomTableListBox(size_t numRows = 0) : table{ {},this }, font(14.0f), size(numRows), desiredWidth(0)
+	CustomTableListBox(size_t numRows = 0) : table{ {},this }, font(14.0f), size(numRows), desiredWidth(0), initBool(false)
 	{
 		addAndMakeVisible(table);
 		table.setColour(TableListBox::ColourIds::backgroundColourId, Colours::black);
@@ -94,13 +94,16 @@ public:
 
 	unsigned int getDesiredWidth() { return desiredWidth; }
 	unsigned int getDesiredHeight() { return desiredHeight; }
+	bool isInit() { return initBool; }
 
 protected:
 	juce::TableListBox table;
 	size_t size;
+	void init() { initBool = true; }
 
 private:
 	unsigned int desiredWidth, desiredHeight;
+	bool initBool;
 	Font font;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomTableListBox)
@@ -148,14 +151,14 @@ public:
 		int bwidth = getWidth() * 0.14f, bheight = getHeight() * 0.05f, marginX = bwidth * marginfactor, marginY = bheight * marginfactor;
 		cancel.setTopLeftPosition(insideComponent->getPosition().x, insideComponent->getPosition().y - bheight);
 		cancel.setSize(bwidth, bheight);
-		
+
 		back.setTopLeftPosition(cancel.getPosition().x + bwidth, cancel.getPosition().y);
 		back.setSize(bwidth, bheight);
 		cancel.setBounds(cancel.getBounds().reduced(marginX, marginY));
 		back.setBounds(back.getBounds().reduced(marginX, marginY));
 	}
 
-	void open()
+	virtual void open()
 	{
 		setVisible(true);
 		setInterceptsMouseClicks(true, true);
@@ -176,6 +179,7 @@ public:
 		insideComponent->setVisible(false);
 		repaint();
 	}
+
 
 protected:
 	virtual void onOpenning() {}

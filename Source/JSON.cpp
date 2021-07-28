@@ -152,13 +152,13 @@ void GasStationsJSON::updatePropreties(const Network& net)
 	auto v = *parsedJSON.getArray();
 	for (int i = 0; i < getNumGasStations(); i++) {
 		auto w = v[i].getDynamicObject();
-
+		bool success;
 		int oilCompanyNumber = w->getProperty("OilCompany").toString().fromLastOccurrenceOf("/", false, true).getIntValue();
-		String oilCompanyName((JSON::parse(net.getOilCompany(oilCompanyNumber)).getProperty("name", "error")).toString());
+		String oilCompanyName((JSON::parse(net.getOilCompany(oilCompanyNumber, success)).getProperty("name", "error")).toString());
 		w->setProperty("OilCompany", oilCompanyName);
 
 		int motorwayCompanyNumber = w->getProperty("MotorwayCompany").toString().fromLastOccurrenceOf("/", false, true).getIntValue();
-		String motorwayCompanyName((JSON::parse(net.getMotorwayCompany(motorwayCompanyNumber)).getProperty("name", "error")).toString());
+		String motorwayCompanyName((JSON::parse(net.getMotorwayCompany(motorwayCompanyNumber, success)).getProperty("name", "error")).toString());
 		w->setProperty("MotorwayCompany", motorwayCompanyName);
 	}
 }

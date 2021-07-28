@@ -13,7 +13,7 @@
 
 PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(new PanelSelection)
 {
-	back.onClick = []() 
+	back.onClick = []()
 	{
 		Core::get().closeAllSelections();
 		Core::get().selectGasStation();
@@ -68,12 +68,22 @@ void PanelSelectionDialogBox::PanelSelection::paint(Graphics& g)
 {
 	g.fillAll(lfColours::panelBackground);
 	if (Core::get().getCurrentStationID() != currentStationID) {
-		currentStationID = Core::get().getCurrentStationID();
-		panelsJSON = Core::get().getPanelsjson(currentStationID);
-		size = panelsJSON.getNumPanels();
-		table.autoSizeAllColumns();
+		bool success;
+		const auto& s = Core::get().getPanelsjson(currentStationID, success);
+		if (success) {
+			init();
+			panelsJSON = s;
+			currentStationID = Core::get().getCurrentStationID();
+			size = panelsJSON.getNumPanels();
+			table.autoSizeAllColumns();
 
-		computeDesiredProportions();
-		getParentComponent()->resized();
+			computeDesiredProportions();
+			getParentComponent()->resized();
+
+		}
+		else {
+			Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection, "Impossible de charger les panneaux disponibles");
+			size = 0;
+		}
 	}
 }

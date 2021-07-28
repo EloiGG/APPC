@@ -12,10 +12,19 @@
 #include "GasStationSelection.h"
 
 //==============================================================================
-GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
-	stationsJSON(*Core::get().getGasStationsjson())
+GasStationSelectionDialogBox::GasStationSelection::GasStationSelection()
 {
-	size = Core::get().getGasStationsjson() ? stationsJSON.getNumGasStations() : 0;
+
+	bool success;
+	const String& s(Core::get().getGasStationsjson(success));
+	if (success) {
+		init();
+		stationsJSON = s;
+		stationsJSON.updatePropreties(Core::get().getNetwork());
+		size = stationsJSON.getNumGasStations();
+	}
+	else
+		size = 0;
 	addAndMakeVisible(table);
 	int w = 110;
 	table.getHeader().addColumn("ID", 6, w);
@@ -23,12 +32,16 @@ GasStationSelectionDialogBox::GasStationSelection::GasStationSelection() :
 	table.getHeader().addColumn("Autoroute", 2, w);
 	table.getHeader().addColumn("Direction", 3, w);
 	table.getHeader().addColumn(L"Compagnie Pétrolière", 4, w);
-	table.getHeader().addColumn(L"Compagnie Autoroutière", 5, w);   
+	table.getHeader().addColumn(L"Compagnie Autoroutière", 5, w);
 	table.setOutlineThickness(1);
 
 	table.autoSizeAllColumns();
 
 	computeDesiredProportions();
+}
+
+void GasStationSelectionDialogBox::GasStationSelection::initialize()
+{
 
 }
 
@@ -70,6 +83,37 @@ String GasStationSelectionDialogBox::GasStationSelection::getPropriety(int rowNu
 		break;
 	}
 	return text;
+}
+
+void GasStationSelectionDialogBox::GasStationSelection::paint(Graphics&)
+{
+	if (!isInit()) {
+		bool success;
+		const String& s(Core::get().getGasStationsjson(success));
+		if (success) {
+			init();
+			stationsJSON = s;
+			size = stationsJSON.getNumGasStations();
+			stationsJSON.updatePropreties(Core::get().getNetwork());
+			table.updateContent();
+			table.autoSizeAllColumns();
+			computeDesiredProportions();
+			getParentComponent()->resized();
+		}
+		else {
+			Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection, "Impossible de charger les stations disponibles");
+			size = 0;
+		}
+	}
+}
+
+void GasStationSelectionDialogBox::open()
+{
+	DialogBoxComponent::open();
+	if (!insideComponent->isInit()) {
+		insideComponent->repaint();
+	}
+
 }
 
 GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(new GasStationSelection)

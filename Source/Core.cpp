@@ -149,31 +149,6 @@ void Core::savePriceSave(const File& f)
 void Core::loadInformationsFromNetwork()
 {
 	if (!networkInit || !connected) return;
-
-	if (gsjson)
-		delete gsjson;
-	gsjson = new GasStationsJSON(network.getAllGasStations());
-	gsjson->updatePropreties(network);
-
-	//PanelJSON p(s);
-	//panelsjson = new PanelsJSON(network.getPanel(0));
-
-	/*Log::write(CharPointer_UTF16(L"Chargement des informations depuis le r\u00E9seau...\n\n"));
-	auto s = network.getFuelPrice();
-	PricesJSON p(s);
-	if (pricesjson != nullptr)
-		delete pricesjson;
-	pricesjson = new PricesJSON(p);
-	numPrices = p.getNumPrices();
-	unsigned int nd = 0;
-	setNumPrices(p.getNumPrices());
-	for (int i = 0; i < numPrices; i++) {
-		prices[i] = p[i].getPrice();
-		if (p[i].getPrice().length() > nd) nd = p[i].getPrice().length();
-	}
-	setNumDigits(nd - 1);
-	for (int i = 0; i < numPrices; i++)
-		updatePrices(TextUpdateOrigin::Omni, i);*/
 	if (updateVisualization)
 		updateVisualization();
 }
@@ -182,11 +157,8 @@ void Core::loadInformationsFromJSON()
 {
 	Log::write(CharPointer_UTF16(L"Lecture des informations du fichier JSON. Param\u00E8tres d\u00E9tect\u00E9s : \n"), 2);
 	auto pwrd = configjson->getAuthPassword();
-	auto id_ = configjson->getID();
 	auto baseAPI = configjson->getBaseAPI();
-	auto reset_line = configjson->getResetLine();
 	auto line_control = configjson->getLineControl();
-	auto delay = configjson->getDelay();
 	auto numLines = configjson->getNumLines();
 	auto numColumns = configjson->getNumColumns();
 	auto portCOM = configjson->getCOMPort();
@@ -195,44 +167,37 @@ void Core::loadInformationsFromJSON()
 		Log::write("Mot de passe\n", 2);
 		hasNetwork = true;
 	}
-	if (id_ != -1) {
-		Log::write("ID\n", 2);
-		id = id_;
-	}
 	if (baseAPI != "error") {
 		Log::write("Adresse API\n", 2);
-		// a faire
 	}
-	if (reset_line != -1) {
-		Log::write("Reset line\n", 2);
-		resetLine = reset_line;
-	}
+	else
+		hasNetwork = false;
 	if (line_control != -1) {
 		Log::write("Line control\n", 2);
 		lineControl = line_control;
 	}
-	if (delay != -1) {
-		Log::write("Delai\n", 2);
-		delay_ms = delay;
-	}
 	if (numLines != -1) {
 		Log::write("Nombre de lignes\n", 2);
-		numPrices = numLines;
+		if (numLines > Core::MAX_PRICES) numPrices = Core::MAX_PRICES;
+		else if (numLines <= 0) numPrices = 1;
+		else numPrices = numLines;
 	}
 	if (numColumns != -1) {
 		Log::write("Nombre de colonnes\n", 2);
-		numDigits = numColumns;
+		if (numColumns > Core::MAX_DIGITS) numPrices = Core::MAX_DIGITS;
+		else if (numColumns <= 0) numPrices = 1;
+		else numDigits = numColumns;
 	}
 	if (portCOM != -1) {
 		Log::write("Port COM\n", 2);
-		COM = portCOM;
+		if (portCOM >= 256) COM = 255;
+		else if (portCOM <= 0) COM = 1;
+		else COM = portCOM;
 	}
 
 	Log::ln(2, 1);
-
 	if (hasNetwork)
-		setNetwork(Network("X-AUTH-TOKEN", pwrd));
-
+		setNetwork(Network("X-AUTH-TOKEN", pwrd, baseAPI));
 	for (int i = 0; i < numPrices; i++)
 		updatePrices(TextUpdateOrigin::Omni, i);
 	if (updateVisualization)

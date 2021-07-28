@@ -23,8 +23,8 @@ public:
     APPCAlertWindows();
     ~APPCAlertWindows() { }
 
-    void open(WindowType window, const std::function<void(int)>& callbackfunction = std::function<void(int)>());
-
+    void open(WindowType window, const String& message = "", const std::function<void(int)>& callbackfunction = std::function<void(int)>());
+    void close();
 private:
     AlertWindow* aw;
 };

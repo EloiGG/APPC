@@ -68,14 +68,12 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un pa
 		else
 		{
 			Core::get().tryToConnect();
-			if(Core::get().isConnected())
+			if (Core::get().isConnected()) {
+				Core::get().loadInformationsFromNetwork();
 				Core::get().selectGasStation();
+			}
 			else {
-				Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection, [this](int r)
-					{
-						if (r == 2)
-							centoFuelOpen.onClick();
-					});
+				Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection);
 			}
 		}
 	};

@@ -85,7 +85,7 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	setSize(600, 600);
 	c.resetInit();
 	if (c.isConnected())
-		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel, [this](int r)
+		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel,"", [this](int r)
 			{
 				if (r == 1)
 					Core::get().selectGasStation();

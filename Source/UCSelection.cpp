@@ -35,7 +35,7 @@ UCSelectionDialogBox::UCSelection::~UCSelection()
 void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
 	currentUCID = rowNumber;
-	Core::get().openAlertWindow(APPCAlertWindows::WindowType::PriceChoice, [this](int r)
+	Core::get().openAlertWindow(APPCAlertWindows::WindowType::PriceChoice, "", [this](int r)
 		{
 			const auto& uc = UCsjson[currentUCID];
 			int numPrices = uc.getCountLinePrice();
@@ -88,13 +88,21 @@ void UCSelectionDialogBox::UCSelection::paint(Graphics& g)
 {
 	g.fillAll(lfColours::panelBackground);
 	if (Core::get().getCurrentPanelID() != currentUCID) {
+		bool success;
 		currentUCID = Core::get().getCurrentPanelID();
-		UCsjson = Core::get().getUCsjson(currentUCID);
-		size = UCsjson.getNumUCJSON();
-		table.autoSizeAllColumns();
+		const String& s(Core::get().getUCsjson(currentUCID, success));
+		if (success) {
+			UCsjson = s;
+			size = UCsjson.getNumUCJSON();
+			table.autoSizeAllColumns();
 
-		computeDesiredProportions();
-		getParentComponent()->resized();
+			computeDesiredProportions();
+			getParentComponent()->resized();
+		}
+		else {
+			Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection, "Impossible de charger les UC disponibles");
+			size = 0;
+		}
 	}
 }
 

@@ -134,6 +134,7 @@ private:
 class GasStationsJSON
 {
 public:
+	GasStationsJSON() {}
 	GasStationsJSON(const String& json) : parsedJSON(JSON::parse(json)) {}
 	void updatePropreties(const Network& net);
 	GasStationJSON operator[](size_t index) const;

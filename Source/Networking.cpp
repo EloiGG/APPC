@@ -36,14 +36,14 @@ Network::Network() : url("https://centofuel2.centaure-systems.fr/api")
 {
 }
 
-Network::Network(const String& token, const String& password) : authToken(token), authPassword(password),
-url("https://centofuel2.centaure-systems.fr/api")
+Network::Network(const String& token, const String& password, const String& baseAPI) : authToken(token), authPassword(password),
+url(baseAPI)
 {
 }
 
-String Network::getFuelPrice(int timeout_ms) const
+String Network::getFuelPrice(bool& success, int timeout_ms) const
 {
-	return request("/fuel_prices");
+	return request("/fuel_prices", success);
 }
 
 void Network::setAuthentication(const String& token, const String& password)
@@ -52,44 +52,52 @@ void Network::setAuthentication(const String& token, const String& password)
 	authPassword = password;
 }
 
-String Network::getOilCompany(int id) const
+String Network::getOilCompany(int id, bool& success) const
 {
-	return request(String("/oil_companies/") + String(id));
+	return request(String("/oil_companies/") + String(id), success);
 }
 
-String Network::getMotorwayCompany(int id) const
+String Network::getMotorwayCompany(int id, bool& success) const
 {
-	return request(String("/motorway_companies/") + String(id));
+	return request(String("/motorway_companies/") + String(id), success);
 }
 
-String Network::getAllGasStations(int timeout_ms) const
+String Network::getAllGasStations(bool& success, int timeout_ms) const
 {
-	return request("/gas_stations");
+	return request("/gas_stations", success);
 }
 
-String Network::getPanels(int id) const
+String Network::getPanels(int id, bool& success) const
 {
-	return request(String("/maintenance/gas_stations/") + String(id));
+	return request(String("/maintenance/gas_stations/") + String(id), success);
 }
 
-String Network::getUCs(int id) const
+String Network::getUCs(int id, bool& success) const
 {
-	return request(String("/maintenance/panels/") + String(id));
+	return request(String("/maintenance/panels/") + String(id), success);
 }
 
-String Network::request(const String& requestString, int timeout_ms) const
+String Network::request(const String& requestString, bool& success, int timeout_ms) const
 {
 	URL realURL(url + requestString);
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	jassert(authPassword != ""); // Il n'y a pas eu d'authentification. utiliser setAuthentication
+	if (authPassword == "") {
+		success = false;
+		return "No password";
+	}// Il n'y a pas eu d'authentification. utiliser setAuthentication
 	if (auto stream = std::unique_ptr<InputStream>(realURL.createInputStream(false, nullptr, nullptr, makeHeader(),
 		timeout_ms, // timeout in millisecs
 		&responseHeaders, &statusCode)))
 	{
+		if (statusCode != 200) {
+			success = false;
+			return "Failed to connect, status code = " + String(statusCode);
+		}
+		success = true;
 		return (stream->readEntireStreamAsString());
 	}
-
+	success = false;
 	if (statusCode != 0)
 		return "Failed to connect, status code = " + String(statusCode);
 

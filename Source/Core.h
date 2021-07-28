@@ -55,7 +55,7 @@ public:
 	Core(const Core&) = delete;
 	static Core& get();
 	~Core() {  }
-	void kill() { delete configjson; delete pricesjson; delete gsjson; }
+	void kill() { delete configjson; delete pricesjson;  }
 
 	unsigned int getNumDigits();
 	void setNumDigits(unsigned int newNumDigits);
@@ -134,9 +134,9 @@ public:
 
 	Price* getPrices() { return prices; }
 	PricesJSON* getpricesjson() { return pricesjson; }
-	GasStationsJSON* getGasStationsjson() { return gsjson; }
-	PanelJSON getPanelsjson(int index) { return network.getPanels(index); }
-	UCsJSON getUCsjson(int index) { return network.getUCs(index); }
+	String getGasStationsjson(bool& success) { return network.getAllGasStations(success); };
+	String getPanelsjson(int index, bool& success) { return network.getPanels(index, success); }
+	String getUCsjson(int index, bool& success) { return network.getUCs(index, success); }
 
 	bool isConnected() { return connected; }
 	void setConnected(bool shouldBeConnected) { connected = shouldBeConnected; }
@@ -160,10 +160,11 @@ public:
 	bool isInit() { return initBool; }
 
 
-	void openAlertWindow(APPCAlertWindows::WindowType window, const std::function<void(int)>& callbackfunction = std::function<void(int)>())
+	void openAlertWindow(APPCAlertWindows::WindowType window, const String& message = "", const std::function<void(int)>&callbackfunction = std::function<void(int)>())
 	{
-		alertWindows.open(window, callbackfunction);
+		alertWindows.open(window, message, callbackfunction);
 	}
+	void closeAlertWindow() { alertWindows.close(); }
 
 	Sequence createOptimizedSequence();
 private:
@@ -174,7 +175,6 @@ private:
 	std::function<void(TextUpdateOrigin, unsigned int)> pricesUpdateFunction;
 	ConfigJSON* configjson;
 	PricesJSON* pricesjson;
-	GasStationsJSON* gsjson;
 	Network network;
 	Price prices[MAX_PRICES];
 	std::shared_ptr<APPCLookAndFeel> lfptr;

@@ -25,7 +25,7 @@ nDigits(0), nPrices(0)
 	name.setJustificationType(Justification::centred);
 	cornerDigit.setShowState(false);
 	disable.setDisabled(false);
-	disable.setMessage(CharPointer_UTF8("Le panneau n'est pas initialisé"));
+	disable.setMessage(CharPointer_UTF8("Le panneau n'est pas initialisÃ©"));
 
 	Core::get().showKeyboard = [this](KeyboardLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{

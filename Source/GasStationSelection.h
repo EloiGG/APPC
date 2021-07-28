@@ -25,18 +25,19 @@ class GasStationSelectionDialogBox : public DialogBoxComponent
 	{
 	public:
 		GasStationSelection();
+		void initialize();
 		~GasStationSelection() override;
-
 		virtual void cellClicked(int rowNumber, int columnId, const MouseEvent&);
 		virtual String getPropriety(int row, int column) override;
-
+		void paint(Graphics&) override;
 	private:
-		const GasStationsJSON& stationsJSON;
+		GasStationsJSON stationsJSON;
 
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GasStationSelection)
 	};
 
 public:
+	virtual void open() override;
 	GasStationSelectionDialogBox();
 
 private:
