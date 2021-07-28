@@ -8,6 +8,11 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	auto& c = Core::get();
 
 	c.setCurrentStationID(2);
+	c.showKeyboard = [this](KeyboardLabel* caller, const std::function<bool(const String&)>& validationFunction, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
+	{
+		kb.resetAndShow(caller, validationFunction, startingText, maxChar);
+		Timer::callAfterDelay(15, [this]() {kb.grabKeyboardFocus(); });;
+	};
 	c.selectGasStation = [this]()
 	{
 		gasSelection.open();
@@ -79,18 +84,20 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	addAndMakeVisible(gasSelection);
 	addAndMakeVisible(panelSelection);
 	addAndMakeVisible(UCSelection);
+	addChildComponent(kb);
+	kb.setAlwaysOnTop(true);
 
 	c.setCurrentPanelID(1);
 	c.updateVisualization();
 	setSize(600, 600);
 	c.resetInit();
 	if (c.isConnected())
-		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel,"", [this](int r)
+		c.openAlertWindow(APPCAlertWindows::WindowType::LoadFromCentoFuel, "", [this](int r)
 			{
 				if (r == 1)
 					Core::get().selectGasStation();
-		/*		else
-					Core::get().init();*/
+				/*		else
+							Core::get().init();*/
 				Core::get().updateVisualization();
 			}
 	);
@@ -108,6 +115,7 @@ void MainComponent::paint(juce::Graphics& g)
 
 void MainComponent::resized()
 {
+	kb.setBounds(getLocalBounds());
 	int w = getWidth(), h = getHeight();
 	float topHeight = 0.08f * h, middleWidth = 0.6f * w, leftWidth = 0.15f * w, bottomHeight = 0.3f * h;
 	auto bounds = getLocalBounds();

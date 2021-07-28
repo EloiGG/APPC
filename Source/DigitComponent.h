@@ -25,11 +25,13 @@ class DigitEditorLabel : public KeyboardLabel
 public:
 	DigitEditorLabel() {
 		setEditable(true, true, true);
+		setWantsKeyboardFocus(false);
 	}
+
 protected:
 	virtual void editorShown(TextEditor* te) override
 	{
-		Core::get().showKeyboard(this, te->getText(), 1);
+		Core::get().showKeyboard(this, [](const String& output) {return Price::isValid(output); }, te->getText(), 1);
 	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{
@@ -41,6 +43,7 @@ protected:
 			textManuallyUpdated();
 		}
 	}
+
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditorLabel)
 };
@@ -59,8 +62,8 @@ public:
 	void setShowState(bool shouldShowState);
 	void updateAnimation();
 	virtual void textKeyboardUpdated() override;
+
 private:
-	
 	bool hasState;
 	virtual void timerCallback() override;
 	unsigned int frameCounter;

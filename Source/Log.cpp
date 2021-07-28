@@ -21,6 +21,7 @@ void Log::writeImpl(const String& string, int debugLevel)
 {
 	for (int i = debugLevel ; i < DEBUG_LEVELS ; i++)
 		s[i].append(string, string.length());
+	//logFile.appendText(string);
 }
 
 void Log::update()
@@ -55,6 +56,10 @@ void Log::updateImpl()
 
 Log::Log()
 {
+	File logDir(File::getCurrentWorkingDirectory().getChildFile("Logs"));
+	logDir.createDirectory();
+	const String& filename = "Log_APPC_" + Time::getCurrentTime().toString(true, true, true, true).replaceCharacters(" :", "_-") + ".txt";
+	logFile = logDir.getChildFile(filename);
 	for (int i = 0; i < DEBUG_LEVELS; i++)
 		s[i].preallocateBytes(16000);
 	title("Debut du programme");

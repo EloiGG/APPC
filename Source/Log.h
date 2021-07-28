@@ -33,5 +33,6 @@ private:
 	const static int textWidth = 60;
 	Log();
 	static Log _log;
+	File logFile;
 	String s[DEBUG_LEVELS];
 };

@@ -109,32 +109,3 @@ input([this]()
 			Log::update();
 		};
 	}
-
-	ConstInputComponent::ConstInputComponent(const String& parameterName, const String& value) : 
-		title(parameterName, parameterName + String(" : "))
-	{
-		titleWidth = title.getFont().getStringWidth(title.getText());
-		input.setEditable(false);
-
-		addAndMakeVisible(title);
-		addAndMakeVisible(input);
-
-		input.setText(String(value), NotificationType::sendNotification);
-	}
-
-	void ConstInputComponent::paint(juce::Graphics& g)
-	{
-		g.setColour(lfColours::inputBackground);
-		g.fillRoundedRectangle(input.getBounds().toFloat(), 3.0f);
-
-		g.setColour(lfColours::inputOutline.withAlpha(0.5f));
-		g.drawRect(input.getBounds());
-	}
-
-	void ConstInputComponent::resized()
-	{
-		float inputwidth = 0.75;
-		auto r = getLocalBounds();
-		title.setBounds(r.removeFromLeft(jmin<int>(titleWidth, getWidth() * 0.8)));
-		input.setBounds(r);
-	}

@@ -36,18 +36,15 @@ public:
 public:
 	Keyboard();
 	~Keyboard() override;
-	void resetAndShow(KeyboardLabel* caller, const String& startingText = "", unsigned int maxNumberOfCharacters = Core::MAX_DIGITS);
+	void resetAndShow(KeyboardLabel* caller, const std::function<bool(const String&)>& validationFunction, 
+		const String& startingText = "", unsigned int maxNumberOfCharacters = Core::MAX_DIGITS);
 	void paint(juce::Graphics&) override;
 	void resized() override;
 	String getOutput() { return output; }
 	void setText(const String& newText) { label.setText(newText, NotificationType::sendNotification); }
-
-	//virtual ApplicationCommandTarget* getNextCommandTarget() override;
-	//virtual void getAllCommands(Array<CommandID>& commands) override;
-	//virtual void getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) override;
-	//virtual bool perform(const InvocationInfo& info) override;
-
+	void setValidationFunction(const std::function<bool(const String&)>& f) { textIsValid = f; }
 private:
+	 std::function<bool(const String&)> textIsValid;
 	unsigned int currentMaxNumChar;
 	String output;
 	KeyboardLookAndFeel lf;

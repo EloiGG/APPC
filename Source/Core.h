@@ -122,7 +122,7 @@ public:
 	std::function<void()> sendSequence;
 	std::function<void()> openSettings;
 	std::function<void()> closeSettings;
-	std::function<void(KeyboardLabel*, const String&, unsigned int)> showKeyboard;
+	std::function<void(KeyboardLabel*, const std::function<bool(const String&)>&, const String&, unsigned int)> showKeyboard;
 	std::function<void()> selectGasStation;
 	std::function<void()> selectPanel;
 	std::function<void()> selectUC;
@@ -151,7 +151,7 @@ public:
 	bool getInTesting() { return inTesting; }
 
 	void init() { initBool = true; }
-	void resetInit() { initBool = false; }
+	void resetInit() { initBool = false; resetAllStates(); }
 	void resetAllStates()
 	{
 		for (int i = 0; i < numPrices * numDigits; i++)

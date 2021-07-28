@@ -12,7 +12,8 @@
 #include "Keyboard.h"
 
 //==============================================================================
-Keyboard::Keyboard() : grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::MAX_DIGITS)
+Keyboard::Keyboard() :
+	grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::MAX_DIGITS)
 {
 	addAndMakeVisible(disable);
 	disable.setDisabled(true);
@@ -68,19 +69,20 @@ Keyboard::Keyboard() : grid(NUM_COLUMNS, NUM_ROWS + 1), currentMaxNumChar(Core::
 		output = label.getText();
 		if (output.length() == 0) output = "        ";
 
-		if (!Price::isValid(output)) {
-			label.setColour(Label::ColourIds::textColourId, Colours::red);
-			label.repaint();
-			Timer::callAfterDelay(220, [this]()
-				{
-					label.setColour(Label::ColourIds::textColourId, Colours::white);
-					label.repaint();
-				});
-			return;
-		}
+		if (textIsValid) // la fonction existe
+			if (!textIsValid(output)) {
+				label.setColour(Label::ColourIds::textColourId, Colours::red);
+				label.repaint();
+				Timer::callAfterDelay(220, [this]()
+					{
+						label.setColour(Label::ColourIds::textColourId, Colours::white);
+						label.repaint();
+					});
+				return;
+			}
 
 		caller->setText(output, NotificationType::sendNotification);
-		if(diff) caller->callForUpdate();
+		if (diff) caller->callForUpdate();
 		setVisible(false);
 	};
 	key[15].setColour(TextButton::ColourIds::buttonColourId, confirmer);
@@ -95,8 +97,9 @@ Keyboard::~Keyboard()
 	removeKeyListener(this);
 }
 
-void Keyboard::resetAndShow(KeyboardLabel* c, const String& startingText, unsigned int maxNumberOfCharacters)
+void Keyboard::resetAndShow(KeyboardLabel* c, const std::function<bool(const String&)>& validationFunction, const String& startingText, unsigned int maxNumberOfCharacters)
 {
+	setValidationFunction(validationFunction);
 	caller = c;
 	label.setText(startingText, NotificationType::sendNotification);
 	output = startingText;
@@ -154,76 +157,3 @@ bool Keyboard::keyPressed(const KeyPress& k, Component* originatingComponent)
 
 	return false;
 }
-//
-//ApplicationCommandTarget* Keyboard::getNextCommandTarget()
-//{
-//	return nullptr;
-//}
-//
-//void Keyboard::getAllCommands(Array<CommandID>& commands)
-//{
-//	Array<CommandID> ids{ KeyPressCommandIDs::b0, KeyPressCommandIDs::b1,
-//							   KeyPressCommandIDs::b2, KeyPressCommandIDs::b3,
-//							   KeyPressCommandIDs::b4, KeyPressCommandIDs::b5,
-//							   KeyPressCommandIDs::b6, KeyPressCommandIDs::b7,
-//							   KeyPressCommandIDs::b8, KeyPressCommandIDs::b9,
-//	};
-//
-//	commands.addArray(ids);
-//}
-//
-//void Keyboard::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
-//{
-//	switch (commandID)
-//	{
-//	case KeyPressCommandIDs::b0:
-//		result.addDefaultKeypress(KeyPress::numberPad0, 0);
-//		result.addDefaultKeypress(KeyPress::, 0);
-//		break;
-//	default:
-//		break;
-//	}
-//}
-//
-//bool Keyboard::perform(const InvocationInfo& info)
-//{
-//	switch (info.commandID)
-//	{
-//	case KeyPressCommandIDs::buttonMoveUp:
-//		DBG("Up");
-//		resized();
-//		break;
-//	case KeyPressCommandIDs::buttonMoveRight:
-//		DBG("R");
-//
-//		resized();
-//		break;
-//	case KeyPressCommandIDs::buttonMoveDown:
-//		DBG("D");
-//
-//		resized();
-//		break;
-//	case KeyPressCommandIDs::buttonMoveLeft:
-//		DBG("L");
-//		resized();
-//		break;
-//	case KeyPressCommandIDs::nextButtonColour:
-//		DBG("Up");
-//		break;
-//	case KeyPressCommandIDs::previousButtonColour:
-//		DBG("Up");
-//		break;
-//	case KeyPressCommandIDs::nextBackgroundColour:
-//		DBG("Up");
-//		repaint();
-//		break;
-//	case KeyPressCommandIDs::previousBackgroundColour:
-//		DBG("Up");
-//		repaint();
-//		break;
-//	default:
-//		return false;
-//	}
-//
-//	return true;
-//}

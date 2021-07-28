@@ -27,7 +27,7 @@ public:
 protected:
 	virtual void editorShown(TextEditor* te) override
 	{
-		Core::get().showKeyboard(this, te->getText().substring(0, Core::get().getNumDigits() + 1), Core::MAX_DIGITS);
+		Core::get().showKeyboard(this, [](const String& output) {return Price::isValid(output); }, te->getText().substring(0, Core::get().getNumDigits() + 1), Core::MAX_DIGITS);
 	}
 	virtual void editorAboutToBeHidden(TextEditor*) override
 	{

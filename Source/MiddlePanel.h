@@ -70,7 +70,6 @@ private:
     Buttons buttons;
     Label name;
     juce::Rectangle<int> nameArea, openConfigArea, keyboardArea;
-    Keyboard kb;
     ShapeButton openConfig;
     Disabled disable;
     int nPrices, nDigits;

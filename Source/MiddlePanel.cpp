@@ -27,11 +27,6 @@ nDigits(0), nPrices(0)
 	disable.setDisabled(false);
 	disable.setMessage(CharPointer_UTF8("Le panneau n'est pas initialisé"));
 
-	Core::get().showKeyboard = [this](KeyboardLabel* caller, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
-	{
-		kb.resetAndShow(caller, startingText, maxChar);
-		Timer::callAfterDelay(15, [this]() {kb.grabKeyboardFocus(); });;
-	};
 	Path p;
 	int i;
 	for (i = 0; i < 7; i++) {
@@ -106,9 +101,7 @@ nDigits(0), nPrices(0)
 			Core::get().closeSettings();
 	};
 
-	kb.setAlwaysOnTop(true);
 	disable.setAlwaysOnTop(true);
-	addChildComponent(kb);
 }
 
 MiddlePanel::~MiddlePanel()
@@ -185,7 +178,6 @@ void MiddlePanel::paint(juce::Graphics& g)
 
 void MiddlePanel::resized()
 {
-	kb.setBounds(getLocalBounds());
 
 	auto digitsSpace = getLocalBounds();
 	auto buttonSpace = digitsSpace.removeFromBottom(digitsSpace.getHeight() * 0.1);

@@ -40,6 +40,7 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un pa
 	};
 	nPrices.min = 1;
 	nPrices.max = Core::MAX_PRICES;
+	nDigits.setMaxInputLengh(2);
 
 	nDigits.onUpdate = [](const String& input)
 	{
@@ -49,6 +50,7 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un pa
 	};
 	nDigits.min = 1;
 	nDigits.max = Core::MAX_DIGITS;
+	nDigits.setMaxInputLengh(1);
 
 	COM.onUpdate = [](const String& input)
 	{
@@ -58,6 +60,7 @@ resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un pa
 	};
 	COM.min = 1;
 	COM.max = 256;
+	COM.setMaxInputLengh(3);
 
 	centoFuelOpen.setLookAndFeel(Core::get().getLookAndFeel().get());
 	centoFuelOpen.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);

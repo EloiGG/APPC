@@ -47,8 +47,6 @@ public:
 			c.loadInformationsFromNetwork();
 		}
 
-		for (int i = 0; i < Core::MAX_PRICES; ++i)
-			Core::get().setPrice(i, Price("888888"));
 		mainWindow.reset(new MainWindow(getApplicationName()));
 
 	}
@@ -64,6 +62,12 @@ public:
 	{
 		Core::get().savePriceSave(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 		Core::get().saveConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
+		File logDir(File::getCurrentWorkingDirectory().getChildFile("Logs"));
+		logDir.createDirectory();
+		const String& filename = "Log_APPC_" + Time::getCurrentTime().toString(true, true, true, true).replaceCharacters(" :", "_-") + ".txt";
+		File log(logDir.getChildFile(filename));
+		auto r = log.create();
+		log.replaceWithText(String("test"));
 		quit();
 	}
 

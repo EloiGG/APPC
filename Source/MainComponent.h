@@ -27,6 +27,7 @@ public:
 	void updatePrices(TextUpdateOrigin whoCalled, unsigned int index);
 
 private:
+	Keyboard kb;
 	MiddlePanel mPanel;
 	RightPanel rPanel;
 	TooltipWindow tooltip;

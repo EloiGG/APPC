@@ -3,7 +3,7 @@
 
 	InputComponent.h
 	Created: 21 Jun 2021 2:24:45pm
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -18,6 +18,30 @@
 //==============================================================================
 /*
 */
+class InputComponentLabel : public KeyboardLabel
+{
+public:
+	InputComponentLabel() : maxNumChar(1) {}
+	InputComponentLabel(const std::function<void()>& f) : maxNumChar(1)
+	{
+		textManuallyUpdated = f;
+		onTextKeyboardUpdate = f;
+	}
+	unsigned int maxNumChar;
+protected:
+	//virtual void textKeyboardUpdated() {}
+	//virtual void editorAboutToBeHidden(TextEditor*) override {}
+	virtual void editorShown(TextEditor* te) override
+	{
+		Core::get().showKeyboard(this, [](const String& output)
+			{
+				return output.containsOnly("0987654321");
+			},
+			te->getText(), maxNumChar);
+	}
+private:
+};
+
 class InputComponent : public juce::Component
 {
 public:
@@ -30,6 +54,7 @@ public:
 
 	void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
 	void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
+	void setMaxInputLengh(unsigned int maxLengh) { input.maxNumChar = maxLengh; }
 
 	std::function<void()>& onIncrement;
 	std::function<void()>& onDecrement;
@@ -39,10 +64,9 @@ public:
 	int increment, decrement;
 
 private:
-
 	String lastText;
 	Label title;
-	SpecialLabel input;
+	InputComponentLabel input;
 	TextButton p, m;
 	int titleWidth;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputComponent)
@@ -56,24 +80,4 @@ private:
 	int titleWidth;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CheckBox)
-};
-
-class ConstInputComponent : public juce::Component
-{
-public:
-	ConstInputComponent(const String& parameterName, const String& value = "");
-
-	void paint(juce::Graphics&) override;
-	void resized() override;
-
-	void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
-	void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
-
-
-
-private:
-	Label title;
-	SpecialLabel input;
-	int titleWidth;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConstInputComponent)
 };
