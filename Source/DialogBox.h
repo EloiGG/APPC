@@ -130,6 +130,7 @@ public:
 
 		cancel.onClick = []()
 		{
+			Log::writeLn("annulation de la selection\n\n");
 			Core::get().closeAllSelections();
 			Core::get().updateVisualization();
 		};

@@ -35,13 +35,20 @@ UCSelectionDialogBox::UCSelection::~UCSelection()
 void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
 	currentUCID = rowNumber;
+	Log::writeNext(" UC selectionne : " + getPropriety(rowNumber, 2));
+	Log::ln(1,2);
+
 	Core::get().openAlertWindow(APPCAlertWindows::WindowType::PriceChoice, "", [this](int r)
 		{
+
 			const auto& uc = UCsjson[currentUCID];
 			int numPrices = uc.getCountLinePrice();
 			int numDigits = uc.getNumberOfDigits();
 			int id = uc.getId();
 			auto& c = Core::get();
+
+			if (r == 1) Log::writeLn("Chargement du prix UC");
+			if (r == 2) Log::writeLn("Chargement du prix de la station");
 
 			String name(uc.getName());
 			float prices[Core::MAX_PRICES] = { 0 };
@@ -52,10 +59,26 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 					prices[uc.getUCLinePrice(i).getPosition()] = uc.getStationLinePrice(i).getPrice();
 			}
 
-			if (name != "error") c.setUCName(name);
-			if (numPrices != -1) c.setNumPrices(numPrices);
-			if (numDigits != -1) c.setNumDigits(numDigits);
-			if (id != -1) c.setID(id);
+			Log::writeLn("Parametres disponibles : ");
+			if (name != "error") {
+				c.setUCName(name);
+				Log::writeLn("Nom UC");
+			}
+			if (numPrices != -1) {
+				c.setNumPrices(numPrices);
+				Log::writeLn("Nombre de prix");
+			}
+			if (numDigits != -1) {
+				c.setNumDigits(numDigits);
+				Log::writeLn("Nombre de chiffres par prix");
+			}
+			if (id != -1) {
+				c.setID(id);
+				Log::writeLn("ID Prix");
+			}
+
+			Log::ln();
+			Log::writeLn("Chargement des parametres...");
 			for (int i = 0; i < numPrices; i++)
 				c.setPrice(i, String(prices[i]));
 
@@ -65,6 +88,9 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 			c.resetInit();
 			c.resetAllStates();
 			c.updateVisualization();
+			Log::writeLn("Parametres charges");
+			Log::ln();
+
 		});
 }
 
@@ -104,6 +130,12 @@ void UCSelectionDialogBox::UCSelection::paint(Graphics& g)
 			size = 0;
 		}
 	}
+}
+
+void UCSelectionDialogBox::open()
+{
+	DialogBoxComponent::open();
+	Log::writeLn("Selection d'une UC...");
 }
 
 UCSelectionDialogBox::UCSelectionDialogBox() : DialogBoxComponent(new UCSelection)

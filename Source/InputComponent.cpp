@@ -61,9 +61,7 @@ input([this]()
 
 	input.onTextChange = [this]()
 	{
-		Log::write(L"Changement du paramètre \"" + String(title.getText().substring(0, title.getText().length() - 3)) + L"\". \tNouvelle valeur : " + String(input.getText()), 2);
-		Log::ln(2);
-		Log::update();
+		Log::writeLn("Changement du parametre \"" + String(title.getText().substring(0, title.getText().length() - 3)) + "\". \tNouvelle valeur : " + String(input.getText()));
 	};
 }
 
@@ -101,10 +99,10 @@ input([this]()
 	{
 		setLookAndFeel(Core::get().getLookAndFeel().get());
 		onClick = [this]() {
-			Log::write(L"Changement d'état du paramètre \"", 2);
-			Log::write(getButtonText().substring(0, getButtonText().length() - 3), 2);
-			Log::write(L"\". Nouvel état : ", 2);
-			Log::write(String((int)getToggleState()), 2);
+			Log::writeLn("Changement d'etat du parametre \"");
+			Log::writeNext(getButtonText().substring(0, getButtonText().length() - 3));
+			Log::writeNext("\". Nouvel état : ");
+			Log::writeNext(String((int)getToggleState()));
 			Log::ln(2);
 			Log::update();
 		};

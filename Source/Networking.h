@@ -33,7 +33,7 @@ public:
     String getPanels(int id, bool& success) const;
     String getUCs(int id, bool& success) const;
     String request(const String& requestString, bool& success, int timeout_ms = 10000) const;
-
+    String getURL() { return url; }
 private:
     String makeHeader() const;
     String authToken, authPassword;

@@ -55,7 +55,7 @@ nDigits(0), nPrices(0)
 			}
 			topDigits[i].setText("", NotificationType::sendNotification);
 			for (int j = 0; j < Core::get().getNumPrices(); ++j)
-				updatePrices(TextUpdateOrigin::Omni, j);
+				Core::get().updatePrices(TextUpdateOrigin::Omni, j);
 			updateVisualization();
 		};
 	}
@@ -71,7 +71,7 @@ nDigits(0), nPrices(0)
 				s[j] = leftDigits[i].getText().getCharPointer()[0];
 			Core::get().setPrice(i, Price(s));
 			leftDigits[i].setText("", NotificationType::sendNotification);
-			updatePrices(TextUpdateOrigin::Omni, i);
+			Core::get().updatePrices(TextUpdateOrigin::Omni, i);
 			updateVisualization();
 		};
 	}
@@ -85,7 +85,7 @@ nDigits(0), nPrices(0)
 			s[j] = cornerDigit.getText().getCharPointer()[0];
 		for (int j = 0; j < Core::get().getNumPrices(); j++) {
 			Core::get().setPrice(j, Price(s));
-			updatePrices(TextUpdateOrigin::Omni, j);
+			Core::get().updatePrices(TextUpdateOrigin::Omni, j);
 		}
 		cornerDigit.setText("", NotificationType::sendNotification);
 		updateVisualization();

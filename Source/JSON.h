@@ -82,8 +82,9 @@ public:
 	int getNumColumns() { return parsedJSON.getProperty("number_of_columns", -1); }
 	int getCOMPort() { return parsedJSON.getProperty("COM_port", -1); }
 	String getStartingCharacter() { return parsedJSON.getProperty("starting_character", "error"); }
-	String makeConfigJSON(int id, const String& base_api, const String& api_key,
-		bool line_control, bool reset_line, int delay, int numColumns, int numLines, int COMPort);
+	static String makeConfigJSON(const String& base_api, const String& api_key,
+ bool line_control,
+		int numColumns, int numLines, int COMPort, const String& startingDigit);
 	String toString();
 
 private:

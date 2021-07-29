@@ -31,14 +31,17 @@ void SerialThread::run()
 	auto& c = Core::get();
 	Log::title("Transmission");
 	auto delay = sequence.getDelay();
-	Log::write("\nOuverture du port COM");
-	Log::write(String(c.getCOMPort()));
-	Log::write(" ");
-	Log::write("avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...", 2);
-	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, c.getCOMPort()))
-		Log::write("port ouvert !\n");
+	Log::writeLn("Ouverture du port COM");
+	Log::writeNext(String(c.getCOMPort()));
+	Log::writeNext(" ");
+	Log::writeNext("avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...");
+	if (uart.open(1170, 8, UART::StopBit::oneStopBit, UART::Parity::noParity, c.getCOMPort())) {
+		Log::writeNext("port ouvert !\n");
+		Log::ln();
+	}
 	else {
-		Log::write("erreur lors de l'ouverture\n");
+		Log::writeNext("erreur lors de l'ouverture\n");
+		Log::ln();
 		goto fin;
 	}
 
@@ -52,18 +55,11 @@ void SerialThread::run()
 		uart.addByte(0x03);				// fin séquence
 		uart.send();
 
-		Log::write(CharPointer_UTF8("\nEnvoi de la requête d'affichage du caractère "));
-		Log::write(String(step.character));
-		if (step.order == 0x46) Log::write(CharPointer_UTF8(" avec contrôle segment "));
-		Log::write(CharPointer_UTF8(" à l'adresse "));
-		Log::write(String(step.adress));
-		Log::write(String(CharPointer_UTF8(" : Octets envoyés (en décimal) : 02 ")) +
-			String(step.order) + String(" ") + String(step.adress) + String(" ") +
-			String(step.character) + String(" ") + String("03"), 2);
-		DBG(String(CharPointer_UTF8(" : Octets envoyés (en décimal) : 02 ")) +
-			String(step.order) + String(" ") + String(step.adress) + String(" ") +
-			String(step.character) + String(" ") + String("03"), 2);
-		Log::ln();
+		Log::writeLn("Envoi de la requete d'affichage du caractere ");
+		Log::writeNext(String(step.character));
+		if (step.order == 0x46) Log::writeNext(" avec controle segment ");
+		Log::writeNext(" a l'adresse ");
+		Log::writeNext(String(step.adress));
 		{
 			MessageManagerLock m(this);
 			if (m.lockWasGained()) {
@@ -73,24 +69,24 @@ void SerialThread::run()
 		}
 		if (waitForResponse)
 		{
-			Log::write(CharPointer_UTF8("Récupération de la réponse du module : "));
+			Log::writeLn(("Recuperation de la reponse du module : "));
 			auto response = getModuleResponse(step.adress - 0x30, getTimeout_ms(step.order));
 			if (response.err_ok)
-				Log::write(CharPointer_UTF8("réponse du module, aucune erreur"));
+				Log::writeNext(("reponse du module, aucune erreur"));
 			else if (response.stopping)
-				Log::write(CharPointer_UTF8("arrêt de la séquence"));
+				Log::writeNext(("arret de la sequence"));
 			else if (response.erreurs[response.err_illisible])
-				Log::write(CharPointer_UTF8("réponse du module illisible !"));
+				Log::writeNext(("reponse du module illisible !"));
 			else if (response.erreurs[response.err_reponse])
-				Log::write(CharPointer_UTF8("pas de réponse du module"));
+				Log::writeNext(("pas de reponse du module"));
 			else
 			{
-				Log::write("Il y a des erreurs sur les segments suivants : ");
+				Log::writeNext("Il y a des erreurs sur les segments suivants : ");
 				for (int i = 0; i < 7; i++)
 					if (response.erreurs[i] == true) {
 						char str[] = "A";
 						str[0] += i;
-						Log::write(str);
+						Log::writeLn(str);
 					}
 			}
 			Log::ln();

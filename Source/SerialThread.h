@@ -15,44 +15,6 @@
 #include "UART.h"
 #include "Core.h"
 
-class Stopwatch
-{
-	using Clock = std::chrono::high_resolution_clock;
-
-private:
-	Clock::time_point start_point;
-
-public:
-	Stopwatch() :
-		start_point(Clock::now())
-	{}
-
-	void reset() { start_point = Clock::now(); }
-
-	double elapsed_time() const
-	{
-		std::atomic_thread_fence(std::memory_order_relaxed);
-		auto counted_time = std::chrono::duration_cast<std::chrono::seconds>(Clock::now() - start_point).count();
-		std::atomic_thread_fence(std::memory_order_relaxed);
-		return static_cast<double>(counted_time);
-	}
-	int elapsed_time_ms() const
-	{
-		std::atomic_thread_fence(std::memory_order_relaxed);
-		auto counted_time = std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - start_point).count();
-		std::atomic_thread_fence(std::memory_order_relaxed);
-		return static_cast<int>(counted_time);
-	}
-	void wait(double seconds)
-	{
-		std::this_thread::sleep_for(std::chrono::duration<double>(seconds));
-	}
-	void wait_ms(double milliseconds)
-	{
-		wait(milliseconds / 1000.0);
-	}
-};
-
 class ProgressionThread : public Thread
 {
 public:

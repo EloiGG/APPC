@@ -17,16 +17,16 @@ PricesJSON::PricesJSON(const String& json)
 
 PricesJSON::PricesJSON(const File& json)
 {
-	Log::write("\nLecture du fichier JSON ");
-	Log::write(json.getFullPathName());
+	Log::writeLn("Lecture du fichier JSON ");
+	Log::writeLn(json.getFullPathName());
 	Log::ln();
 
 	parsedJSON = JSON::parse(json);
 
 	if (parsedJSON == var())
-		Log::write("Impossible de lire le fichier");
+		Log::writeLn("Impossible de lire le fichier");
 	else
-		Log::write(L"Lecture réussie");
+		Log::writeLn("Lecture reussie");
 	Log::ln(1, 2);
 	Log::update();
 }
@@ -57,31 +57,29 @@ bool ConfigJSON::err_ok(const String& output)
 
 ConfigJSON::ConfigJSON(const File& json)
 {
-	Log::write("\nLecture du fichier JSON ");
-	Log::write(json.getFullPathName());
-	Log::ln();
+	Log::writeLn("Lecture du fichier JSON ");
+	Log::writeLn(json.getFullPathName());
 
 	parsedJSON = JSON::parse(json);
 
 	if (parsedJSON == var())
-		Log::write("Impossible de lire le fichier");
+		Log::writeLn("Impossible de lire le fichier");
 	else
-		Log::write(L"Lecture réussie");
+		Log::writeLn("Lecture reussie");
 	Log::ln(1, 2);
 	Log::update();
 }
 
-String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& api_key, bool line_control, bool reset_line, int delay, int numColumns, int numLines, int COMPort)
+String ConfigJSON::makeConfigJSON(const String& base_api, const String& api_key, bool line_control, int numColumns, int numLines, int COMPort, const String& startingDigit)
 {
 	DynamicObject* obj = new DynamicObject();
-	obj->setProperty("id", id);
 	obj->setProperty("base_api", base_api);
 	obj->setProperty("api_key", api_key);
 	obj->setProperty("line_control", line_control);
-	obj->setProperty("reset_line", reset_line);
 	obj->setProperty("number_of_columns", numColumns);
 	obj->setProperty("number_of_lines", numLines);
 	obj->setProperty("COM_port", COMPort);
+	obj->setProperty("starting_character", startingDigit);
 
 	var json(obj);
 
@@ -90,7 +88,7 @@ String ConfigJSON::makeConfigJSON(int id, const String& base_api, const String& 
 
 String ConfigJSON::toString()
 {
-	return makeConfigJSON(getID(), getBaseAPI(), getBaseAPI(), getLineControl(), getResetLine(), getDelay(), getNumColumns(), getNumLines(), getCOMPort());
+	return makeConfigJSON(getBaseAPI(), getBaseAPI(), getLineControl(), getNumColumns(), getNumLines(), getCOMPort(), getStartingCharacter());
 }
 
 SequenceJSON::SequenceJSON(const File& json)

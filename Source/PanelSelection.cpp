@@ -11,6 +11,12 @@
 
 #include "PanelSelection.h"
 
+void PanelSelectionDialogBox::open()
+{
+	DialogBoxComponent::open();
+	Log::writeLn("Selection d'un panneau...");
+}
+
 PanelSelectionDialogBox::PanelSelectionDialogBox() : DialogBoxComponent(new PanelSelection)
 {
 	back.onClick = []()
@@ -38,6 +44,7 @@ PanelSelectionDialogBox::PanelSelection::PanelSelection() : currentStationID(1)
 
 void PanelSelectionDialogBox::PanelSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
+	Log::writeNext(" panneau selectionne : " + getPropriety(rowNumber, 2));
 	Core::get().setCurrentPanelID(getPropriety(rowNumber, 1).getIntValue());
 	Core::get().selectUC();
 }
@@ -58,6 +65,7 @@ String PanelSelectionDialogBox::PanelSelection::getPropriety(int row, int column
 		break;
 	case 4:
 		text = String(panelsJSON.getBox());
+		break;
 	default:
 		break;
 	}

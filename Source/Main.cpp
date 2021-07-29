@@ -26,29 +26,24 @@ public:
 	//==============================================================================
 	void initialise(const juce::String& commandLine) override
 	{
-		/*Core::get().setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
-		Core::get().loadInformationsFromJSON();*/
-		//================================ SI ON VEUT CHARGER LE DERNIER PRIX ============================
-		/*if (File::getCurrentWorkingDirectory().getChildFile("lastprices.prices").existsAsFile()) {
-			PriceSave lastPrices(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
-			for (int i = 0; i < lastPrices.getNumPrices(); ++i)
-				Core::get().setPrice(i, lastPrices.getPrice(i));
-			for (int i = lastPrices.getNumPrices(); i < Core::MAX_PRICES; ++i)
-				Core::get().setPrice(i, Price("0"));
-		}
-		else*/
-
+		Log::title("INITIALISATION");
+		Log::ln();
 		if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
-			Log::write("Chargement du fichier init.config");
+			Log::writeLn("Chargement du fichier init.config");
 			Log::ln();
 			auto& c = Core::get();
 			c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
 			c.loadInformationsFromJSON();
-			c.loadInformationsFromNetwork();
 		}
+		else {
+			Log::writeLn("Impossible de charger le fichier init.config\n");
+			for (int i = 0; i < Core::MAX_PRICES; i++)
+				Core::get().setPrice(i, Price("88888888"));
+		}
+		Log::title("FIN INITIALISATION");
+		Log::ln();
 
 		mainWindow.reset(new MainWindow(getApplicationName()));
-
 	}
 
 	void shutdown() override
@@ -60,14 +55,10 @@ public:
 	//==============================================================================
 	void systemRequestedQuit() override
 	{
+		Log::ln();
 		Core::get().savePriceSave(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 		Core::get().saveConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));
-		File logDir(File::getCurrentWorkingDirectory().getChildFile("Logs"));
-		logDir.createDirectory();
-		const String& filename = "Log_APPC_" + Time::getCurrentTime().toString(true, true, true, true).replaceCharacters(" :", "_-") + ".txt";
-		File log(logDir.getChildFile(filename));
-		auto r = log.create();
-		log.replaceWithText(String("test"));
+		Log::title("FIN DU PROGRAMME");
 		quit();
 	}
 

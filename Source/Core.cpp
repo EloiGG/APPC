@@ -3,7 +3,7 @@
 
 	Core.cpp
 	Created: 19 Jun 2021 11:11:52am
-	Author:  Eloi
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -91,14 +91,14 @@ Network Core::getNetwork() const
 void Core::setNetwork(const Network& net)
 {
 	network = net;
-	Log::write(CharPointer_UTF16(CharPointer_UTF16(L"\nV\u00E9rification de la configuration r\u00E9seau...\n")));
+	Log::writeLn("\nVerification de la configuration reseau...\n");
 
 	if (std::get<0>(net.connected())) {
 		connected = true;
-		Log::write(CharPointer_UTF16(L"Connect\u00E9 \u00E0 CentoFuel\n"));
+		Log::writeLn("Connecte a CentoFuel\n");
 	}
 	else {
-		Log::write(CharPointer_UTF16(L"Impossible de se connecter \u00E0 CentoFuel\n"));
+		Log::writeLn("Impossible de se connecter a CentoFuel\n");
 		String errorMessage;
 		switch (std::get<1>(net.connected())) // code erreur	
 		{
@@ -117,8 +117,8 @@ void Core::setNetwork(const Network& net)
 		default:
 			break;
 		}
-		Log::write("Message d'erreur : ");
-		Log::write(errorMessage);
+		Log::writeLn("Message d'erreur : ");
+		Log::writeLn(errorMessage);
 	}
 	Log::update();
 	networkInit = true;
@@ -131,13 +131,18 @@ bool Core::hasNetwork()
 
 void Core::saveConfigJSON(const File& f)
 {
+	Log::writeLn("Sauvegarde de la configuration dans " + f.getFullPathName());
 	f.deleteFile();
 	f.create();
-	f.replaceWithText(configjson->makeConfigJSON(id, configjson->getBaseAPI(), "", lineControl, resetLine, configjson->getDelay(), numDigits, numPrices, COM));
+	if (configjson)
+		f.replaceWithText(configjson->makeConfigJSON(configjson->getBaseAPI(), configjson->getAuthPassword(), lineControl, numDigits, numPrices, COM, configjson->getStartingCharacter()));
+	else
+		f.replaceWithText(ConfigJSON::makeConfigJSON(network.getURL(), "", lineControl, numDigits, numPrices, COM, "8"));
 }
 
 void Core::savePriceSave(const File& f)
 {
+	Log::writeLn("Sauvegarde des prix dans " + f.getFullPathName());
 	String p[MAX_PRICES];
 	for (int i = 0; i < MAX_PRICES; i++)
 		p[i] = prices[i].toString(MAX_DIGITS);
@@ -155,7 +160,7 @@ void Core::loadInformationsFromNetwork()
 
 void Core::loadInformationsFromJSON()
 {
-	Log::write(CharPointer_UTF16(L"Lecture des informations du fichier JSON. Param\u00E8tres d\u00E9tect\u00E9s : \n"), 2);
+	Log::writeLn("Lecture des informations du fichier JSON. Parametres detectes : ");
 	auto pwrd = configjson->getAuthPassword();
 	auto baseAPI = configjson->getBaseAPI();
 	auto line_control = configjson->getLineControl();
@@ -167,25 +172,25 @@ void Core::loadInformationsFromJSON()
 	bool hasNetwork = false;
 
 	if (pwrd != "error" && pwrd.length()) {
-		Log::write("Mot de passe\n", 2);
+		Log::writeLn("Mot de passe");
 		hasNetwork = true;
 	}
 
 	if (baseAPI != "error") {
-		Log::write("Adresse API\n", 2);
+		Log::writeLn("Adresse API");
 	}
-	else 
+	else
 		hasNetwork = false;
-	
+
 	if (line_control != -1) {
-		Log::write("Line control\n", 2);
+		Log::writeLn("Line control");
 		lineControl = line_control;
 	}
 	else
 		lineControl = true;
 
 	if (numLines != -1) {
-		Log::write("Nombre de lignes\n", 2);
+		Log::writeLn("Nombre de lignes");
 		if (numLines > Core::MAX_PRICES) numPrices = Core::MAX_PRICES;
 		else if (numLines <= 0) numPrices = 1;
 		else numPrices = numLines;
@@ -194,7 +199,7 @@ void Core::loadInformationsFromJSON()
 		numPrices = 4;
 
 	if (numColumns != -1) {
-		Log::write("Nombre de colonnes\n", 2);
+		Log::writeLn("Nombre de colonnes");
 		if (numColumns > Core::MAX_DIGITS) numPrices = Core::MAX_DIGITS;
 		else if (numColumns <= 0) numPrices = 1;
 		else numDigits = numColumns;
@@ -203,7 +208,7 @@ void Core::loadInformationsFromJSON()
 		numDigits = 4;
 
 	if (portCOM != -1) {
-		Log::write("Port COM\n", 2);
+		Log::writeLn("Port COM");
 		if (portCOM >= 256) COM = 255;
 		else if (portCOM <= 0) COM = 1;
 		else COM = portCOM;
@@ -212,7 +217,7 @@ void Core::loadInformationsFromJSON()
 		COM = 3;
 
 	if (startingCharacter != "error") {
-		Log::write("Caractere a afficher au demarrage\n", 2);
+		Log::writeLn("Caractere a afficher au demarrage\n");
 		Price p(startingCharacter);
 		char s[Core::MAX_DIGITS + 1];
 		char c(Price::toUARTchar(startingCharacter.getCharPointer()[0]));
@@ -250,7 +255,7 @@ bool Core::getBatteryAlarm()
 {
 	bool b = false;
 	if (b == false)
-		Log::write("erreur lecture pin");
+		Log::writeLn("erreur lecture pin");
 	return false;
 }
 
@@ -261,7 +266,6 @@ Sequence Core::createOptimizedSequence()
 	for (int p = 0; p < numPrices; ++p) {
 		for (int d = 0; d < numDigits; ++d) {
 			int moduleNumber = d + p * numDigits;
-			DBG("prix : " << p << " digit : " << d << " adresse : " << moduleNumber);
 			auto state = getModuleState(moduleNumber);
 			if (!state.upToDate || state.work_in_progress || state.stopping)
 				s.addStep(Sequence::SequenceStep(moduleNumber + 0x30, lineControl ? 0x46 : 0x43,

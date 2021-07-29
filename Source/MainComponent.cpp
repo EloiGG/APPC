@@ -46,11 +46,10 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 		[this](TextUpdateOrigin o, unsigned int index)
 		{
 			mPanel.updatePrices(o, index);
-			Log::write("Changement du prix ");
-			Log::write(String(index + 1));
-			Log::write(". Nouveau prix : ");
-			Log::write(Core::get().getPrice(index).toString(Core::MAX_DIGITS));
-			Log::ln();
+			Log::writeLn("Changement du prix ");
+			Log::writeNext(String(index + 1));
+			Log::writeNext(". Nouveau prix : ");
+			Log::writeNext(Core::get().getPrice(index).toString(Core::MAX_DIGITS));
 			Log::update();
 		}
 	);
@@ -67,7 +66,6 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 		settingsOppened = true;
 		rPanel.setVisible(true);
 		resized();
-		//setSize(getWidth() * 1.0 / 0.6, getHeight());
 	};
 
 	c.closeSettings = [this]()
@@ -75,7 +73,6 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 		settingsOppened = false;
 		rPanel.setVisible(false);
 		resized();
-		//setSize(getWidth() * 0.6, getHeight());
 	};
 
 	addAndMakeVisible(mPanel);
@@ -96,8 +93,6 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 			{
 				if (r == 1)
 					Core::get().selectGasStation();
-				/*		else
-							Core::get().init();*/
 				Core::get().updateVisualization();
 			}
 	);

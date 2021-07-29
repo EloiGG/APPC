@@ -33,6 +33,7 @@ class PanelSelectionDialogBox : public DialogBoxComponent
 	};
 
 public:
+	void open() override;
 	PanelSelectionDialogBox();
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PanelSelectionDialogBox)

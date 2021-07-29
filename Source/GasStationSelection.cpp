@@ -52,6 +52,7 @@ GasStationSelectionDialogBox::GasStationSelection::~GasStationSelection()
 
 void GasStationSelectionDialogBox::GasStationSelection::cellClicked(int rowNumber, int columnId, const MouseEvent&)
 {
+	Log::writeNext(" station selectionnee : " + getPropriety(rowNumber, 1));
 	Core::get().setCurrentStationID(getPropriety(rowNumber, 6).getIntValue());
 	Core::get().selectPanel();
 }
@@ -113,7 +114,7 @@ void GasStationSelectionDialogBox::open()
 	if (!insideComponent->isInit()) {
 		insideComponent->repaint();
 	}
-
+	Log::writeLn("Selection d'une station service...");
 }
 
 GasStationSelectionDialogBox::GasStationSelectionDialogBox() : DialogBoxComponent(new GasStationSelection)
