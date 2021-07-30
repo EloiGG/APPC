@@ -58,6 +58,9 @@
                   file="Source/PriceDisplayComponent.cpp"/>
             <FILE id="KE6WpO" name="PriceDisplayComponent.h" compile="0" resource="0"
                   file="Source/PriceDisplayComponent.h"/>
+            <FILE id="VP5H8b" name="SegmentError.cpp" compile="1" resource="0"
+                  file="Source/SegmentError.cpp"/>
+            <FILE id="wEVyVA" name="SegmentError.h" compile="0" resource="0" file="Source/SegmentError.h"/>
           </GROUP>
           <FILE id="WDr1DK" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
           <FILE id="klg5it" name="MainComponent.cpp" compile="1" resource="0"

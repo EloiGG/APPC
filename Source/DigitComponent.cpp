@@ -15,6 +15,7 @@
 
 DigitEditor::DigitEditor() : frameCounter(0), hasState(true)
 {
+	addAndMakeVisible(error);
 	state.err_ok = true;
 	state.work_in_progress = true;
 	setEditable(true);
@@ -69,6 +70,7 @@ String DigitEditor::getDigit()
 void DigitEditor::resized()
 {
 	Label::resized();
+	error.setBounds(getLocalBounds());
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);

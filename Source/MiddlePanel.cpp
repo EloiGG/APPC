@@ -178,7 +178,6 @@ void MiddlePanel::paint(juce::Graphics& g)
 
 void MiddlePanel::resized()
 {
-
 	auto digitsSpace = getLocalBounds();
 	auto buttonSpace = digitsSpace.removeFromBottom(digitsSpace.getHeight() * 0.1);
 	nameArea = digitsSpace.removeFromTop(digitsSpace.getHeight() * 0.1);

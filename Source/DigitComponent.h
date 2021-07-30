@@ -3,7 +3,7 @@
 
 	DigitComponent.h
 	Created: 17 Jun 2021 11:04:03am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -16,6 +16,7 @@
 #include "SpecialLabel.h"
 #include "ErrorStateIndicator.h"
 #include "SerialThread.h"
+#include "SegmentError.h"
 //==============================================================================
 /*
 */
@@ -68,6 +69,7 @@ private:
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
 	ErrModule state;
+	SegmentError error;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 };
 

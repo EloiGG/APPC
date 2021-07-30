@@ -1,0 +1,120 @@
+[mn:s:ms]
+
+=====================DEBUT DU PROGRAMME=====================
+
+[0:0:12]	
+[0:0:12]	29 Jul 2021 16:07:33
+[0:0:13]	
+
+=======================INITIALISATION=======================
+
+[0:0:13]	
+[0:0:13]	Chargement du fichier init.config
+[0:0:13]	
+[0:0:13]	Lecture du fichier JSON 
+[0:0:13]	C:\Users\admin\Documents\GitHub\APPC\Builds\VisualStudio2019\init.config
+[0:0:14]	Lecture reussie
+[0:0:14]	
+[0:0:14]	Lecture des informations du fichier JSON. Parametres detectes : 
+[0:0:14]	Mot de passe
+[0:0:14]	Adresse API
+[0:0:14]	Line control
+[0:0:14]	Nombre de lignes
+[0:0:15]	Nombre de colonnes
+[0:0:15]	Port COM
+[0:0:15]	Caractere a afficher au demarrage
+[0:0:15]	
+[0:0:15]	Verification de la configuration reseau...
+[0:0:226]	Connecte a CentoFuel
+
+=====================FIN INITIALISATION=====================
+
+[0:0:227]	
+[0:1:753]	Changement du parametre "Port COM". 	Nouvelle valeur : 17
+[0:54:499]	Selection d'une station service... station selectionnee : Galande Lamare
+[0:55:167]	Selection d'un panneau... panneau selectionne : APPC Test Labo
+[0:55:892]	Selection d'une UC... UC selectionne : APPC Test Labo
+[0:56:284]	
+[0:56:946]	Chargement du prix UC
+[0:56:947]	Parametres disponibles : 
+[0:56:947]	Nom UC
+[0:56:947]	Nombre de prix
+[0:56:947]	Nombre de chiffres par prix
+[0:56:948]	ID Prix
+[0:56:948]	
+[0:56:948]	Chargement des parametres...
+[0:56:949]	Changement du prix 1. Nouveau prix : 1.11100
+[0:56:950]	Changement du prix 2. Nouveau prix : 2.22200
+[0:56:951]	Changement du prix 3. Nouveau prix : 3.33300
+[0:56:952]	Changement du prix 4. Nouveau prix : 0.00000
+[0:56:954]	Changement du prix 5. Nouveau prix : 0.00000
+[0:56:955]	Changement du prix 6. Nouveau prix : 0.00000
+[0:56:956]	Changement du prix 7. Nouveau prix : 0.00000
+[0:56:957]	Changement du prix 8. Nouveau prix : 0.00000
+[0:56:958]	Changement du prix 9. Nouveau prix : 0.00000
+[0:56:959]	Changement du prix 10. Nouveau prix : 0.00000
+[0:56:961]	Parametres charges
+[0:56:961]	
+[1:54:855]	Changement du parametre "Nombre de prix". 	Nouvelle valeur : 2
+[1:55:44]	Changement du parametre "Nombre de prix". 	Nouvelle valeur : 1
+[1:55:785]	Changement du parametre "Nombre de chiffres". 	Nouvelle valeur : 3
+[1:55:945]	Changement du parametre "Nombre de chiffres". 	Nouvelle valeur : 2
+[1:56:121]	Changement du parametre "Nombre de chiffres". 	Nouvelle valeur : 1
+
+========================TRANSMISSION========================
+
+[1:58:19]	Ouverture du port COM17 avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...port ouvert !
+
+[1:58:39]	
+[1:58:139]	Envoi de la requete d'affichage du caractere 49 avec controle segment  a l'adresse 48
+[1:58:141]	Recuperation de la reponse du module : pas de reponse du module
+[2:14:150]	
+
+===================FIN DE LA TRANSMISSION===================
+
+[2:20:685]	Changement du parametre "Nombre de chiffres". 	Nouvelle valeur : 2
+
+========================TRANSMISSION========================
+
+[2:23:43]	Ouverture du port COM17 avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...port ouvert !
+
+[2:23:50]	
+[2:23:151]	Envoi de la requete d'affichage du caractere 49 avec controle segment  a l'adresse 48
+[2:23:153]	Recuperation de la reponse du module : pas de reponse du module
+[2:39:171]	
+[2:39:223]	Envoi de la requete d'affichage du caractere 49 avec controle segment  a l'adresse 49
+[2:39:224]	Recuperation de la reponse du module : reponse du module illisible !
+[2:55:143]	
+
+===================FIN DE LA TRANSMISSION===================
+
+
+========================TRANSMISSION========================
+
+[2:59:962]	Ouverture du port COM17 avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...port ouvert !
+
+[2:59:984]	
+
+===================FIN DE LA TRANSMISSION===================
+
+[3:6:471]	Changement du prix 1. Nouveau prix : 2.20000
+
+========================TRANSMISSION========================
+
+[3:7:857]	Ouverture du port COM17 avec baud rate = 1170, 8 bits/byte, un stop bit, pas de parity bit...port ouvert !
+
+[3:7:877]	
+[3:7:978]	Envoi de la requete d'affichage du caractere 50 avec controle segment  a l'adresse 48
+[3:7:981]	Recuperation de la reponse du module : reponse du module, aucune erreur
+[3:11:222]	
+[3:11:273]	Envoi de la requete d'affichage du caractere 50 avec controle segment  a l'adresse 49
+[3:11:274]	Recuperation de la reponse du module : reponse du module, aucune erreur
+[3:14:516]	
+
+===================FIN DE LA TRANSMISSION===================
+
+[3:41:171]	
+[3:41:172]	Sauvegarde des prix dans C:\Users\admin\Documents\GitHub\APPC\Builds\VisualStudio2019\lastprices.prices
+[3:41:215]	Sauvegarde de la configuration dans C:\Users\admin\Documents\GitHub\APPC\Builds\VisualStudio2019\lastconfig.config
+
+======================FIN DU PROGRAMME======================
