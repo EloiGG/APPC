@@ -1,0 +1,34 @@
+[mn:s:ms]
+
+=====================DEBUT DU PROGRAMME=====================
+
+[0:0:3]	
+[0:0:4]	30 Jul 2021 16:30:42
+[0:0:4]	
+
+=======================INITIALISATION=======================
+
+[0:0:4]	
+[0:0:4]	Chargement du fichier init.config
+[0:0:4]	
+[0:0:5]	Lecture du fichier JSON 
+[0:0:5]	C:\Users\admin\Documents\GitHub\APPC\APPC install\init.config
+[0:0:5]	Lecture reussie
+[0:0:5]	
+[0:0:5]	Lecture des informations du fichier JSON. Parametres detectes : 
+[0:0:5]	Adresse API
+[0:0:5]	Line control
+[0:0:6]	Nombre de lignes
+[0:0:6]	Nombre de colonnes
+[0:0:16]	Port COM
+[0:0:16]	Caractere a afficher au demarrage
+[0:0:16]	
+
+=====================FIN INITIALISATION=====================
+
+[0:0:17]	
+[0:2:61]	
+[0:2:62]	Sauvegarde des prix dans C:\Users\admin\Documents\GitHub\APPC\APPC install\lastprices.prices
+[0:2:66]	Sauvegarde de la configuration dans C:\Users\admin\Documents\GitHub\APPC\APPC install\lastconfig.config
+
+======================FIN DU PROGRAMME======================
