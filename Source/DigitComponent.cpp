@@ -15,7 +15,6 @@
 
 DigitEditor::DigitEditor() : frameCounter(0), hasState(true)
 {
-	addAndMakeVisible(error);
 	state.err_ok = true;
 	state.work_in_progress = true;
 	setEditable(true);
@@ -70,7 +69,6 @@ String DigitEditor::getDigit()
 void DigitEditor::resized()
 {
 	Label::resized();
-	error.setBounds(getLocalBounds());
 	auto f = getFont();
 	f.setHeight(getHeight());
 	setFont(f);
@@ -81,11 +79,11 @@ void DigitEditor::setState(const ErrModule& newState)
 	state = newState;
 	//DBG("changement : uptodate = " << (int)newState.upToDate);
 	String tip;
-	if (state.err_ok) tip = (L"Pas d'erreurs détectées sur ce module");
-	else if (state.work_in_progress || state.stopping) tip = (L"Pas d'informations sur l'état du module");
-	else if (!state.upToDate) tip = (L"Le prix n'a pas encore été envoyé vers le panneau");
-	else if (state.erreurs[state.err_illisible]) tip = (L"La réponse du module n'a pas pu être comprise");
-	else if (state.erreurs[state.err_reponse]) tip = (L"Le module n'a pas fourni de réponse");
+	if (state.err_ok) tip = (L"Pas d'erreurs dÃ©tectÃ©es sur ce module");
+	else if (state.work_in_progress || state.stopping) tip = (L"Pas d'informations sur l'Ã©tat du module");
+	else if (!state.upToDate) tip = (L"Le prix n'a pas encore Ã©tÃ© envoyÃ© vers le panneau");
+	else if (state.erreurs[state.err_illisible]) tip = (L"La rÃ©ponse du module n'a pas pu Ãªtre comprise");
+	else if (state.erreurs[state.err_reponse]) tip = (L"Le module n'a pas fourni de rÃ©ponse");
 	else {
 		tip = CharPointer_UTF8("Erreurs sur les segments suivants : ");
 		if (state.erreurs[state.err_A]) tip += "A";

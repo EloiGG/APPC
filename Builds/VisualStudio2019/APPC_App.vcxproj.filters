@@ -265,9 +265,6 @@
     <ClCompile Include="..\..\Source\PriceDisplayComponent.cpp">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\SegmentError.cpp">
-      <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>APPC\Source\UI\Components</Filter>
     </ClCompile>
@@ -1531,9 +1528,6 @@
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PriceDisplayComponent.h">
-      <Filter>APPC\Source\UI\Components\Middle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SegmentError.h">
       <Filter>APPC\Source\UI\Components\Middle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">

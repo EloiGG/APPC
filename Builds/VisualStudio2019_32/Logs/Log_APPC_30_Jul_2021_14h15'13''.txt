@@ -1,0 +1,22 @@
+[mn:s:ms]
+
+=====================DEBUT DU PROGRAMME=====================
+
+[0:0:13]	
+[0:0:13]	30 Jul 2021 14:15:13
+[0:0:13]	
+
+=======================INITIALISATION=======================
+
+[0:0:14]	
+[0:0:14]	Impossible de charger le fichier init.config
+
+=====================FIN INITIALISATION=====================
+
+[0:0:15]	
+[0:0:123]	Changement du parametre "Port COM". 	Nouvelle valeur : 0
+[0:10:668]	
+[0:10:668]	Sauvegarde des prix dans C:\Users\admin\Documents\GitHub\APPC\Builds\VisualStudio2019_32\lastprices.prices
+[0:10:672]	Sauvegarde de la configuration dans C:\Users\admin\Documents\GitHub\APPC\Builds\VisualStudio2019_32\lastconfig.config
+
+======================FIN DU PROGRAMME======================

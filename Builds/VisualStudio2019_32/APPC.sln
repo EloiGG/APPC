@@ -1,0 +1,20 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2019
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPC - App", "APPC_App.vcxproj", "{BD2B2E39-00AE-ADC2-DF25-BC60690062CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD2B2E39-00AE-ADC2-DF25-BC60690062CC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BD2B2E39-00AE-ADC2-DF25-BC60690062CC}.Debug|Win32.Build.0 = Debug|Win32
+		{BD2B2E39-00AE-ADC2-DF25-BC60690062CC}.Release|Win32.ActiveCfg = Release|Win32
+		{BD2B2E39-00AE-ADC2-DF25-BC60690062CC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

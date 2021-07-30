@@ -16,7 +16,6 @@
 #include "SpecialLabel.h"
 #include "ErrorStateIndicator.h"
 #include "SerialThread.h"
-#include "SegmentError.h"
 //==============================================================================
 /*
 */
@@ -69,7 +68,6 @@ private:
 	virtual void timerCallback() override;
 	unsigned int frameCounter;
 	ErrModule state;
-	SegmentError error;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DigitEditor)
 };
 
