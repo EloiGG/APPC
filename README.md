@@ -1,6 +1,11 @@
 # APPC
  Contrôle APPC via ordinateur/réseau
 
+## Installation simple (pour utilisation)
+
+Télécharger et lancer l'installateur correspondant à la plateforme de l'ordinateur depuis le repos APPC_INSTALL
+https://github.com/EloiGG/APPC_INSTALL. Des instructions supplémentaires seront diponibles sur le repos. 
+
 ## Première installation (pour développement)
 
  - Etape 1 : télécharger JUCE (https://juce.com/get-juce/download)
