@@ -3,7 +3,9 @@
 
     LookAndFeel.h
     Created: 17 Jun 2021 11:04:18am
-    Author:  admin
+    Author:  Eloi GUIHARD-GOUJON
+
+    Contient les éléments spécifiant le rendu visuel du logiciel
 
   ==============================================================================
 */
@@ -11,6 +13,7 @@
 #pragma once
 #include <JuceHeader.h>
 
+// Couleurs communes dans le logiciel
 namespace lfColours
 {
     const Colour digitColour(244, 255, 143);
@@ -35,6 +38,9 @@ namespace lfColours
     const Colour upToDate(186, 117, 255);
 }
 
+/// <summary>
+/// Classe permettant de changer les visuels des éléments du logiciel
+/// </summary>
 class APPCLookAndFeel : public LookAndFeel_V4
 {
 public:

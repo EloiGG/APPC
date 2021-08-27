@@ -5,6 +5,8 @@
     Created: 19 Jun 2021 1:07:43am
     Author:  Eloi GUIHARD-GOUJON
 
+    Contient les éléments visuel du panneau principal du logiciel
+
   ==============================================================================
 */
 
@@ -26,14 +28,27 @@
 /*
 */
 
+/// <summary>
+/// Classe permettant de surligner certaines parties des prix
+/// </summary>
 class HighLight : public juce::Component
 {
 public:
     HighLight();
+
+    // Change le nombre de colonnes et de lignes
     void resize(unsigned int newX, unsigned int newY);
+
+    // Surligne la ligne spécifiée
     void highlightRow(int rowIndex);
+
+    // Surligne la colonne spécifiée
     void highlightColumn(int columnIndex);
+
+    // Surligne tout le component
     void highlightAll();
+
+    // Arrête tout surlignage en cours
     void stopHighlighting();
 
     void paint(juce::Graphics&) override;
@@ -54,9 +69,16 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    // Met à jour tous les prix affichés
     void updatePrices(TextUpdateOrigin whocalled, unsigned int index);
+
+    // Met à jour tout le visuel
     void updateVisualization();
+
+    // Fonction appelée lorsque la souris sort du component
     void mouseExit(const MouseEvent&) override;
+
+    // Fonction appelée lorsque la souris entre dans le component
     void mouseEnter(const MouseEvent&) override;
 
 private:

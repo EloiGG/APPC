@@ -14,19 +14,19 @@ Log Log::_log;
 
 void Log::writeLn(const String& string)
 {
-	int elapsedTime(_log.getTime_ms());
+	int elapsedTime(_log._getTime_ms());
 	String milliseconds(elapsedTime % 1000);
 	String seconds(elapsedTime / 1000 % 60);
 	String minutes(elapsedTime / (60 * 1000) % 60);
-	_log.writeImpl("\n" + String("[") + minutes + ":" + seconds + ":" + milliseconds + "]\t" + string.removeCharacters("\n"));
+	_log._writeImpl("\n" + String("[") + minutes + ":" + seconds + ":" + milliseconds + "]\t" + string.removeCharacters("\n"));
 }
 
 void Log::writeNext(const String& string)
 {
-	_log.writeImpl(string);
+	_log._writeImpl(string);
 }
 
-void Log::writeImpl(const String& string)
+void Log::_writeImpl(const String& string)
 {
 	if (!init) {
 		init = true;
@@ -35,14 +35,14 @@ void Log::writeImpl(const String& string)
 		title("Debut du programme");
 		ln();
 		writeLn(Time::getCurrentTime().toString(true, true, true, true));
-		ln(1, 3);
+		ln();
 	}
 	logFile.appendText(string);
 }
 
 void Log::update()
 {
-	_log.updateImpl();
+	_log._updateImpl();
 }
 
 void Log::title(const String& string)
@@ -55,15 +55,15 @@ void Log::title(const String& string)
 	str.append(string.toUpperCase(), string.length());
 	str.append(t, (textWidth - string.length()) / 2);
 	str.append("\n", 1);
-	_log.writeImpl(str);
+	_log._writeImpl(str);
 }
 
-void Log::ln(int debugLevel, int numberOfLines)
+void Log::ln()
 {
 	writeLn("");
 }
 
-void Log::updateImpl()
+void Log::_updateImpl()
 {
 }
 

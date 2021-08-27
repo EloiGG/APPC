@@ -3,7 +3,9 @@
 
 	Disabled.h
 	Created: 24 Jun 2021 11:41:40am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
+
+	Contient de quoi marquer un component comme désactivé/inaccessible
 
   ==============================================================================
 */
@@ -15,6 +17,10 @@
 //==============================================================================
 /*
 */
+
+/// <summary>
+/// Component qui permet de rayer une zone pour la marquer désactivée/inaccessible
+/// </summary>
 class Disabled : public juce::Component
 {
 public:
@@ -34,14 +40,6 @@ public:
 		g.fillAll(Colours::grey.withAlpha(0.45f));
 		g.setColour(Colours::black);
 		int spacing = 7, w = 0, h = 0;
-		/*for (w = 0; w + getHeight() <= getWidth(); w += spacing)
-			g.drawLine(w, 0, w + getHeight(), getHeight());
-		for (h = 0; h + getWidth() <= getHeight(); h += spacing)
-			g.drawLine(0, h, getWidth(), getWidth() + h);
-		for (; w < getWidth(); w += spacing)
-			g.drawLine(w, 0, getWidth(), getWidth() - w);
-		for (h += spacing; h < getHeight(); h += spacing)
-			g.drawLine(0, h, getHeight() - h, getHeight());*/
 		for (int y = 0; y < getHeight() + getWidth(); y += spacing) {
 			g.drawLine(Line<float>(0, y, y, 0), 1.0f);
 		}
@@ -52,11 +50,14 @@ public:
 	void resized() override
 	{
 	}
+
+	// Marque la zone comme désactivée, la hachurant
 	void setDisabled(bool shouldBeDisabled)
 	{
 		isDisabled = shouldBeDisabled;
 		setInterceptsMouseClicks(shouldBeDisabled, shouldBeDisabled);
 	}
+
 	void setMessage(const String& newMessage)
 	{
 		message = newMessage;

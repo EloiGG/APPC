@@ -2,10 +2,7 @@
 
 #include <JuceHeader.h>
 #include "MiddlePanel.h"
-#include "TopPanel.h"
-#include "RightPanel.h"
 #include "LeftPanel.h"
-#include "BottomPanel.h"
 #include "Disabled.h"
 #include "Log.h"
 #include "Keyboard.h"
@@ -29,7 +26,7 @@ public:
 private:
 	Keyboard kb;
 	MiddlePanel mPanel;
-	RightPanel rPanel;
+	LeftPanel rPanel;
 	TooltipWindow tooltip;
 	bool settingsOppened;
 	GasStationSelectionDialogBox gasSelection;

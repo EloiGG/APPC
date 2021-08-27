@@ -5,6 +5,8 @@
 	Created: 21 Jul 2021 11:59:29am
 	Author:  Eloi GUIHARD-GOUJON
 
+	Contient la classe pour l'affichage de la liste des panneaux
+
   ==============================================================================
 */
 
@@ -15,6 +17,9 @@
 #include "JSON.h"
 #include "Core.h"
 
+/// <summary>
+/// Component affichant la liste des panneaux
+/// </summary>
 class PanelSelectionDialogBox : public DialogBoxComponent
 {
 

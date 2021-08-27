@@ -5,6 +5,9 @@
 	Created: 16 Jun 2021 11:29:44am
 	Author:  Eloi GUIHARD-GOUJON
 
+	Contient les classes nécessaires pour parser des JSON.
+	Notamment les fichiers d'initialisation et les résultats des requêtes CentoFuel.
+
   ==============================================================================
 */
 
@@ -83,14 +86,16 @@ public:
 	int getCOMPort() { return parsedJSON.getProperty("COM_port", -1); }
 	String getStartingCharacter() { return parsedJSON.getProperty("starting_character", "error"); }
 	static String makeConfigJSON(const String& base_api, const String& api_key,
- bool line_control,
-		int numColumns, int numLines, int COMPort, const String& startingDigit);
+		bool line_control, int numColumns, int numLines, int COMPort, const String& startingDigit);
 	String toString();
 
 private:
 	var parsedJSON;
 };
 
+/// <summary>
+/// Classe obsolète, ne pas utiliser.
+/// </summary>
 class SequenceJSON
 {
 public:
@@ -104,6 +109,9 @@ private:
 	var parsedJSON;
 };
 
+/// <summary>
+/// Permet de lire les fichiers de sauvegarde de prix (fichiers .prices) 
+/// </summary>
 class PriceSave
 {
 public:
@@ -116,6 +124,9 @@ private:
 	var parsedPriceSave;
 };
 
+/// <summary>
+/// Contient les informations d'une station essence
+/// </summary>
 class GasStationJSON
 {
 public:
@@ -132,6 +143,9 @@ private:
 	DynamicObject* dynObj;
 };
 
+/// <summary>
+/// Contient les informations de plusieurs stations essence. Les différentes stations peuvent être accédées via l'opérateur []
+/// </summary>
 class GasStationsJSON
 {
 public:
@@ -144,22 +158,28 @@ private:
 	var parsedJSON;
 };
 
+/// <summary>
+/// Contient les informations d'un panneau de carburant qui peut contenir une ou deux UC
+/// </summary>
 class PanelJSON
 {
 public:
-	PanelJSON(){}
+	PanelJSON() {}
 	PanelJSON(const String& json) : parsedJSON(JSON::parse(json)), var((*parsedJSON.getArray())[0]) {}
-	
+
 	int getId() { return var.getProperty("id", "error"); }
 	String getName() { return var.getProperty("name", "error"); }
 	String getType() { return var.getProperty("type", "error"); }
-	int getBox() {return var.getProperty("box", "error");}
+	int getBox() { return var.getProperty("box", "error"); }
 	size_t getNumPanels() const { return parsedJSON.getArray()->size(); }
 private:
 	var parsedJSON;
 	var var;
 };
 
+/// <summary>
+/// Contient les informations d'un prix d'une UC
+/// </summary>
 class UCLinePrice
 {
 public:
@@ -173,6 +193,9 @@ private:
 	DynamicObject* dynObj;
 };
 
+/// <summary>
+/// Contient les informations d'un prix d'une station
+/// </summary>
 class StationLinePrice
 {
 public:
@@ -185,8 +208,9 @@ private:
 	var parsedJSON;
 };
 
-
-
+/// <summary>
+/// Contient les informations d'une UC
+/// </summary>
 class UCJSON
 {
 public:
@@ -207,6 +231,9 @@ private:
 	var parsedJSON;
 };
 
+/// <summary>
+/// Contient les informations de plusieurs UC qui peuvent être accédées individuellement via l'opérateur []
+/// </summary>
 class UCsJSON
 {
 public:

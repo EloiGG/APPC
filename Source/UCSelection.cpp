@@ -36,7 +36,7 @@ void UCSelectionDialogBox::UCSelection::cellClicked(int rowNumber, int columnId,
 {
 	currentUCID = rowNumber;
 	Log::writeNext(" UC selectionne : " + getPropriety(rowNumber, 2));
-	Log::ln(1,2);
+	Log::ln();
 
 	Core::get().openAlertWindow(APPCAlertWindows::WindowType::PriceChoice, "", [this](int r)
 		{

@@ -10,7 +10,6 @@
 #include "JSON.h"
 #include "Networking.h"
 #include "Price.h"
-#include "GPIO.h"
 
 //==============================================================================
 class APPCApplication : public juce::JUCEApplication
@@ -28,6 +27,8 @@ public:
 	{
 		Log::title("INITIALISATION");
 		Log::ln();
+
+		// Si le fichier init.config existe, on le charge
 		if (File::getCurrentWorkingDirectory().getChildFile("init.config").existsAsFile()) {
 			Log::writeLn("Chargement du fichier init.config");
 			Log::ln();
@@ -35,7 +36,7 @@ public:
 			c.setConfigJSON(File::getCurrentWorkingDirectory().getChildFile("init.config"));
 			c.loadInformationsFromJSON();
 		}
-		else {
+		else { // Sinon on affiche que des 8 et on garde la configuration de base
 			Log::writeLn("Impossible de charger le fichier init.config\n");
 			for (int i = 0; i < Core::MAX_PRICES; i++)
 				Core::get().setPrice(i, Price("88888888"));
@@ -49,12 +50,13 @@ public:
 	void shutdown() override
 	{
 		mainWindow = nullptr; // (deletes our window)
-		Core::get().kill();
+		Core::get().kill(); // détruit toutes les variables du core
 	}
 
 	//==============================================================================
 	void systemRequestedQuit() override
 	{
+		// Sauvegarde les fichiers lastprices et lastconfig
 		Log::ln();
 		Core::get().savePriceSave(File::getCurrentWorkingDirectory().getChildFile("lastprices.prices"));
 		Core::get().saveConfigJSON(File::getCurrentWorkingDirectory().getChildFile("lastconfig.config"));

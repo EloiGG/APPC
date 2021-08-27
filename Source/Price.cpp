@@ -3,7 +3,7 @@
 
 	Price.cpp
 	Created: 17 Jun 2021 2:55:28pm
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */

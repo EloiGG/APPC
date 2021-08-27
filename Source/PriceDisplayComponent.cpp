@@ -3,7 +3,7 @@
 
 	PriceDisplayComponent.cpp
 	Created: 17 Jun 2021 9:16:08am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */

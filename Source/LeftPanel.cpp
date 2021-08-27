@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LeftPanel.cpp
-    Created: 19 Jun 2021 1:07:21am
-    Author:  Eloi
+	GeneralTab.cpp
+	Created: 19 Jun 2021 10:42:19am
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -12,40 +12,124 @@
 #include "LeftPanel.h"
 
 //==============================================================================
-LeftPanel::LeftPanel()
-{
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
 
+LeftPanel::LeftPanel() : grid(4, 18), nPrices("Nombre de prix", Core::get().getNumPrices()), nDigits("Nombre de chiffres", Core::get().getNumDigits()),
+resetLine("Effacer si erreur"), COM("Port COM", 3), centoFuelOpen("Choisir un panneau"), title(L"Paramètres", CharPointer_UTF8("Paramètres"))
+{
+	addChildComponent(grid);
+	addAndMakeVisible(nPrices);
+	addAndMakeVisible(nDigits);
+	addAndMakeVisible(COM);
+	addAndMakeVisible(resetLine);
+	addAndMakeVisible(centoFuelOpen);
+	addAndMakeVisible(title);
+	addAndMakeVisible(disabled);
+
+	title.setJustificationType(Justification::centred);
+
+	disabled.setDisabled(true);
+
+	grid.setBounds(0, 0, getWidth(), 300);
+
+	nPrices.onUpdate = [](const String& input)
+	{
+		Core::get().setNumPrices(input.getIntValue());
+		Core::get().resetInit();
+
+		Core::get().updateVisualization();
+	};
+	nPrices.min = 1;
+	nPrices.max = Core::MAX_PRICES;
+	nDigits.setMaxInputLengh(2);
+
+	nDigits.onUpdate = [](const String& input)
+	{
+		Core::get().setNumDigits(input.getIntValue());
+		Core::get().resetInit();
+		Core::get().updateVisualization();
+	};
+	nDigits.min = 1;
+	nDigits.max = Core::MAX_DIGITS;
+	nDigits.setMaxInputLengh(1);
+
+	COM.onUpdate = [](const String& input)
+	{
+		Core::get().setCOMPort(input.getIntValue());
+		Core::get().resetInit();
+		Core::get().updateVisualization();
+	};
+	COM.min = 1;
+	COM.max = 256;
+	COM.setMaxInputLengh(3);
+
+	centoFuelOpen.setLookAndFeel(Core::get().getLookAndFeel().get());
+	centoFuelOpen.setColour(TextButton::ColourIds::buttonColourId, lfColours::buttonBackground);
+	centoFuelOpen.onClick = [this]()
+	{
+		if (Core::get().isConnected())
+			Core::get().selectGasStation();
+		else
+		{
+			Core::get().tryToConnect();
+			if (Core::get().isConnected()) {
+				Core::get().loadInformationsFromNetwork();
+				Core::get().selectGasStation();
+			}
+			else {
+				Core::get().openAlertWindow(APPCAlertWindows::WindowType::NoConnection);
+			}
+		}
+	};
 }
 
 LeftPanel::~LeftPanel()
 {
 }
 
-void LeftPanel::paint (juce::Graphics& g)
+void LeftPanel::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll(lfColours::panelBackground);
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("LeftPanel", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+	g.fillAll(lfColours::tabBackground);
+	g.setColour(lfColours::priceBackground.darker());
+	g.fillRect(grid.getLine(0, false, 1.62f));
+	g.setColour(Colours::black);
+	g.drawRect(grid.getLine(0, false, 1.62f));
 }
 
 void LeftPanel::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+	grid.setBounds(getLocalBounds());// .withWidth(getWidth()));
+	setSize(grid.getWidth(), jmax(getHeight(), 600));
+	title.setBounds(grid.getLine(0, false, 1.62f));
+	COM.setBounds(grid.getLine(2));
+	nPrices.setBounds(grid.getLine(3));
+	nDigits.setBounds(grid.getLine(4));
+	centoFuelOpen.setBounds(grid.getLine(6, false, 1.5f));
+	disabled.setBounds(getLocalBounds());
 
+	Font f(jmax<int>(title.getHeight() * 0.5, 16));
+	title.setFont(f);
+}
+
+void LeftPanel::setNumPrices(int newNumPrices)
+{
+	nPrices.setInput(String(newNumPrices));
+}
+
+void LeftPanel::setNumDigits(int newNumDigits)
+{
+	nDigits.setInput(String(newNumDigits));
+}
+
+void LeftPanel::updateParameters()
+{
+	auto& c = Core::get();
+	setNumPrices(c.getNumPrices());
+	setNumDigits(c.getNumDigits());
+	setCOMPort(c.getCOMPort());
+	resetLine.setToggleState(c.getResetLine(), NotificationType::sendNotification);
+	if (c.getIsInTransmission())
+		disabled.setDisabled(true);
+	else
+		disabled.setDisabled(false);
+	repaint();
 }

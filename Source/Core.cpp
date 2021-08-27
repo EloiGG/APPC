@@ -230,8 +230,7 @@ void Core::loadInformationsFromJSON()
 	else
 		for (int i = 0; i < Core::MAX_PRICES; ++i)
 			prices[i] = "888888";
-
-	Log::ln(2, 1);
+		Log::ln();
 
 	if (hasNetwork)
 		setNetwork(Network("X-AUTH-TOKEN", pwrd, baseAPI));

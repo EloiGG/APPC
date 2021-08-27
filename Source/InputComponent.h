@@ -18,6 +18,10 @@
 //==============================================================================
 /*
 */
+
+/// <summary>
+/// Classe dérivée de KeyboardLabel pour l'édition de texte via clavier ou clavier visuel
+/// </summary>
 class InputComponentLabel : public KeyboardLabel
 {
 public:
@@ -29,8 +33,6 @@ public:
 	}
 	unsigned int maxNumChar;
 protected:
-	//virtual void textKeyboardUpdated() {}
-	//virtual void editorAboutToBeHidden(TextEditor*) override {}
 	virtual void editorShown(TextEditor* te) override
 	{
 		Core::get().showKeyboard(this, [](const String& output)
@@ -42,6 +44,10 @@ protected:
 private:
 };
 
+/// <summary>
+/// Component qui permet l'édition d'un paramètre via un champs de texte éditable par clavier,
+/// clavier visuel ou via des boutons + et -
+/// </summary>
 class InputComponent : public juce::Component
 {
 public:
@@ -52,12 +58,22 @@ public:
 	void paint(juce::Graphics&) override;
 	void resized() override;
 
+	// Change le nom du paramètre
 	void setTitle(const String& newTitle) { title.setText(newTitle, NotificationType::sendNotification); }
+
+	// Change la valeur du paramètre
 	void setInput(const String& newInput) { input.setText(newInput, NotificationType::sendNotification); }
+
+	// Change le nombre maximal de caractères acceptés
 	void setMaxInputLengh(unsigned int maxLengh) { input.maxNumChar = maxLengh; }
 
+	// Action déclenchée lorsqu'on clique sur le bouton +
 	std::function<void()>& onIncrement;
+
+	// Action déclenchée lorsqu'on clique sur le bouton -
 	std::function<void()>& onDecrement;
+
+	// Action déclenchée quand le texte est changé
 	std::function<void(const String&)> onUpdate;
 
 	float min, max;
@@ -72,6 +88,9 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputComponent)
 };
 
+/// <summary>
+/// Component de type case à cocher
+/// </summary>
 class CheckBox : public ToggleButton
 {
 public:

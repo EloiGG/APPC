@@ -5,6 +5,8 @@
 	Created: 22 Jul 2021 3:47:05pm
 	Author:  Eloi GUIHARD-GOUJON
 
+	Contient la classe pour l'affichage de la liste des panneaux
+
   ==============================================================================
 */
 
@@ -16,6 +18,10 @@
 //==============================================================================
 /*
 */
+
+/// <summary>
+/// Component affichant la liste des panneaux
+/// </summary>
 class UCSelectionDialogBox : public DialogBoxComponent
 {
 	class UCSelection : public CustomTableListBox

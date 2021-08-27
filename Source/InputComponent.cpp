@@ -103,7 +103,7 @@ input([this]()
 			Log::writeNext(getButtonText().substring(0, getButtonText().length() - 3));
 			Log::writeNext("\". Nouvel état : ");
 			Log::writeNext(String((int)getToggleState()));
-			Log::ln(2);
+			Log::ln();
 			Log::update();
 		};
 	}

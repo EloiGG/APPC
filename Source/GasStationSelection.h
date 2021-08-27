@@ -5,6 +5,8 @@
 	Created: 20 Jul 2021 4:22:44pm
 	Author:  Eloi GUIHARD-GOUJON
 
+	Contient la classe pour l'affichage de la liste des stations services
+
   ==============================================================================
 */
 
@@ -19,6 +21,10 @@
 //==============================================================================
 /*
 */
+
+/// <summary>
+/// Component affichant la liste des stations services
+/// </summary>
 class GasStationSelectionDialogBox : public DialogBoxComponent
 {
 	class GasStationSelection : public CustomTableListBox

@@ -3,7 +3,7 @@
 
 	UART.cpp
 	Created: 16 Jun 2021 10:59:35am
-	Author:  admin
+	Author:  Eloi GUIHARD-GOUJON
 
   ==============================================================================
 */
@@ -39,12 +39,11 @@ bool UART::open(int baudRate, unsigned int byteSize, StopBit stopbit, Parity par
 		return false;
 	}
 
-	int timeoutmult = 1;
+	timeouts.ReadTotalTimeoutConstant = 50;
+	timeouts.ReadTotalTimeoutMultiplier = 10;
+	timeouts.WriteTotalTimeoutConstant = 50;
+	timeouts.WriteTotalTimeoutMultiplier = 10;
 
-	timeouts.ReadTotalTimeoutConstant = 50 * timeoutmult;
-	timeouts.ReadTotalTimeoutMultiplier = 10 * timeoutmult;
-	timeouts.WriteTotalTimeoutConstant = 50 * timeoutmult;
-	timeouts.WriteTotalTimeoutMultiplier = 10 * timeoutmult;
 	if (SetCommTimeouts(hSerial, &timeouts) == 0)
 	{
 		CloseHandle(hSerial);
@@ -66,15 +65,13 @@ void UART::addByte(unsigned char Byte)
 }
 
 void UART::addBytes(const char* s)
-{
+{ // cette fonction ne doit pas être utilisée
 	for (int i = 0; i < 15; i += 3) {
 		unsigned char a = s[i] > '9' ? s[i] - 87 : s[i] - 48;
 		unsigned char b = s[i + 1] > '9' ? s[i + 1] - 87 : s[i + 1] - 48;
 		unsigned char c = 16 * a + b;
 		addByte(c);
 	}
-
-
 }
 
 bool UART::send()

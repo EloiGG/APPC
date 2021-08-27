@@ -4,6 +4,9 @@
 	DialogBoxComponent.h
 	Created: 20 Jul 2021 4:21:58pm
 	Author:  Eloi GUIHARD-GOUJON
+	
+	Contient les classes virtuelles qui doivent être béritées pour faire apparaître des liste.
+	Utilisées pour la sélection des stations services, des panneaux d'affichages et des UC.
 
   ==============================================================================
 */
@@ -19,6 +22,9 @@
 /*
 */
 
+/// <summary>
+/// Classe TableListBox permettant la mise en forme des cellules
+/// </summary>
 class CustomTableListBox : public TableListBoxModel, public Component
 {
 public:
@@ -109,7 +115,9 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomTableListBox)
 };
 
-
+/// <summary>
+/// Component pour afficher une liste
+/// </summary>
 class DialogBoxComponent : public juce::Component
 {
 public:

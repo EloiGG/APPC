@@ -8,6 +8,9 @@ MainComponent::MainComponent() : tooltip(this, 200), settingsOppened(false)
 	auto& c = Core::get();
 
 	c.setCurrentStationID(2);
+
+	// Initialisation des fonctions lambda du core :
+
 	c.showKeyboard = [this](KeyboardLabel* caller, const std::function<bool(const String&)>& validationFunction, const String& startingText = "", unsigned int maxChar = Core::MAX_DIGITS)
 	{
 		kb.resetAndShow(caller, validationFunction, startingText, maxChar);

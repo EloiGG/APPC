@@ -37,13 +37,13 @@
             <FILE id="iLB3qB" name="UCSelection.cpp" compile="1" resource="0" file="Source/UCSelection.cpp"/>
             <FILE id="wmSstK" name="UCSelection.h" compile="0" resource="0" file="Source/UCSelection.h"/>
           </GROUP>
-          <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="Right">
-            <FILE id="wL6Gxe" name="RightPanel.cpp" compile="1" resource="0" file="Source/RightPanel.cpp"/>
-            <FILE id="LqnmGo" name="RightPanel.h" compile="0" resource="0" file="Source/RightPanel.h"/>
-            <FILE id="lykD4S" name="Buttons.cpp" compile="1" resource="0" file="Source/Buttons.cpp"/>
-            <FILE id="fCVsPe" name="Buttons.h" compile="0" resource="0" file="Source/Buttons.h"/>
+          <GROUP id="{C4228FB4-F476-FC99-6E42-FA244A68C45B}" name="LeftPanel">
+            <FILE id="wL6Gxe" name="LeftPanel.cpp" compile="1" resource="0" file="Source/LeftPanel.cpp"/>
+            <FILE id="LqnmGo" name="LeftPanel.h" compile="0" resource="0" file="Source/LeftPanel.h"/>
           </GROUP>
           <GROUP id="{A3C3405C-4230-3739-E927-B8369218F077}" name="Middle">
+            <FILE id="lykD4S" name="Buttons.cpp" compile="1" resource="0" file="Source/Buttons.cpp"/>
+            <FILE id="fCVsPe" name="Buttons.h" compile="0" resource="0" file="Source/Buttons.h"/>
             <FILE id="mEuui8" name="DigitComponent.cpp" compile="1" resource="0"
                   file="Source/DigitComponent.cpp"/>
             <FILE id="WNBeOL" name="DigitComponent.h" compile="0" resource="0"
