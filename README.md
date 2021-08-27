@@ -13,7 +13,7 @@ Télécharger et lancer l'installateur correspondant à la plateforme de l'ordin
  - Etape 3 : dans ce dossier, lancer Projucer.exe
  - Etape 4 : dans Projucer : File>Global Paths... renseigner le chemin d'accès au dossier JUCE
  - Etape 5 : coller le fichier "SEVEN SEGMENT.ttf" dans le dossier C:\Windows\Fonts
- - Etape 6 (pour Windows) : télécharger et installer Visual Studio, intaller le module "développement desktop C++" dans Visual Studio Installer
+ - Etape 6 (pour Windows) : télécharger et installer Visual Studio, installer le module "développement desktop C++" dans Visual Studio Installer
  
 ### Ouvrir le projet
 
